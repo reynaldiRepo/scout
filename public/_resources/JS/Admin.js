@@ -1,5 +1,10 @@
 (function ($) {
-    var baseHref = '$BaseHref';
+    var baseHref = '';
+    if (window.location.href.includes('localhost')){
+        baseHref = 'http://localhost/pramuka/'
+    }else{
+        baseHref = window.location.origin+"/"
+    }
 
     function onChangeKabupaten(e, target) {
         if (e.val() != "") {

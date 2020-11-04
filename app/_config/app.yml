@@ -34,3 +34,5 @@ Name: ExtraJSCSSLeftAndMain
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
     - public/_resources/CSS/Admin.css
+  extra_requirements_javascript:
+    - public/_resources/JS/Admin.js

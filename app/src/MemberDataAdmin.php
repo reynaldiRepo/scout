@@ -15,9 +15,9 @@ class MemberDataAdmin extends ModelAdmin{
     
     function init() {
         parent::init();
-        Requirements:: javascriptTemplate("public/_resources/JS/Admin.js", array(
-            'BaseHref' => Director::absoluteBaseURL()
-        ));
+        // Requirements:: javascriptTemplate("public/_resources/JS/Admin.js", array(
+        //     'BaseHref' => Director::absoluteBaseURL()
+        // ));
         
     }
 }

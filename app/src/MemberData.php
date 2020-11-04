@@ -1,4 +1,5 @@
 <?php 
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
@@ -31,8 +32,8 @@ class MemberData extends Member
     private static $has_one = [
         'KabupatenLahir' => KabupatenData::class,
         'Kecamatan' => KecamatanData::class,
-        'Kwarcab' => KabupatenData::class,
-        'Kwarran' => KecamatanData::class,
+        'GolonganData' => GolonganData::class,
+        'SakaData' => SakaData::class
     ];
 
     private static $has_many = [
@@ -98,6 +99,12 @@ class MemberData extends Member
             'Email',
             'Email'
         ));
+        
+        $fields->insertBefore('Email', UploadField::create(
+            'PhotoProfile',
+            'Photo Profile'
+        ));
+        
         $fields->insertAfter('Email', TextField::create(
             'FirstName',
             'Nama Depan'
@@ -208,7 +215,17 @@ class MemberData extends Member
             'Root.Data Kepramukaan',
             [
                 $Kwarcab,
-                $Kwarran
+                $Kwarran,
+                DropdownField::create(
+                    'GolonganDataID',
+                    'Golongan',
+                    GolonganData::get()->sort("Title", "ASC")->map("ID", "Title")
+                )->setEmptyString('Pilih Golongan'),
+                DropdownField::create(
+                    'SakaDataID',
+                    'Saka',
+                    SakaData::get()->sort("Title", "ASC")->map("ID", "Title")
+                )->setEmptyString('Pilih Saka')
             ]
         );
 
