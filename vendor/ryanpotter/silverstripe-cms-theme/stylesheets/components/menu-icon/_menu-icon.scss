@@ -1,0 +1,54 @@
+/*
+|--------------------------------------------------------------------------
+| Menu Icon
+|--------------------------------------------------------------------------
+*/
+
+.cms {
+  .menu__icon {
+    color: currentColor;
+    font-size: 0;
+    margin-top: 0;
+    top: 50%;
+    left: 2rem;
+    transform: translate3d(0, -50%, 0);
+    line-height: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    // Icon images
+    &--image {
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    &--chevron {
+      right: 1rem;
+      left: auto;
+
+      &::before {
+        content: "U";
+      }
+    }
+
+    &::before {
+      color: currentColor;
+      font-size: 1.5rem;
+    }
+
+    // Slightly reduce the size of font awesome icons
+    &.fa,
+    &.fas,
+    &.far,
+    &.fab,
+    &.fal {
+      &::before {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}

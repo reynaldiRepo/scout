@@ -14,8 +14,23 @@ SilverStripe\Admin\LeftAndMain:
   cms_icon_color: currentColor
 
 ---
-Name: MemberExtension
+Name: MemberClassExtension
 ---
 SilverStripe\Security\Member:
   extensions:
     - MemberExtension
+
+# ---
+# Name: MemberExtension
+# ---
+# SilverStripe\Core\Injector\Injector:
+#   SilverStripe\Security\Member:
+#     class: MemberData
+
+
+---
+Name: ExtraJSCSSLeftAndMain
+---
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_css:
+    - public/_resources/CSS/Admin.css

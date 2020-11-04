@@ -1,0 +1,30 @@
+/*
+|--------------------------------------------------------------------------
+| CMS Sitename
+|--------------------------------------------------------------------------
+*/
+
+$cms-sitename-font-family: $font-family-base;
+
+.cms {
+  .cms-sitename {
+    font-family: $cms-sitename-font-family;
+    padding: 2rem;
+    height: auto;
+
+    // Modifiers
+    // ----------------------------------------
+
+    &__title {
+      padding: 0;
+      margin: 0;
+    }
+
+    // Child Nodes
+    // ----------------------------------------
+
+    .logo {
+      flex: 1 0 0;
+    }
+  }
+}

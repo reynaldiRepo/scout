@@ -1,0 +1,31 @@
+{
+  "name": "ryanpotter/silverstripe-cms-theme",
+  "description": "CMS Theme",
+  "type": "silverstripe-vendormodule",
+  "keywords": [
+    "silverstripe",
+    "theme"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Ryan Potter",
+      "homepage": "http://ryanpotter.co.nz/",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "silverstripe/framework": "^4.0",
+    "silverstripe/admin": "^1.0",
+    "silverstripe/siteconfig": "^4.0"
+  },
+  "support": {
+    "issues": "https://github.com/Rhym/silverstripe-cms-theme/issues"
+  },
+  "extra": {
+    "installer-name": "silverstripe-cms-theme",
+    "expose": [
+      "dist"
+    ]
+  }
+}

@@ -33,4 +33,20 @@ class KabupatenData extends DataObject {
     {
         return false;
     }
+
+    static function getKabupatenWithProv(){
+        $res = [];
+        foreach(KabupatenData::get()->sort("Title","Asc") as $pd){
+            $res[$pd->ID] = $pd->Title." Provinsi ".$pd->ProvinsiData()->Title;
+        }
+        return $res;
+    }
+
+    public function toJsonArray(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['Title'] = $this->Title;
+        $res['ProvinsiDataID'] = $this->ProvinsiDataID;
+        return $res;
+    }
 }

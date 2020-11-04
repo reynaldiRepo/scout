@@ -1,6 +1,7 @@
 <?php
 
-class CT {
+class CT { 
+
     public function clearing(){
         $Prov = DataObject::get('ProvinsiData', 'ID <= 22 AND ID >= 21');
         foreach($Prov as $p){

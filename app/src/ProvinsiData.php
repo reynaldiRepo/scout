@@ -29,4 +29,15 @@ class ProvinsiData extends DataObject {
     {
         return false;
     }
+
+    static function getJatim(){
+        return DataObject::get('ProvinsiData', "Title Like '%Jawa Timur%'")->first();
+    }
+
+    public function toJsonArray(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['Title'] = $this->Title;
+        return $res;
+    }
 }

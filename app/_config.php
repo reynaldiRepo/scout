@@ -6,6 +6,7 @@ use SilverStripe\Admin\SecurityAdmin;
 use SilverStripe\VersionedAdmin\ArchiveAdmin;
 use SilverStripe\CampaignAdmin\CampaignAdmin;
 use SilverStripe\Security\Security;
+use SilverStripe\Admin\LeftAndMain;
 
 //remove menu on admin===========================
 CMSMenu::remove_menu_class(ReportAdmin::class);

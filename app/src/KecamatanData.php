@@ -29,5 +29,13 @@ class KecamatanData extends DataObject {
         return false;
     }
 
+    public function toJsonArray(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['Title'] = $this->Title;
+        $res['KabupatenDataID'] = $this->KabupatenDataID;
+        return $res;
+    }
+
 
 }
