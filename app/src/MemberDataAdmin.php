@@ -10,14 +10,10 @@ class MemberDataAdmin extends ModelAdmin{
         'MemberData'
     ];
     private static $url_segment = 'Member';
-    private static $menu_title = 'Data Member';
+    private static $menu_title = 'Member';
     private static $menu_icon_class = 'fas fa-users';
     
     function init() {
         parent::init();
-        // Requirements:: javascriptTemplate("public/_resources/JS/Admin.js", array(
-        //     'BaseHref' => Director::absoluteBaseURL()
-        // ));
-        
     }
 }

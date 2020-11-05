@@ -38,6 +38,7 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\Config\\' => 25,
             'Symfony\\Component\\Cache\\' => 24,
+            'SilverWare\\Calendar\\' => 20,
             'SilverStripe\\i18n\\Tests\\' => 24,
             'SilverStripe\\i18n\\' => 18,
             'SilverStripe\\View\\Tests\\' => 24,
@@ -193,6 +194,10 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
         'Symfony\\Component\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
+        ),
+        'SilverWare\\Calendar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/silverware/calendar/src',
         ),
         'SilverStripe\\i18n\\Tests\\' => 
         array (

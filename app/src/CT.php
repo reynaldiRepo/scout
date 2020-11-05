@@ -1,8 +1,11 @@
 <?php
 
+use SilverStripe\Assets\Image;
+
+
 class CT { 
 
-    public function clearing(){
+    public function clearinglokasi(){
         $Prov = DataObject::get('ProvinsiData', 'ID <= 22 AND ID >= 21');
         foreach($Prov as $p){
             $kab = $p->KabupatenData();
@@ -64,4 +67,10 @@ class CT {
         }
         die("Done");
     }
+
+
+    static function publish($Image){
+        $Image->publishRecursive();
+    }
+
 }

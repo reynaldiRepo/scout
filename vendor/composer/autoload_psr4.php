@@ -17,6 +17,7 @@ return array(
     'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
     'Symfony\\Component\\Config\\' => array($vendorDir . '/symfony/config'),
     'Symfony\\Component\\Cache\\' => array($vendorDir . '/symfony/cache'),
+    'SilverWare\\Calendar\\' => array($vendorDir . '/silverware/calendar/src'),
     'SilverStripe\\i18n\\Tests\\' => array($vendorDir . '/silverstripe/framework/tests/php/i18n'),
     'SilverStripe\\i18n\\' => array($vendorDir . '/silverstripe/framework/src/i18n'),
     'SilverStripe\\View\\Tests\\' => array($vendorDir . '/silverstripe/framework/tests/php/View'),

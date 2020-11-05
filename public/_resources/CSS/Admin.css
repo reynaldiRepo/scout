@@ -1,7 +1,8 @@
-.ss-single-selected{
+.ss-single-selected {
     height: 35px !important;
 }
 
 .chosen-container:not(.chosen-container-active) {
     overflow: unset !important;
 }
+

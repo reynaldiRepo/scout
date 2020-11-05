@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TextareaField;
@@ -10,16 +11,19 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 
 
-
 class SosmedData extends DataObject{
     private static $db = [
         'URL' => 'Varchar(255)',
         'Username' => 'Varchar(255)',
     ];
 
+    private static $singular_name = "Data Sosial Media";
+    private static $plural_name = "List Data Sosial Media";
+
     private static $has_one = [
         'SosmedCategoryData' => SosmedCategoryData::class,
-        'MemberData'=> MemberData::class
+        'MemberData'=> MemberData::class,
+        'SiteConfig'=> SiteConfig::class
     ];
 
     private static $summary_fields = [
@@ -69,6 +73,9 @@ class SosmedCategoryData extends DataObject{
         'Title' => 'Varchar(255)',
         'IconCode' => 'Varchar(255)',
     ];
+
+    private static $singular_name = "Jenis Sosial Media";
+    private static $plural_name = "Jenis Sosial Media";
     
     private $fontIconCode = [
         "fa fa-500px",

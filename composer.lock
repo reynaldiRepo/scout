@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d82b613f0fa80696e6cc1e995bb45503",
+    "content-hash": "df6e91ac77a63a95c776da205776f0b8",
     "packages": [
         {
             "name": "bramus/ansi-php",
@@ -2299,6 +2299,64 @@
                 "versioned"
             ],
             "time": "2019-11-13T02:39:33+00:00"
+        },
+        {
+            "name": "silverware/calendar",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/praxisnetau/silverware-calendar.git",
+                "reference": "71060ec362447e284609f5a8678a38d0206cd2c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/praxisnetau/silverware-calendar/zipball/71060ec362447e284609f5a8678a38d0206cd2c1",
+                "reference": "71060ec362447e284609f5a8678a38d0206cd2c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "silverstripe/framework": "^4@dev"
+            },
+            "type": "silverstripe-vendormodule",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "expose": [
+                    "admin/client/dist",
+                    "client/dist"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "SilverWare\\Calendar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Tucker",
+                    "email": "colin@praxis.net.au",
+                    "homepage": "http://www.praxis.net.au",
+                    "role": "Developer"
+                }
+            ],
+            "description": "SilverWare Calendar Module.",
+            "homepage": "https://github.com/praxisnetau/silverware-calendar",
+            "keywords": [
+                "calendar",
+                "date",
+                "datepicker",
+                "silverstripe",
+                "silverware",
+                "time",
+                "timepicker"
+            ],
+            "time": "2018-06-12T06:25:51+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

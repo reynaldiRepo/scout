@@ -3640,6 +3640,66 @@
         ]
     },
     {
+        "name": "silverware/calendar",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/praxisnetau/silverware-calendar.git",
+            "reference": "71060ec362447e284609f5a8678a38d0206cd2c1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/praxisnetau/silverware-calendar/zipball/71060ec362447e284609f5a8678a38d0206cd2c1",
+            "reference": "71060ec362447e284609f5a8678a38d0206cd2c1",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0",
+            "silverstripe/framework": "^4@dev"
+        },
+        "time": "2018-06-12T06:25:51+00:00",
+        "type": "silverstripe-vendormodule",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            },
+            "expose": [
+                "admin/client/dist",
+                "client/dist"
+            ]
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "SilverWare\\Calendar\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Colin Tucker",
+                "email": "colin@praxis.net.au",
+                "homepage": "http://www.praxis.net.au",
+                "role": "Developer"
+            }
+        ],
+        "description": "SilverWare Calendar Module.",
+        "homepage": "https://github.com/praxisnetau/silverware-calendar",
+        "keywords": [
+            "calendar",
+            "date",
+            "datepicker",
+            "silverstripe",
+            "silverware",
+            "time",
+            "timepicker"
+        ]
+    },
+    {
         "name": "swiftmailer/swiftmailer",
         "version": "v5.4.12",
         "version_normalized": "5.4.12.0",

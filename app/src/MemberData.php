@@ -16,9 +16,13 @@ use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\PasswordField;
 
 class MemberData extends Member
 {
+    private static $singular_name = "Member";
+    private static $plural_name = "List Member";
+
     private static $db = [
         'NTA_SIPA'=> 'Varchar(255)',
         'Sex' => 'Varchar(255)',
@@ -27,6 +31,7 @@ class MemberData extends Member
         'PhoneNumber' => 'Varchar(255)',
         'Address' => 'Text',
         'Bio' => 'HTMLText',
+        'Status' => 'Boolean'
     ];
 
     private static $has_one = [
@@ -38,9 +43,16 @@ class MemberData extends Member
 
     private static $has_many = [
         'SosmedData' => SosmedData::class,
-        'HobbyData' => HobbyData::class
+        'HobbyData' => HobbyData::class,
+        'CommentEventData' => CommentEventData::class
     ];
 
+    private static $belongs_many_many = [
+        'EventData' => EventData::class
+    ];
+
+
+    
     private $arrKelamin = [
         'L'=>'Laki - Laki',
         'P'=>'Perempuan'
@@ -55,19 +67,28 @@ class MemberData extends Member
         'Buddha' => 'Buddha',
         'Khonghucu' => 'Khonghucu'
     ];
-
-
     
+
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-         
     }
+
+    public function onAfterWrite()
+    {
+        parent::onAfterWrite();
+        $this->addToGroupByCode("member");     
+    }
+
 
     public function getCMSFields()
     {
-        $fields = new FieldList();
+        $fields = parent::getCMSFields();
         $fields->add(new TabSet("Root"));
+        $fields->removeFieldFromTab('Root', 'HobbyData');
+        $fields->removeFieldFromTab('Root', 'SosmedData');
+        $fields->removeFieldFromTab('Root', 'Permissions');
+        $fields->removeFieldFromTab('Root', 'CommentEventData');
         $fields->removeByName([
             'Sex',
             'Agama',
@@ -92,12 +113,17 @@ class MemberData extends Member
             TextField::create(
                 'NTA_SIPA',
                 'NTA SIPA (Nomoe Tanda Anggota)'
-            ),
-            'Password'
+            )
         );
-        $fields->insertBefore('NTA_SIPA', EmailField::create(
+        $fields->insertBefore('Password', EmailField::create(
             'Email',
             'Email'
+        ));
+
+        $fields->insertBefore('Email', DropdownField::create(
+            'Status',
+            'Status',
+            ['0'=>'Not Acive', '1'=>'Active']
         ));
         
         $fields->insertBefore('Email', UploadField::create(
@@ -107,14 +133,12 @@ class MemberData extends Member
         
         $fields->insertAfter('Email', TextField::create(
             'FirstName',
-            'Nama Depan'
+            'Firstname'
         ));
         $fields->insertAfter('FirstName', TextField::create(
             'Surname',
-            'Nama Belakang'
+            'Surname'
         ));
-
-        
 
         $fields->insertAfter('Surname', OptionsetField::create(
             'Sex',
@@ -138,7 +162,7 @@ class MemberData extends Member
             KabupatenData::get()->sort("Title", "ASC")->map("ID", "Title")
         )->setEmptyString('Pilih Kabupaten Kota'));
 
-        $fields->insertAfter('KabupatenLahirID', NumericField::create(
+        $fields->insertAfter('KabupatenLahirID', TextField::create(
             'PhoneNumber',
             'Nomor Telephone'
         ));
@@ -245,12 +269,6 @@ class MemberData extends Member
             $gridFieldConfig            
         );
         $fields->addFieldToTab('Root.Hobi', $itemHobby);
-
-        
-
-
-
-
         return  $fields;
     }
 

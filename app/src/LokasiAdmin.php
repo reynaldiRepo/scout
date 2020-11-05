@@ -8,6 +8,6 @@ class LokasiAdmin extends ModelAdmin{
         'KecamatanData'
     ];
     private static $url_segment = 'lokasi';
-    private static $menu_title = 'Data Lokasi';
+    private static $menu_title = 'Lokasi';
     private static $menu_icon_class = 'fas fa-map';
 }

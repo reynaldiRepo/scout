@@ -12,6 +12,7 @@ SilverStripe\Admin\LeftAndMain:
   cms_drawer_background: '#1a3e88'
   cms_drawer_color: currentColor
   cms_icon_color: currentColor
+  calendar_highlight_color: '#1d48a0'
 
 ---
 Name: MemberClassExtension
@@ -36,3 +37,18 @@ SilverStripe\Admin\LeftAndMain:
     - public/_resources/CSS/Admin.css
   extra_requirements_javascript:
     - public/_resources/JS/Admin.js
+
+---
+Name: CalendarFieldConfig
+---
+SilverStripe\Forms\FormField:
+  calendar_datepicker_class: 'hasDatepicker'
+
+
+---
+Name: SiteConfigCustom
+---
+Silverstripe\SiteConfig\SiteConfig:
+  extensions:
+    - SiteConfigCustom
+

@@ -1,4 +1,5 @@
 <?php 
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\TextField;
@@ -14,8 +15,40 @@ class MemberExtension extends DataExtension
     private static $has_one = [
         'Kwarcab' => KabupatenData::class,
         'Kwarran' => KecamatanData::class,
-        'PhotoProfile' => Image::class,
+        'PhotoProfile' => CustomImage::class,
     ];
+
+    
+    public function onAfterWrite()
+    {
+        parent::onAfterWrite();
+    }
+
+    
+    private static $summary_fields = [
+        'getPhotoProfileThumb' => 'Photo',
+        'FirstName' => 'Firstname',
+        'Surname' => 'Surname',
+        'Kwarcab.Title' => 'Kwarcab',
+        'getGroupName.Title' => 'Level User'
+    ];
+
+    public function getGroupName(){
+        return $this->owner->Groups()->first();
+    }
+
+    public function getFullName(){
+        return $this->owner->FirstName." ".$this->owner->Surname;
+    }
+
+    public function getPhotoProfileThumb(){
+        if ($this->owner->PhotoProfileID != 0 && $this->owner->PhotoProfile()->exists()){
+            return $this->owner->PhotoProfile()->Fill(32,32);
+        }else{
+            $sc = SiteConfig::current_site_config();
+            return $sc->DefaultPhotoMember()->Fill(32,32);
+        }
+    }
     
     public function updateCMSFields(FieldList $fields) 
     {
@@ -52,11 +85,11 @@ class MemberExtension extends DataExtension
         ));
         $fields->insertBefore('Email', TextField::create(
             'FirstName',
-            'Nama Depan'
+            'Firstname'
         ));
         $fields->insertBefore('Email', TextField::create(
             'Surname',
-            'Nama Belakang'
+            'Surname'
         ));
         $fields->addFieldsToTab(
             'Root.Main',
