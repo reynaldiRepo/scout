@@ -1,7 +1,9 @@
 <?php
 
 use SilverStripe\Assets\Image;
-
+use SilverStripe\Security\Security;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Group;
 
 class CT { 
 
@@ -69,8 +71,55 @@ class CT {
     }
 
 
+    public function dummymember(){
+        $arrImage = [19,20, 23, 24];
+        foreach(MemberData::get() as $m){
+            $m->delete();
+        }
+        
+        $jsonPath =  "../app/src/JSON/dummymember.json";
+        $strJson = file_get_contents($jsonPath);
+        $arrayMember = json_decode($strJson, true);
+        foreach($arrayMember as $am){
+            $kecamatan = DataObject::get("KecamatanData", 
+                        "KabupatenDataID = '".$am['KabupatenLahirID']."' ",
+                        "RAND()",
+                        "",
+                        "1")->first();
+            $am['KecamatanID'] = $kecamatan->ID;
+            $am['KwarcabID'] = $am['KabupatenLahirID'];
+            $am['KwarranID'] = $kecamatan->ID;
+            $am['Password'] = "dummydummy";
+            $imgaIndex = array_rand($arrImage,1);
+            $am['PhotoProfileID'] = $arrImage[$imgaIndex];
+            $newMemberData = new MemberData();
+            $newMemberData->update($am);
+            $newMemberData->write();
+        }
+        die("create-dummy");
+    }
+
+    static function currentUser(){
+        return Security::getCurrentUser();
+    }
+
     static function publish($Image){
         $Image->publishRecursive();
+    }
+
+    static function getGroupID($code){
+        $group = Group::get()->filter(["Code"=>$code])->first();
+        return $group;
+    }
+
+    public function curlGetRequest($url){
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);  // penting, karena SSL
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);      // penting, karena SSL
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
     }
 
 }

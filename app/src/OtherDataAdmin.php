@@ -9,6 +9,6 @@ class OtherAdmin extends ModelAdmin {
         'SosmedCategoryData'
     ];
     private static $url_segment = 'other';
-    private static $menu_title = 'Other';
+    private static $menu_title = 'Data Lainnya';
     private static $menu_icon_class = 'fas fa-table';
 }

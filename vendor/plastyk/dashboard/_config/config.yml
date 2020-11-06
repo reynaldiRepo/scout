@@ -1,0 +1,18 @@
+---
+Name: dashboardconfig
+After:
+    - '#cmsdefaultadmin'
+---
+SilverStripe\Admin\AdminRootController:
+  default_panel: Plastyk\Dashboard\Admin\DashboardAdmin
+
+Plastyk\Dashboard\Admin\DashboardAdmin:
+  extensions:
+    - Plastyk\Dashboard\Extensions\DashboardSearchExtension
+
+SilverStripe\Core\Injector\Injector:
+  Psr\SimpleCache\CacheInterface.plastykDashboardCache:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: "plastykDashboardCache"
+      defaultLifetime: 3600

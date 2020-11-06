@@ -17,11 +17,14 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\PasswordField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+
 
 class MemberData extends Member
 {
     private static $singular_name = "Member";
     private static $plural_name = "List Member";
+    private static $default_sort = "Created Desc";
 
     private static $db = [
         'NTA_SIPA'=> 'Varchar(255)',
@@ -51,7 +54,16 @@ class MemberData extends Member
         'EventData' => EventData::class
     ];
 
+    /**
+     * Defines summary fields commonly used in table columns
+     * as a quick overview of the data for this dataobject
+     * @var array
+     */
+    private static $summary_fields = [
+        'getStatusStr' => 'Status'
+    ];
 
+    
     
     private $arrKelamin = [
         'L'=>'Laki - Laki',
@@ -68,6 +80,10 @@ class MemberData extends Member
         'Khonghucu' => 'Khonghucu'
     ];
     
+    public function getStatusStr(){
+        $arr = ['0'=>'Not Acive', '1'=>'Active'];
+        return($arr[$this->Status]);
+    }
 
     public function onBeforeWrite()
     {
@@ -89,6 +105,8 @@ class MemberData extends Member
         $fields->removeFieldFromTab('Root', 'SosmedData');
         $fields->removeFieldFromTab('Root', 'Permissions');
         $fields->removeFieldFromTab('Root', 'CommentEventData');
+        $fields->removeFieldFromTab('Root', 'EventData');
+
         $fields->removeByName([
             'Sex',
             'Agama',
@@ -120,7 +138,7 @@ class MemberData extends Member
             'Email'
         ));
 
-        $fields->insertBefore('Email', DropdownField::create(
+        $fields->insertBefore('Email', CustomDropdown::create(
             'Status',
             'Status',
             ['0'=>'Not Acive', '1'=>'Active']
@@ -146,7 +164,7 @@ class MemberData extends Member
             $this->arrKelamin
         )->setValue("L"));
 
-        $fields->insertAfter('Sex', DropdownField::create(
+        $fields->insertAfter('Sex', CustomDropdown::create(
             'Agama',
             'Agama',
             $this->arrAgama
@@ -156,7 +174,7 @@ class MemberData extends Member
             'Tanggal Lahir'
         ));
 
-        $fields->insertAfter('TglLahir', DropdownField::create(
+        $fields->insertAfter('TglLahir', CustomDropdown::create(
             'KabupatenLahirID',
             'Kota Kelahiran',
             KabupatenData::get()->sort("Title", "ASC")->map("ID", "Title")
@@ -167,15 +185,15 @@ class MemberData extends Member
             'Nomor Telephone'
         ));
         
-        $KabupatenDD = DropdownField::create(
+        $KabupatenDD = CustomDropdown::create(
             'KabupatenSelect',
             'Kabupaten Tempat Tinggal',
             ProvinsiData::getJatim()->KabupatenData()->sort("Title", "ASC")->map("ID", "Title")
-        )->setEmptyString('Pilih kota anda');
+        )->setEmptyString('Pilih Kabupatem/Kota');
 
         if ($this->KecamatanID != 0){
             $KabupatenDD->setValue($this->Kecamatan()->KabupatenDataID);
-            $KecamatanDD = DropdownField::create(
+            $KecamatanDD = CustomDropdown::create(
                 'KecamatanID',
                 'Kecamatan Tempat Tinggal',
                 KecamatanData::get()->filter(['KabupatenDataID'=>$this->Kecamatan()->KabupatenDataID])->sort("Title", "ASC")->map("ID", "Title")
@@ -212,16 +230,29 @@ class MemberData extends Member
         );
 
 
-        // Kwarcab
-        // Kwarran
-        $Kwarcab = CustomDropdown::create(
-            'KwarcabID',
-            'Kwarcab',
-            KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC")->map("ID", "Title")
-        )->setEmptyString('Plih Kabupaten Kwarcab');
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID("admin-cabang"))){
+            $arrKab = [$member->KwarcabID=>$member->Kwarcab()->Title];
+            $arrKec = KecamatanData::get()->filter(['KabupatenDataID'=>$member->KwarcabID]);
+            $Kwarcab = CustomDropdown::create(
+                'KwarcabID',
+                'Kwarcab',
+                $arrKab
+            );
+        }else{
+            $arrKab = KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC")->map("ID", "Title");
+            $arrKec = [];
+            $Kwarcab = CustomDropdown::create(
+                'KwarcabID',
+                'Kwarcab',
+                $arrKab
+            )->setEmptyString('Plih Kabupaten Kwarcab');
+        }
+
+        
         if ($this->KwarranID != 0){
             $Kwarcab->setValue($this->Kwarran()->KabupatenDataID);
-            $Kwarran = DropdownField::create(
+            $Kwarran = CustomDropdown::create(
                 'KwarranID',
                 'Kwarran',
                 KecamatanData::get()->filter(['KabupatenDataID'=>$this->Kwarran()->KabupatenDataID])->sort("Title", "ASC")->map("ID", "Title")
@@ -230,9 +261,11 @@ class MemberData extends Member
             $Kwarran = CustomDropdown::create(
                 'KwarranID',
                 'Kwarran',
-                array()
+                $arrKec
             )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
         }
+        $Kwarcab->setIsRequired(true);
+        $Kwarran->setIsRequired(true);
 
 
         $fields->addFieldsToTab(
@@ -240,12 +273,12 @@ class MemberData extends Member
             [
                 $Kwarcab,
                 $Kwarran,
-                DropdownField::create(
+                CustomDropdown::create(
                     'GolonganDataID',
                     'Golongan',
                     GolonganData::get()->sort("Title", "ASC")->map("ID", "Title")
                 )->setEmptyString('Pilih Golongan'),
-                DropdownField::create(
+                CustomDropdown::create(
                     'SakaDataID',
                     'Saka',
                     SakaData::get()->sort("Title", "ASC")->map("ID", "Title")

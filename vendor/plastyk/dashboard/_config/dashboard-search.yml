@@ -1,0 +1,24 @@
+---
+Name: dashboard-search
+---
+Plastyk\Dashboard\Admin\DashboardAdmin:
+  default_search_panels:
+    - Plastyk\Dashboard\Search\DashboardSearchResultPagePanel
+    - Plastyk\Dashboard\Search\DashboardSearchResultMemberPanel
+    - Plastyk\Dashboard\Search\DashboardSearchResultFilePanel
+  search_results_page_length: 10
+
+Page:
+  dashboard_admin_link: 'admin/pages/edit/show/$ID/'
+  extensions:
+    - Plastyk\Dashboard\Extensions\DashboardSearchResultExtension
+
+SilverStripe\Security\Member:
+  dashboard_admin_link: 'admin/security/EditForm/field/Members/item/$ID/edit/'
+  extensions:
+    - Plastyk\Dashboard\Extensions\DashboardSearchResultExtension
+
+SilverStripe\Assets\File:
+  dashboard_admin_link: 'admin/assets/EditForm/field/File/item/$ID/edit/'
+  extensions:
+    - Plastyk\Dashboard\Extensions\DashboardSearchResultExtension

@@ -22,6 +22,10 @@ class MemberExtension extends DataExtension
     public function onAfterWrite()
     {
         parent::onAfterWrite();
+        if ($this->owner->ClassName == 'SilverStripe\Security\Member'){
+            $this->owner->addToGroupByCode("administrators"); 
+        }
+        
     }
 
     
@@ -57,7 +61,8 @@ class MemberExtension extends DataExtension
             'FailedLoginCount',
             'FirstName',
             'Surname',
-            'PhotoProfile'
+            'PhotoProfile',
+            'DirectGroups'
         ]);
         $Kwarcab = CustomDropdown::create(
             'KwarcabID',

@@ -1688,6 +1688,68 @@
         "abandoned": true
     },
     {
+        "name": "plastyk/dashboard",
+        "version": "2.0.15",
+        "version_normalized": "2.0.15.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/plastyk/silverstripe-dashboard.git",
+            "reference": "cbbda1b08e6ffa1013e613c637902e2da0772c2c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/plastyk/silverstripe-dashboard/zipball/cbbda1b08e6ffa1013e613c637902e2da0772c2c",
+            "reference": "cbbda1b08e6ffa1013e613c637902e2da0772c2c",
+            "shasum": ""
+        },
+        "require": {
+            "silverstripe/framework": "^4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7",
+            "squizlabs/php_codesniffer": "*"
+        },
+        "time": "2020-10-12T23:37:28+00:00",
+        "type": "silverstripe-vendormodule",
+        "extra": {
+            "installer-name": "dashboard",
+            "expose": [
+                "css",
+                "images",
+                "javascript"
+            ]
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Plastyk\\Dashboard\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "3dgoo",
+                "email": "michael@3dgoo.com"
+            },
+            {
+                "name": "Turnerj",
+                "email": "git@turnerj.com"
+            },
+            {
+                "name": "Plastyk Studios",
+                "email": "howdy@plastyk.com.au"
+            }
+        ],
+        "description": "An extendable dashboard for Silverstripe",
+        "keywords": [
+            "dashboard",
+            "silverstripe"
+        ]
+    },
+    {
         "name": "psr/cache",
         "version": "1.0.1",
         "version_normalized": "1.0.1.0",

@@ -1,4 +1,6 @@
 <?php
+use SilverStripe\Security\Member;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\LabelField;
 use SilverStripe\Forms\NumericField_Readonly;
 use SilverStripe\Forms\ReadonlyField;
@@ -13,12 +15,15 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\DatetimeField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\RequiredFields;
 
 
 class EventData extends DataObject {
     
     private static $singular_name = "Event";
     private static $plural_name = "List Event";
+    private static $default_sort = "Created Desc";
 
     private static $db = [
         'Title' => 'Varchar',
@@ -55,8 +60,48 @@ class EventData extends DataObject {
         'getJumlahParticipant' => 'Participant'
     ];
 
+    /**
+     * DataObject create permissions
+     * @param Member $member
+     * @return boolean
+     */
+    public function canDelete($member = null)
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function canCreate($member = null, $context = [])
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public function canEdit($member = null)
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public function getJumlahParticipant(){
         return $this->MemberData()->count();
+    }
+
+    public function getCMSValidator()
+    {
+      return new Event_Validator();
     }
 
     public function getCMSFields()
@@ -105,17 +150,13 @@ class EventData extends DataObject {
                 )      
             ]
         );
-
         
-        $gridFieldConfig = GridFieldConfig_RecordEditor::create();
         $memberList = GridField::create(
             'MemberData',
             'List Participant',
             $this->MemberData(),
-            $gridFieldConfig            
+            GridFieldConfig_RecordEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)
         );
-        
-        
         
         $fields->addFieldToTab(
             'Root.Participant',
@@ -130,12 +171,11 @@ class EventData extends DataObject {
             $memberList
         );
 
-        $gridFieldConfig = GridFieldConfig_RecordEditor::create();
         $CommentList = GridField::create(
             'CommentEventData',
             'List Comment',
             $this->CommentEventData(),
-            $gridFieldConfig            
+            GridFieldConfig_RecordEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)
         );
         
 
@@ -143,13 +183,21 @@ class EventData extends DataObject {
             'Root.Comment',
             $CommentList
         );
-
-
-
-        
         return $fields;
     }
+}
 
+
+class Event_Validator extends RequiredFields {
+    function php($data)
+    {
+        $bRet = parent::php($data);
+        if ($data['Mulai'] > $data['Selesai']){
+            $this->validationError('Mulai','Waktu  Mulai Melebehi Waktu Selesai',"required");
+            $bRet = false;
+        }
+        return $bRet;
+    }
 }
 
 

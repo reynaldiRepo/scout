@@ -21,12 +21,23 @@ SilverStripe\Security\Member:
   extensions:
     - MemberExtension
 
-# ---
-# Name: MemberExtension
-# ---
-# SilverStripe\Core\Injector\Injector:
-#   SilverStripe\Security\Member:
-#     class: MemberData
+
+
+---
+Name: LeftAndMainExt
+---
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - LeftAndMainExt
+
+
+---
+Name: SecurityAdminExtension
+---
+SilverStripe\Admin\SecurityAdmin:
+  extensions:
+    - SecurityAdminExtension
+
 
 
 ---
@@ -51,4 +62,42 @@ Name: SiteConfigCustom
 Silverstripe\SiteConfig\SiteConfig:
   extensions:
     - SiteConfigCustom
+
+
+---
+Name: PrioritySecurity
+---
+SilverStripe\Admin\SecurityAdmin:
+  menu_priority: -11
+
+---
+Name: PrioritySiteConfigCMS
+---
+SilverStripe\SiteConfig\SiteConfigLeftAndMain:
+  menu_priority: -10
+
+---
+Name: PriorityPagesCMS
+---
+SilverStripe\CMS\Controllers\CMSPagesController:
+  menu_priority: -8
+
+---
+Name: PriorityAssetCMS
+---
+SilverStripe\AssetAdmin\Controller\AssetAdmin:
+  menu_priority: -9
+
+
+---
+Name: GroupedMenuAditiotanlData
+---
+SilverStripe\Admin\LeftAndMain:
+  menu_groups:
+    Other:
+      icon_class: 'fa fa-folder'
+      priority: -7
+      items:
+        - OtherAdmin
+        - LokasiAdmin
 

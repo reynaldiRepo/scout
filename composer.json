@@ -10,7 +10,8 @@
         "silverstripe/login-forms": "^4.2",
         "ryanpotter/silverstripe-cms-theme": "^3.4",
         "otago/autocomplete-suggest-field": "^4.3",
-        "silverware/calendar": "^1.1"
+        "silverware/calendar": "^1.1",
+        "plastyk/dashboard": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7"

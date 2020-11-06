@@ -122,11 +122,12 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
             );
         }
 
-        // Build gridfield
+        //only for admin fileds
         $memberList = GridField::create(
             'Members',
             false,
-            Member::get(),
+            // Member::get(),
+            Group::get()->filter(['Code'=>'administrators'])->first()->Members(),
             $memberListConfig
         )->addExtraClass("members_grid");
 
@@ -148,7 +149,7 @@ class SecurityAdmin extends LeftAndMain implements PermissionProvider
                 return Convert::raw2xml($item->getBreadcrumbs(' > '));
             }
         ));
-
+        
         $fields = FieldList::create(
             TabSet::create(
                 'Root',

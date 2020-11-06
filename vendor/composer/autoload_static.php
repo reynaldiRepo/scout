@@ -99,6 +99,7 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
             'Prophecy\\' => 9,
+            'Plastyk\\Dashboard\\' => 18,
             'PhpParser\\' => 10,
         ),
         'O' => 
@@ -426,6 +427,10 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
+        ),
+        'Plastyk\\Dashboard\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/plastyk/dashboard/src',
         ),
         'PhpParser\\' => 
         array (

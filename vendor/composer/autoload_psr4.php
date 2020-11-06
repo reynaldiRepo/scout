@@ -75,6 +75,7 @@ return array(
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src/Prophecy'),
+    'Plastyk\\Dashboard\\' => array($vendorDir . '/plastyk/dashboard/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'OP\\Tests\\' => array($vendorDir . '/otago/autocomplete-suggest-field/tests'),
     'OP\\' => array($vendorDir . '/otago/autocomplete-suggest-field/src'),

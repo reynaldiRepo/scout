@@ -16,6 +16,8 @@ class HomePage extends Page{
 
 class HomePageController extends PageController{
     private static $allowed_actions = [
-        'Test'
+        'Test',
     ];
+
+    
 }

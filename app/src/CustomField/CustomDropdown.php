@@ -14,17 +14,18 @@ class CustomDropdown extends DropdownField{
 
     public function validate($validator)
     {
-        if ($isRequired){
+        if ($this->isRequired){
             if (empty($this->value)) {
                 $validator->validationError(
-                    $this->name, 'Is Required Field', false
+                    $this->name, $this->title." Tidak Boleh Kosong", "required"
                 );
+                return false;
             }
         }
         return true;
     }
 
-    public function setIsRequired(boolval $bool){
+    public function setIsRequired($bool){
         $this->isRequired = $bool;
     }
 }

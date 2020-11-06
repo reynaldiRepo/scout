@@ -1,5 +1,6 @@
 <?php 
 
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
@@ -15,11 +16,11 @@ class AdminCabangData extends Member
 
     private static $singular_name = "Admin Cabang";
     private static $plural_name = "List Admin Cabang";
+    private static $default_sort = "Created Desc";
     
     public function onAfterWrite()
     {
         parent::onAfterWrite();
-        $this->Groups()->removeAll();
         $this->addToGroupByCode("admin-cabang");        
     }
 
@@ -31,9 +32,34 @@ class AdminCabangData extends Member
     {
         $fields = parent::getCMSFields();
         $fields->removeFieldFromTab('Root', 'Permissions');
-        $fields->removeByName([
-            'DirectGroups'
-        ]);
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))){
+            $fields->removeByName([
+                'KwarcabID',
+                'KwarranID',
+                'DirectGroups'
+            ]);
+            $fields->addFieldToTab(
+                'Root.Main',
+                DropdownField::create(
+                    'KwarcabID',
+                    'KwarcabID',
+                    [$member->KwarcabID=>$member->Kwarcab()->Title]
+                )->setValue($member->KwarcabID)
+            );
+            $fields->addFieldToTab(
+                'Root.Main',
+                DropdownField::create(
+                    'KwarranID',
+                    'KwarranID',
+                    KecamatanData::get()->filter(['KabupatenDataID'=>$member->KwarcabID])
+                )
+            );
+        }else{
+            $fields->removeByName([
+                'DirectGroups'
+            ]);
+        }
         return $fields;
     }
     

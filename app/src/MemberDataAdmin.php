@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Security\Member;
 use SilverStripe\Control\Director;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Admin\ModelAdmin;
@@ -14,6 +15,19 @@ class MemberDataAdmin extends ModelAdmin{
     private static $menu_icon_class = 'fas fa-users';
     
     function init() {
-        parent::init();
+        parent::init();   
+    }
+
+
+    public function getList() 
+    {
+        $list = parent::getList();
+        if($this->modelClass == 'MemberData') {
+            $member = Member::currentUser();
+            if ($member->inGroup(CT::getGroupID("admin-cabang"))) {
+                $list = $list->filter(['KwarcabID'=>$member->KwarcabID]);
+            }
+        }
+        return $list;
     }
 }
