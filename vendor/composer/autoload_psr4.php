@@ -85,6 +85,7 @@ return array(
     'M1\\Env\\' => array($vendorDir . '/m1/env/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
+    'JamesGordo\\CSV\\' => array($vendorDir . '/jamesgordo/php-csv-parser/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GraphQL\\' => array($vendorDir . '/webonyx/graphql-php/src'),

@@ -23,6 +23,14 @@ class AdminCabangData extends Member
         parent::onAfterWrite();
         $this->addToGroupByCode("admin-cabang");        
     }
+    /**
+     * Defines summary fields commonly used in table columns
+     * as a quick overview of the data for this dataobject
+     * @var array
+     */
+    private static $summary_fields = [
+        'Kwarcab.Title' => 'Kwarcab',
+    ];
 
     /**
      * CMS Fields
@@ -62,5 +70,6 @@ class AdminCabangData extends Member
         }
         return $fields;
     }
+    
     
 }

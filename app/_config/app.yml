@@ -100,4 +100,18 @@ SilverStripe\Admin\LeftAndMain:
       items:
         - OtherAdmin
         - LokasiAdmin
+        - ImportAdmin
 
+---
+Name: app-dashboard
+---
+Plastyk\Dashboard\Admin\DashboardAdmin:
+  menu_icon_class: 'fa fa-chart-line'
+
+
+---
+Name: DashboardAdminExtension
+---
+Plastyk\Dashboard\Admin\DashboardAdmin:
+  extensions:
+    - DashboardAdminExtension

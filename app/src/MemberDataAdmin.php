@@ -5,6 +5,8 @@ use SilverStripe\Control\Director;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\View\Requirements;
+use SilverStripe\Forms\GridField\GridFieldImportButton;
+
 
 class MemberDataAdmin extends ModelAdmin{
     private static $managed_models = [
@@ -30,4 +32,15 @@ class MemberDataAdmin extends ModelAdmin{
         }
         return $list;
     }
+
+    function getEditForm($id = null, $fields = null) {
+        $form = parent::getEditForm($id, $fields);
+        $form->Fields()
+            ->fieldByName($this->sanitiseClassName($this->modelClass))
+            ->getConfig()
+            ->removeComponentsByType(GridFieldImportButton::class);
+        return $form;
+    }
+
+    
 }

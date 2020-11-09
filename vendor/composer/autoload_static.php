@@ -119,6 +119,10 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
             'League\\Flysystem\\' => 17,
             'League\\Csv\\' => 11,
         ),
+        'J' => 
+        array (
+            'JamesGordo\\CSV\\' => 15,
+        ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
@@ -467,6 +471,10 @@ class ComposerStaticInitf8e5f2e554f3ab621291ce3798eb7837
         'League\\Csv\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
+        ),
+        'JamesGordo\\CSV\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jamesgordo/php-csv-parser/src',
         ),
         'Intervention\\Image\\' => 
         array (

@@ -33,8 +33,6 @@ class MemberExtension extends DataExtension
         'getPhotoProfileThumb' => 'Photo',
         'FirstName' => 'Firstname',
         'Surname' => 'Surname',
-        'Kwarcab.Title' => 'Kwarcab',
-        'getGroupName.Title' => 'Level User'
     ];
 
     public function getGroupName(){

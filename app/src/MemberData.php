@@ -60,6 +60,8 @@ class MemberData extends Member
      * @var array
      */
     private static $summary_fields = [
+        'Kwarcab.Title' => 'Kwarcab',
+        'SakaData.Title' => 'Saka',
         'getStatusStr' => 'Status'
     ];
 
@@ -273,18 +275,20 @@ class MemberData extends Member
             [
                 $Kwarcab,
                 $Kwarran,
-                CustomDropdown::create(
+                $golongan = CustomDropdown::create(
                     'GolonganDataID',
                     'Golongan',
                     GolonganData::get()->sort("Title", "ASC")->map("ID", "Title")
                 )->setEmptyString('Pilih Golongan'),
-                CustomDropdown::create(
+                $saka = CustomDropdown::create(
                     'SakaDataID',
                     'Saka',
                     SakaData::get()->sort("Title", "ASC")->map("ID", "Title")
                 )->setEmptyString('Pilih Saka')
             ]
         );
+        $saka->setIsRequired(true);
+        $golongan->setIsRequired(true);
 
         $gridFieldConfig = GridFieldConfig_RecordEditor::create();
         $itemSosmed = GridField::create(
