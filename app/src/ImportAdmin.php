@@ -96,14 +96,19 @@ class ImportAdmin extends LeftAndMain {
                 //check Kwarcab
                 $index = 1;
                 foreach($array as $data){
-                    $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%'");
+                    if (isset($data['Kwarcab'])){
+                        $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%'");
+                    }
                     $Kwarran = DataObject::get('KecamatanData', "Title Like '%".$data['Kwarran']."%'");
                     $Saka = DataObject::get('SakaData', "Title Like '%".$data['Saka']."%'");
                     $Golongan = DataObject::get('GolonganData', "Title Like '%".$data['Golongan']."%'");
                     
-                    if ($Kwarcab->count() == 0 && !$member->inGroup(CT::getGroupID("admin-cabang"))){
-                        array_push($warningMsg, "Kabupaten ".$data['Kwarcab']." Not Found ,warning at row ".$index);
+                    if (isset($data['Kwarcab'])) {
+                        if ($Kwarcab->count() == 0 && !$member->inGroup(CT::getGroupID("admin-cabang"))) {
+                            array_push($warningMsg, "Kabupaten ".$data['Kwarcab']." Not Found ,warning at row ".$index);
+                        }
                     }
+
                     if ($Kwarran->count() == 0){
                         array_push($warningMsg, "Kecamatan ".$data['Kwarran']." Not Found ,warning at row ".$index);
                     }
@@ -145,6 +150,7 @@ class ImportAdmin extends LeftAndMain {
                         $newMember->KwarranID = $Kwarran->first()->ID;
                         $newMember->SakaDataID = $Saka->first()->ID;
                         $newMember->GolonganDataID = $Golongan->first()->ID;
+                        $newMember->Password = "12345678";
                         $newMember->write();
                         $Count += 1;
                     }

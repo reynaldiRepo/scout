@@ -1,0 +1,7 @@
+{
+    "name": "silverstripe-themes/themeperansaka",
+    "description": "The SilverStripe themeperansaka theme (default SilverStripe 3 theme)",
+    "type": "silverstripe-theme",
+    "keywords": ["silverstripe", "theme"],
+    "license": "BSD-3-Clause"
+}

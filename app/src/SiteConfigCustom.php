@@ -24,6 +24,7 @@ class SiteConfigCustom extends DataExtension
 
     private static $has_one = [
         'WebLogo' => CustomImage::class,
+        'SmallWebLogo' => CustomImage::class,
         'DefaultPhotoMember' => CustomImage::class,
         'DefaultPhoto' => CustomImage::class,
         'FavicoImage' => CustomImage::class
@@ -41,6 +42,10 @@ class SiteConfigCustom extends DataExtension
             [
                 UploadField::create(
                     'WebLogo',
+                    'Web Logo'
+                ),
+                UploadField::create(
+                    'SmallWebLogo',
                     'Web Logo'
                 ),
                 UploadField::create(
