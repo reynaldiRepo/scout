@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><% if $MetaTitle %>$MetaTitle<% else %>$Title<% end_if %> &raquo; $SiteConfig.Title</title>
     <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="">
+    <% include MetaTag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <% include Resource %>

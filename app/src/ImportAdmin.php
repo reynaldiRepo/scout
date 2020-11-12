@@ -30,23 +30,17 @@ class ImportAdmin extends LeftAndMain {
         $member = Member::currentUser();
         if (!$member->inGroup(CT::getGroupID("admin-cabang"))) {
             $patternMember = [
-                'FirstName',
-                'Surname',
+                'Nama',
                 'Email',
                 'Kwarcab',
-                'Kwarran',
                 'Saka',
-                'Golongan',
-                'NTA_SIPA'];
+                'Golongan',];
         }else{
             $patternMember = [
-                'FirstName',
-                'Surname',
+                'Nama',
                 'Email',
-                'Kwarran',
                 'Saka',
                 'Golongan',
-                'NTA_SIPA'
             ];
         }   
 
@@ -100,26 +94,28 @@ class ImportAdmin extends LeftAndMain {
                 $index = 1;
                 foreach($array as $data){
                     if (isset($data['Kwarcab'])){
-                        $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%'");
-                    }
-                    $Kwarran = DataObject::get('KecamatanData', "Title Like '%".$data['Kwarran']."%'");
-                    $Saka = DataObject::get('SakaData', "Title Like '%".$data['Saka']."%'");
-                    $Golongan = DataObject::get('GolonganData', "Title Like '%".$data['Golongan']."%'");
-                    
-                    if (isset($data['Kwarcab'])) {
+                        $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%'");                        
                         if ($Kwarcab->count() == 0 && !$member->inGroup(CT::getGroupID("admin-cabang"))) {
                             array_push($warningMsg, "Kabupaten ".$data['Kwarcab']." Not Found ,warning at row ".$index);
                         }
                     }
-
-                    if ($Kwarran->count() == 0){
-                        array_push($warningMsg, "Kecamatan ".$data['Kwarran']." Not Found ,warning at row ".$index);
+                    if (isset($data['Kwarran'])) {
+                        $Kwarran = DataObject::get('KecamatanData', "Title Like '%".$data['Kwarran']."%'");
+                        if ($Kwarran->count() == 0){
+                            array_push($warningMsg, "Kecamatan ".$data['Kwarran']." Not Found ,warning at row ".$index);
+                        }
                     }
-                    if ($Saka->count() == 0){
-                        array_push($warningMsg, "Saka ".$data['Saka']." Not Found ,warning at row ".$index);
+                    if (isset($data['Saka'])) {
+                        $Saka = DataObject::get('SakaData', "Title Like '%".$data['Saka']."%'");
+                        if ($Saka->count() == 0){
+                            array_push($warningMsg, "Saka ".$data['Saka']." Not Found ,warning at row ".$index);
+                        }
                     }
-                    if ($Golongan->count() == 0){
-                        array_push($warningMsg, "Golongan ".$data['Golongan']." Not Found,warning at row ".$index);
+                    if (isset($data['Golongan'])) {
+                        $Golongan = DataObject::get('GolonganData', "Title Like '%".$data['Golongan']."%'");
+                        if ($Golongan->count() == 0){
+                            array_push($warningMsg, "Golongan ".$data['Golongan']." Not Found,warning at row ".$index);
+                        }
                     }
                     if (empty($data['Email'])){
                         array_push($warningMsg, "Email Empty ,warning at row ".$index);
@@ -132,14 +128,8 @@ class ImportAdmin extends LeftAndMain {
                             }
                         }
                     }
-                    if (empty($data['FirstName'])){
-                        array_push($warningMsg, "FirstName Empty ,warning at row ".$index);
-                    }
-                    if (empty($data['Surname'])){
-                        array_push($warningMsg, "Surname Empty ,warning at row ".$index);
-                    }
-                    if (empty($data['NTA_SIPA'])){
-                        array_push($warningMsg, "NTA_SIPA Empty ,warning at row ".$index);
+                    if (empty($data['Nama'])){
+                        array_push($warningMsg, "Nama Empty ,warning at row ".$index);
                     }
                     // var_dump($warningMsg);
                     if (count($warningMsg) !=0){
@@ -147,12 +137,22 @@ class ImportAdmin extends LeftAndMain {
                     }else{
                         $newMember = new MemberData();
                         $newMember->update($data);
+                        $nama = $data['Nama'];
+                        $nama = explode(" ", $data['Nama']);
+                        if (count($nama) != 1){
+                            $newMember->FirstName = $nama[0];
+                            $newMember->Surname = $nama[1];
+                        }else{
+                            $newMember->FirstName = $nama[0];
+                        }
                         if (!$member->inGroup(CT::getGroupID("admin-cabang"))){
                             $newMember->KwarcabID = $Kwarcab->first()->ID;
                         }else{
                             $newMember->KwarcabID = $member->Kwarcab()->ID;
                         }
-                        $newMember->KwarranID = $Kwarran->first()->ID;
+                        if (isset($data['Kwarran'])) {
+                            $newMember->KwarranID = $Kwarran->first()->ID;
+                        }
                         $newMember->SakaDataID = $Saka->first()->ID;
                         $newMember->GolonganDataID = $Golongan->first()->ID;
                         $newMember->Password = "12345678";
@@ -209,18 +209,18 @@ class ImportAdmin extends LeftAndMain {
             <div class="pl-3 pr-3">
             <table class="table table-bordered bg-light" style="margin-bottom:12px">
                 <tr>
-                    <td>*FirstName</td>
-                    <td>*Surname</td>
+                    <td>Nama</td>
                     <td>*Email</td>
                     <td>*Kwarcab</td>
-                    <td>*Kwarran</td>
+                    <td>Kwarran</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
-                    <td>*NTA_SIPA</td>
+                    <td>NTA_SIPA</td>
                     <td>Address</td>
                 </tr>
             </table>
             </div>
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
             </div>');
         }else{
             $desc = LiteralField::create('Title', '
@@ -232,18 +232,16 @@ class ImportAdmin extends LeftAndMain {
             <div class="pl-3 pr-3">
             <table class="table table-bordered bg-light" style="margin-bottom:12px">
                 <tr>
-                    <td>*FirstName</td>
-                    <td>*Surname</td>
+                    <td>*Nama</td>
                     <td>*Email</td>
-                    <td>*Kwarran</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
-                    <td>*NTA_SIPA</td>
-                    <td>Address</td>
                 </tr>
             </table>
             </div>
-            </div>');
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
+            </div>
+            ');
         }
 
         $fields->addFieldsToTab(
