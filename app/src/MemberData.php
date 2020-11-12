@@ -1,4 +1,6 @@
 <?php 
+use SilverStripe\Control\Director;
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\GridField\GridField;
@@ -26,6 +28,21 @@ class MemberData extends Member
     private static $plural_name = "List Member";
     private static $default_sort = "Created Desc";
 
+    /**
+     * Defines a default list of filters for the search context
+     * @var array
+     */
+    private static $searchable_fields = [
+        'Kwarcab.Title' => [
+            'title' => 'Kabupaten Kwarcab',
+        ],
+        'SakaDataID' => [
+            'filter'=>'ExactMatchFilter',
+            'title' => 'Saka',
+        ]
+    ];
+
+
     private static $db = [
         'NTA_SIPA'=> 'Varchar(255)',
         'Sex' => 'Varchar(255)',
@@ -41,7 +58,8 @@ class MemberData extends Member
         'KabupatenLahir' => KabupatenData::class,
         'Kecamatan' => KecamatanData::class,
         'GolonganData' => GolonganData::class,
-        'SakaData' => SakaData::class
+        'SakaData' => SakaData::class,
+        'BannerImage' => CustomImage::class
     ];
 
     private static $has_many = [
@@ -87,6 +105,16 @@ class MemberData extends Member
         return($arr[$this->Status]);
     }
 
+    public function getBannerImage(){
+        
+        if ($this->BannerImageID != 0 && $this->BannerImage()->exists()){
+            return $this->BannerImage();
+        }else{
+            $sc = SiteConfig::current_site_config();
+            return $sc->DefaultPhotoBannerMember();
+        }
+    }
+
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
@@ -96,6 +124,16 @@ class MemberData extends Member
     {
         parent::onAfterWrite();
         $this->addToGroupByCode("member");     
+
+        if ($this->owner->isChanged('Status') && $this->owner->Status == '1'){
+            $from = SiteConfig::current_site_config()->EmailInfo;
+            $subject = "Akun anda telah aktif";
+            $to = $this->owner->Email;
+            $body = "Akun anda telah terkonfirmasi, selamat datang di Peransaka Jawa Timur, silahkan login dengan link dibawah<br>
+                    <a href='".Director::baseURL()."member/login"."'>Login</a>";
+            $member = $this->owner;
+            CT::sendmail($from, $subject ,$to, $body, $member);
+        }
     }
 
 
@@ -126,7 +164,9 @@ class MemberData extends Member
             'Email',
             'KabupatenLahirID',
             'KecamatanID',
-            'DirectGroups'
+            'DirectGroups',
+            'BannerImage',
+            'PhotoProfile'
         ]);
         $fields->addFieldToTab(
             'Root.Main',
@@ -149,6 +189,11 @@ class MemberData extends Member
         $fields->insertBefore('Email', UploadField::create(
             'PhotoProfile',
             'Photo Profile'
+        ));
+
+        $fields->insertBefore('Email', UploadField::create(
+            'BannerImage',
+            'Image Banner'
         ));
         
         $fields->insertAfter('Email', TextField::create(
@@ -260,14 +305,22 @@ class MemberData extends Member
                 KecamatanData::get()->filter(['KabupatenDataID'=>$this->Kwarran()->KabupatenDataID])->sort("Title", "ASC")->map("ID", "Title")
             )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
         }else{
-            $Kwarran = CustomDropdown::create(
-                'KwarranID',
-                'Kwarran',
-                $arrKec
-            )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
+            if ($this->KwarcabID != 0){
+                $Kwarran = CustomDropdown::create(
+                    'KwarranID',
+                    'Kwarran',
+                    KecamatanData::get()->filter(['KabupatenDataID'=>$this->KwarcabID])->sort("Title", "ASC")->map("ID", "Title")
+                )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
+            }else{
+                $Kwarran = CustomDropdown::create(
+                    'KwarranID',
+                    'Kwarran',
+                    $arrKec
+                )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
+            }
         }
         $Kwarcab->setIsRequired(true);
-        $Kwarran->setIsRequired(true);
+        // $Kwarran->setIsRequired(true);
 
 
         $fields->addFieldsToTab(
@@ -299,6 +352,8 @@ class MemberData extends Member
         );
         
         $fields->addFieldToTab('Root.Sosial Media', $itemSosmed);
+
+        $gridFieldConfig = GridFieldConfig_RecordEditor::create();
         $itemHobby = GridField::create(
             'HobbyData',
             'List Hobi',

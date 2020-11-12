@@ -30,7 +30,6 @@ class MemberExtension extends DataExtension
 
     
     private static $summary_fields = [
-        'getPhotoProfileThumb' => 'Photo',
         'FirstName' => 'Firstname',
         'Surname' => 'Surname',
     ];
@@ -51,6 +50,16 @@ class MemberExtension extends DataExtension
             return $sc->DefaultPhotoMember()->Fill(32,32);
         }
     }
+
+    public function getPhotoProfile(){
+        
+        if ($this->owner->PhotoProfileID != 0 && $this->owner->PhotoProfile()->exists()){
+            return $this->owner->PhotoProfile();
+        }else{
+            $sc = SiteConfig::current_site_config();
+            return $sc->DefaultPhotoMember();
+        }
+    }
     
     public function updateCMSFields(FieldList $fields) 
     {
@@ -60,7 +69,6 @@ class MemberExtension extends DataExtension
             'FirstName',
             'Surname',
             'PhotoProfile',
-            'DirectGroups'
         ]);
         $Kwarcab = CustomDropdown::create(
             'KwarcabID',

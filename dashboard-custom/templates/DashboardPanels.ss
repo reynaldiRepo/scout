@@ -1,4 +1,4 @@
-$showPanel(Plastyk\Dashboard\Panels\UpdatePanel)
+<%-- $showPanel(Plastyk\Dashboard\Panels\UpdatePanel) --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"
     integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g=="
     crossorigin="anonymous" />

@@ -19,3 +19,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.cms-content-header .cms-content-header-info{
+    min-width: 0;
+}

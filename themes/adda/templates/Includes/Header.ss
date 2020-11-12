@@ -8,9 +8,8 @@
 						<nav>
 							<ul>
 								<li class="active"><a href="$BaseHref">Home</a></li>
-								<li class="{$BaseHref}event/"><a href="$BaseHref">Event</a></li>
-								<li class="{$BaseHref}member/all"><a href="$BaseHref">Anggota</a></li>
-								<li class="{$BaseHref}news/"><a href="$BaseHref">News</a></li>
+								<li class=""><a href="{$BaseHref}event/">Event</a></li>
+								<li class=""><a href="{$BaseHref}member/all">Anggota</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -20,7 +19,7 @@
 				<div class="col-md-2">
 					<div class="brand-logo text-center">
 						<a href="$BaseHref">
-							<img src="$SiteConfig.WebLogo.ScaleHeight(42).Link" alt="brand logo">
+							<img src="$SiteConfig.WebLogo.URL" alt="brand logo">
 						</a>
 					</div>
 				</div>

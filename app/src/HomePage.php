@@ -1,4 +1,5 @@
 <?php 
+use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 
@@ -18,6 +19,16 @@ class HomePageController extends PageController{
     private static $allowed_actions = [
         'Test',
     ];
+
+    protected function init()
+    {
+        parent::init();
+        $member = Member::currentUser();
+        
+        if (!$member){
+            $this->redirect("member/login");
+        }
+    }
 
     
 }

@@ -55,8 +55,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="./comingsoon.html">Masuk Anggota</a>
-                                <a class="dropdown-item" href="./comingsoon.html">Mendaftar</a>
+                                <a class="dropdown-item" href="">Masuk Anggota</a>
+                                <a class="dropdown-item" href="">Mendaftar</a>
                             </div>
                         </div>
                     </div>
@@ -81,8 +81,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="./comingsoon.html">Masuk Anggota</a>
-                        <a class="dropdown-item" href="./comingsoon.html">Mendaftar</a>
+                        <a class="dropdown-item" href="{$BaseHref}admin">Masuk Anggota</a>
+                        <a class="dropdown-item" href="{$BaseHref}admin">Mendaftar</a>
                     </div>
                 </div>
             </div>

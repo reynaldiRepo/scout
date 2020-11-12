@@ -3,6 +3,10 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
 
 class HobbyData extends DataObject{
+    private static $singular_name = "Hobi";
+    private static $plural_name = "List Hobi";
+
+    private static $default_sort = "Created Desc";
     private static $db = [
         'Title' => 'Varchar(255)',
     ];

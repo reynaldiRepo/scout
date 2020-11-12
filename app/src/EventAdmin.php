@@ -12,6 +12,9 @@ class EventAdmin extends ModelAdmin{
     private static $menu_title = 'Event';
     private static $menu_icon_class = 'fas fa-calendar-check';
 
+    private static $menu_priority = -3;
+
+
     function getEditForm($id = null, $fields = null) {
         $form = parent::getEditForm($id, $fields);
         $form->Fields()

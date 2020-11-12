@@ -15,6 +15,7 @@ class MemberDataAdmin extends ModelAdmin{
     private static $url_segment = 'Member';
     private static $menu_title = 'Member';
     private static $menu_icon_class = 'fas fa-users';
+    private static $menu_priority = -5;
     
     function init() {
         parent::init();   

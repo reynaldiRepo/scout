@@ -2,39 +2,43 @@
 <html class="no-js" lang="en">
 
 <head>
+    <% base_tag %>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Adda - Social Network HTML Tasdsademplate</title>
-    <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="">
+    <title><% if $MetaTitle %>$MetaTitle<% else %>$Title<% end_if %> &raquo; $SiteConfig.Title</title>
+    
+    <% include MetaTag %>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="$ThemeDir/images/favicon.ico">
-
-    <!-- CSS
-	============================================ -->
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900"
-        rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/vendor/bootstrap.min.css">
-
-    <!-- Icon Font CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/vendor/bicon.min.css">
-    <!-- Flat Icon CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/vendor/flaticon.css">
-    <!-- audio & video player CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/plugins/plyr.css">
-    <!-- Slick CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/plugins/slick.min.css">
-    <!-- nice-select CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/plugins/nice-select.css">
-    <!-- perfect scrollbar css -->
-    <link rel="stylesheet" href="$ThemeDir/css/plugins/perfect-scrollbar.css">
-    <!-- light gallery css -->
-    <link rel="stylesheet" href="$ThemeDir/css/plugins/lightgallery.min.css">
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="$ThemeDir/css/style.css">
+    <% include Resource %>
+    <style>
+        .nav-a {
+            color: #333333 !important;
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 11px 0;
+            text-transform: capitalize;
+        }
+        .nav-a a {
+            color: #333333 !important;
+        }
+        
+        .ss-single-selected {
+            height: 40px !important
+        }
+        .loading {
+            background-image: url("$SiteConfig.LoadingGif.URL");
+            height: 100px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .blockPage {
+            top: 346.005px !important;
+        }
+        
+    </style>
 
 </head>
 
@@ -54,25 +58,10 @@
                 <div class="row">
                     <div class="col-lg-3 order-2 order-lg-1">
                         <aside class="widget-area">
-                            <!-- widget single item start -->
-                            <div class="card card-profile widget-item p-0">
-                                <div class="profile-banner">
-                                    <figure class="profile-banner-small">
-                                        <a href="profile.html">
-                                            <img src="$ThemeDir/images/banner/banner-small.jpg" alt="">
-                                        </a>
-                                        <a href="profile.html" class="profile-thumb-2">
-                                            <img src="$ThemeDir/images/profile/profile-midle-1.jpg" alt="">
-                                        </a>
-                                    </figure>
-                                    <div class="profile-desc text-center">
-                                        <h6 class="author"><a href="profile.html">Dimbel Lebmid</a></h6>
-                                        <p>Any one can join with but Social network us if you want Any one can join with
-                                            us if you want</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- widget single item start -->
+                            
+                            <% if $CurrentMember %>
+                                <% include ProfileCard %>
+                            <% end_if %>
 
                             <!-- widget single item start -->
                             <div class="card widget-item">
@@ -1153,36 +1142,7 @@
 
     </main>
 
-    <!-- Scroll to top start -->
-    <div class="scroll-top not-visible">
-        <i class="bi bi-finger-index"></i>
-    </div>
-    <!-- Scroll to Top End -->
-
-    <!-- Modernizer JS -->
-    <script src="$ThemeDir/javascript/vendor/modernizr-3.6.0.min.js"></script>
-    <!-- jQuery JS -->
-    <script src="$ThemeDir/javascript/vendor/jquery-3.3.1.min.js"></script>
-    <!-- Popper JS -->
-    <script src="$ThemeDir/javascript/vendor/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="$ThemeDir/javascript/vendor/bootstrap.min.js"></script>
-    <!-- Slick Slider JS -->
-    <script src="$ThemeDir/javascript/plugins/slick.min.js"></script>
-    <!-- nice select JS -->
-    <script src="$ThemeDir/javascript/plugins/nice-select.min.js"></script>
-    <!-- audio video player JS -->
-    <script src="$ThemeDir/javascript/plugins/plyr.min.js"></script>
-    <!-- perfect scrollbar js -->
-    <script src="$ThemeDir/javascript/plugins/perfect-scrollbar.min.js"></script>
-    <!-- light gallery js -->
-    <script src="$ThemeDir/javascript/plugins/lightgallery-all.min.js"></script>
-    <!-- image loaded js -->
-    <script src="$ThemeDir/javascript/plugins/imagesloaded.pkgd.min.js"></script>
-    <!-- isotope filter js -->
-    <script src="$ThemeDir/javascript/plugins/isotope.pkgd.min.js"></script>
     <!-- Main JS -->
     <script src="$ThemeDir/javascript/main.js"></script>
-
 </body>
 </html>

@@ -32,6 +32,12 @@ class AdminCabangData extends Member
         'Kwarcab.Title' => 'Kwarcab',
     ];
 
+    private static $searchable_fields = [
+        'Kwarcab.Title' => [
+            'title' => 'Kabupaten Kwarcab',
+        ],
+    ];
+
     /**
      * CMS Fields
      * @return FieldList
@@ -45,7 +51,6 @@ class AdminCabangData extends Member
             $fields->removeByName([
                 'KwarcabID',
                 'KwarranID',
-                'DirectGroups'
             ]);
             $fields->addFieldToTab(
                 'Root.Main',

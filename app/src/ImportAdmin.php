@@ -36,7 +36,8 @@ class ImportAdmin extends LeftAndMain {
                 'Kwarcab',
                 'Kwarran',
                 'Saka',
-                'Golongan'];
+                'Golongan',
+                'NTA_SIPA'];
         }else{
             $patternMember = [
                 'FirstName',
@@ -44,8 +45,10 @@ class ImportAdmin extends LeftAndMain {
                 'Email',
                 'Kwarran',
                 'Saka',
-                'Golongan'];
-        }
+                'Golongan',
+                'NTA_SIPA'
+            ];
+        }   
 
         $patternEvent = [
             'Title',
@@ -132,11 +135,13 @@ class ImportAdmin extends LeftAndMain {
                     if (empty($data['FirstName'])){
                         array_push($warningMsg, "FirstName Empty ,warning at row ".$index);
                     }
-                    
                     if (empty($data['Surname'])){
                         array_push($warningMsg, "Surname Empty ,warning at row ".$index);
                     }
-                    var_dump($warningMsg);
+                    if (empty($data['NTA_SIPA'])){
+                        array_push($warningMsg, "NTA_SIPA Empty ,warning at row ".$index);
+                    }
+                    // var_dump($warningMsg);
                     if (count($warningMsg) !=0){
                         array_push($IndexWarningMsg, $index);
                     }else{
@@ -211,6 +216,7 @@ class ImportAdmin extends LeftAndMain {
                     <td>*Kwarran</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
+                    <td>*NTA_SIPA</td>
                     <td>Address</td>
                 </tr>
             </table>
@@ -232,6 +238,7 @@ class ImportAdmin extends LeftAndMain {
                     <td>*Kwarran</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
+                    <td>*NTA_SIPA</td>
                     <td>Address</td>
                 </tr>
             </table>

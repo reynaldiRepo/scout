@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Forms\TextField;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\TextareaField;
@@ -16,6 +17,7 @@ class SiteConfigCustom extends DataExtension
         'MetaTitle' => 'Text',
         'MetaDescription' => 'Text',
         'GoogleAnalytic' => 'Text',
+        'EmailInfo' => 'Varchar(255)',
     ];
 
     private static $has_many = [
@@ -26,8 +28,10 @@ class SiteConfigCustom extends DataExtension
         'WebLogo' => CustomImage::class,
         'SmallWebLogo' => CustomImage::class,
         'DefaultPhotoMember' => CustomImage::class,
+        'DefaultPhotoBannerMember' => CustomImage::class,
         'DefaultPhoto' => CustomImage::class,
-        'FavicoImage' => CustomImage::class
+        'FavicoImage' => CustomImage::class,
+        'LoadingGif' => CustomImage::class
     ];
 
     public function onAfterWrite()
@@ -46,11 +50,15 @@ class SiteConfigCustom extends DataExtension
                 ),
                 UploadField::create(
                     'SmallWebLogo',
-                    'Web Logo'
+                    'Small Web Logo'
                 ),
                 UploadField::create(
                     'DefaultPhotoMember',
                     'Default Photo Member'
+                ),
+                UploadField::create(
+                    'DefaultPhotoBannerMember',
+                    'Default Photo Banner Member'
                 ),
                 UploadField::create(
                     'DefaultPhoto',
@@ -59,6 +67,10 @@ class SiteConfigCustom extends DataExtension
                 UploadField::create(
                     'FavicoImage',
                     'Favico'
+                ),
+                UploadField::create(
+                    'LoadingGif',
+                    'Loading'
                 ),
             ]
         );
@@ -89,6 +101,16 @@ class SiteConfigCustom extends DataExtension
                 'GoogleAnalytic',
                 'Google Analytic Script'
              )
+        );
+
+        $fields->addFieldsToTab(
+            'Root.Email',
+            [
+                TextField::create(
+                    'EmailInfo',
+                    'Email Info, digunakan untuk email pengiriman notifikasi pada user, gunakan email dengan nama domain anda'
+                )
+            ]
         );
     }
 }

@@ -26,7 +26,24 @@ namespace {
         protected function init()
         {
             parent::init();
-            
+            // var_dump($_SESSION);
+            // die();
+        }
+
+        public function getSaka(){
+            return SakaData::get();
+        }
+
+        public function getGolongan(){
+            return GolonganData::get();
+        }
+
+        public function getKabupaten(){
+            return KabupatenData::get();
+        }
+
+        public function getKabupatenJatim(){
+            return KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC");
         }
     }
 }
