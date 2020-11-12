@@ -2,6 +2,7 @@
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
 class EventAdmin extends ModelAdmin{
     private static $managed_models = [
         'EventData',
@@ -20,7 +21,7 @@ class EventAdmin extends ModelAdmin{
         $form->Fields()
             ->fieldByName($this->sanitiseClassName($this->modelClass))
             ->getConfig()
-            ->removeComponentsByType(GridFieldImportButton::class);
+            ->removeComponentsByType([GridFieldImportButton::class]);
         return $form;
     }
 }

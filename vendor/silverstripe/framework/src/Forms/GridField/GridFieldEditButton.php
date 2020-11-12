@@ -26,7 +26,7 @@ class GridFieldEditButton implements GridField_ColumnProvider, GridField_ActionP
      */
     protected $extraClass = [
         'grid-field__icon-action--hidden-on-hover' => true,
-        'font-icon-edit' => true,
+        'fa fa-eye' => true,
         'btn--icon-large' => true,
         'action-menu--handled' => true
     ];
@@ -36,7 +36,7 @@ class GridFieldEditButton implements GridField_ColumnProvider, GridField_ActionP
      */
     public function getTitle($gridField, $record, $columnName)
     {
-        return _t(__CLASS__ . '.EDIT', "Edit");
+        return _t(__CLASS__ . '.DETAIL', "Detail");
     }
 
     /**
@@ -53,7 +53,7 @@ class GridFieldEditButton implements GridField_ColumnProvider, GridField_ActionP
     public function getExtraData($gridField, $record, $columnName)
     {
         return [
-            "classNames" => "font-icon-edit action-detail edit-link"
+            "classNames" => "font-icon-eye action-detail edit-link"
         ];
     }
 
