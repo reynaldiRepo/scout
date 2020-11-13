@@ -38,8 +38,42 @@ class AdminCabangData extends Member
         ],
     ];
 
+    public function canDelete($member = null)
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function canCreate($member = null, $context = [])
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public function canEdit($member = null)
+    {
+        $member = Member::currentUser();
+        
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            if ($this->owner->ID == $member->ID){
+                return true;
+            }
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     /**
-     * CMS Fields
+     * CMS Fieldsv
      * @return FieldList
      */
     public function getCMSFields()
@@ -68,10 +102,6 @@ class AdminCabangData extends Member
                     KecamatanData::get()->filter(['KabupatenDataID'=>$member->KwarcabID])
                 )
             );
-        }else{
-            $fields->removeByName([
-                'DirectGroups'
-            ]);
         }
         return $fields;
     }

@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Security\Member;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\ReadonlyField;
@@ -200,6 +201,7 @@ class ImportAdmin extends LeftAndMain {
         $csvField->setValidator($file_validator);
 
         if (!$member->inGroup(CT::getGroupID("admin-cabang"))){
+            $file = SiteConfig::current_site_config()->FormatCSVMemberCabang()->URL;
             $desc = LiteralField::create('Title', '
             <div class="alert alert-info" role="alert">
             Halaman Untuk Import, Untuk melakukan import data diperlukan file berformat <b>.csv</b> dengan 
@@ -221,8 +223,12 @@ class ImportAdmin extends LeftAndMain {
             </table>
             </div>
             <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
+            <hr>
+            <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
+            <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>
             </div>');
         }else{
+            $file = SiteConfig::current_site_config()->FormatCSVMember()->URL;
             $desc = LiteralField::create('Title', '
             <div class="alert alert-info" role="alert">
             Halaman Untuk Import, Untuk melakukan import data diperlukan file berformat <b>.csv</b> dengan 
@@ -240,6 +246,9 @@ class ImportAdmin extends LeftAndMain {
             </table>
             </div>
             <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
+            <hr>
+            <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
+            <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>
             </div>
             ');
         }

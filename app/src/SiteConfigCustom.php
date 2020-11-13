@@ -31,7 +31,9 @@ class SiteConfigCustom extends DataExtension
         'DefaultPhotoBannerMember' => CustomImage::class,
         'DefaultPhoto' => CustomImage::class,
         'FavicoImage' => CustomImage::class,
-        'LoadingGif' => CustomImage::class
+        'LoadingGif' => CustomImage::class,
+        'FormatCSVMember' => CustomFile::class,
+        'FormatCSVMemberCabang' => CustomFile::class,
     ];
 
     public function onAfterWrite()
@@ -110,6 +112,22 @@ class SiteConfigCustom extends DataExtension
                     'EmailInfo',
                     'Email Info, digunakan untuk email pengiriman notifikasi pada user, gunakan email dengan nama domain anda'
                 )
+            ]
+        );
+
+        $fields->addFieldsToTab(
+            'Root.Web File',
+            [
+                UploadField::create(
+                    'FormatCSVMember',
+                    'Format CSV Import Member'
+                ),
+
+                UploadField::create(
+                    'FormatCSVMemberCabang',
+                    'Format CSV Import Member untuk admin Cabang'
+                ),
+
             ]
         );
     }

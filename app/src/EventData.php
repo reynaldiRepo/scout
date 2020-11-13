@@ -209,6 +209,37 @@ class KategoriEventData extends DataObject
         'Title' => 'Varchar',
     ];
 
+
+    public function canDelete($member = null)
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function canCreate($member = null, $context = [])
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public function canEdit($member = null)
+    {
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     private static $has_many = [
         'EventData' => EventData::class
     ];

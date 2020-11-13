@@ -1,6 +1,7 @@
 <?php 
 
 use SilverStripe\Assets\Image;
+use SilverStripe\Assets\File;
 
 class CustomImage extends Image{
     
@@ -8,6 +9,14 @@ class CustomImage extends Image{
         'CommentEventData' => CommentEventData::class
     ];
     
+    public function onAfterWrite()
+    {
+        parent::onAfterWrite();
+        $this->publishRecursive();
+    }
+}
+
+class CustomFile extends File{    
     public function onAfterWrite()
     {
         parent::onAfterWrite();

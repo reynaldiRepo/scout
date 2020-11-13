@@ -22,6 +22,8 @@ class EventAdmin extends ModelAdmin{
             ->fieldByName($this->sanitiseClassName($this->modelClass))
             ->getConfig()
             ->removeComponentsByType([GridFieldImportButton::class]);
+
+        
         return $form;
     }
 }

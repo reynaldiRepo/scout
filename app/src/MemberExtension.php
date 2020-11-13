@@ -16,7 +16,7 @@ class MemberExtension extends DataExtension
         'Kwarcab' => KabupatenData::class,
         'Kwarran' => KecamatanData::class,
         'PhotoProfile' => CustomImage::class,
-    ];
+];
 
     
     public function onAfterWrite()
@@ -25,6 +25,7 @@ class MemberExtension extends DataExtension
         if ($this->owner->ClassName == 'SilverStripe\Security\Member'){
             $this->owner->addToGroupByCode("administrators"); 
         }
+        
         
     }
 
@@ -69,6 +70,7 @@ class MemberExtension extends DataExtension
             'FirstName',
             'Surname',
             'PhotoProfile',
+            
         ]);
         $Kwarcab = CustomDropdown::create(
             'KwarcabID',
