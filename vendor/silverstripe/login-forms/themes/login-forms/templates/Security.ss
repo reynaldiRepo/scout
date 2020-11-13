@@ -14,9 +14,10 @@
         <% require css("silverstripe/login-forms: client/dist/styles/darkmode.css") %>
     </head>
     <body>
-        <% include AppHeader %>
-
         <main class="login-form">
+            <div class="text-center mb-3">
+                <img src="$SiteConfig.WebLogo.ScaleWidth(200).URL" class="mb-3">
+            </div>
             <% if $Title %>
                 <h2 class="login-form__title">$Title</h2>
             <% end_if %>
@@ -38,7 +39,7 @@
         </main>
 
         <footer class="silverstripe-brand">
-            <% include SilverStripeLogo %>
+            
         </footer>
     </body>
 </html>
