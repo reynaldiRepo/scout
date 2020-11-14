@@ -16,8 +16,9 @@ use SilverStripe\Forms\TabSet;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\DatetimeField;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\RequiredFields;
-
 
 class EventData extends DataObject {
     
@@ -55,6 +56,7 @@ class EventData extends DataObject {
     private static $summary_fields = [
         'Title' => 'Nama Kegiatan',
         'Mulai' => 'Tanggal Pelaksanaan',
+        'Selesai' => 'Event Berakhir',
         'SakaData.Title' => 'Saka',
         'KategoriEventData.Title' => 'Kategori',
         'getJumlahParticipant' => 'Participant'
@@ -155,7 +157,7 @@ class EventData extends DataObject {
             'MemberData',
             'List Participant',
             $this->MemberData(),
-            GridFieldConfig_RecordEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)
+            GridFieldConfig_RecordEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)->addComponents(new GridFieldExportButton('buttons-before-left'),new GridFieldPrintButton('buttons-before-left'))
         );
         
         $fields->addFieldToTab(

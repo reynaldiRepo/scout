@@ -101,7 +101,7 @@ class ImportAdmin extends LeftAndMain {
                 $index = 1;
                 foreach($array as $data){
                     if (isset($data['Kwarcab'])){
-                        $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%'");                        
+                        $Kwarcab = DataObject::get('KabupatenData', "Title Like '%".$data['Kwarcab']."%' and ProvinsiDataID = '".ProvinsiData::getJatim()->ID."'");                        
                         if ($Kwarcab->count() == 0 && !$member->inGroup(CT::getGroupID("admin-cabang"))) {
                             array_push($warningMsg, "Kabupaten ".$data['Kwarcab']." Not Found ,warning at row ".$index);
                         }
@@ -151,32 +151,36 @@ class ImportAdmin extends LeftAndMain {
                     }else{
                         $newMember = new MemberData();
                         $newMember->update($data);
+                        // code serahkan pada programmer agar tidak conflict
+                        // $newMember->FirstName = $data['Nama'];
+
                         $nama = $data['Nama'];
                         $nama = explode(" ", $data['Nama']);
                         if (count($nama) != 1){
                             $newMember->FirstName = $nama[0];
-                            $newMember->Surname = $nama[1];
+                            $newMember->Surname = implode(" ",array_slice($nama,1)); 
                         }else{
                             $newMember->FirstName = $nama[0];
                         }
-                        if (isset($data['Kwarcab'])) {
-                            if (!$member->inGroup(CT::getGroupID("admin-cabang"))) {
-                                $newMember->KwarcabID = $Kwarcab->first()->ID;
-                            } else {
+                        if (isset($data['Kwarcab']) && !$member->inGroup(CT::getGroupID("admin-cabang"))) {
+                            $newMember->KwarcabID = $Kwarcab->first()->ID;
+                        }else{
+                            if ($member->inGroup(CT::getGroupID("admin-cabang"))) {
                                 $newMember->KwarcabID = $member->Kwarcab()->ID;
                             }
-                        }   
+                        }
                         if (isset($data['Kwarran'])) {
                             $newMember->KwarranID = $Kwarran->first()->ID;
                         }
                         $newMember->SakaDataID = $Saka->first()->ID;
                         $newMember->GolonganDataID = $Golongan->first()->ID;
-                        $newMember->Password = "12345678";
+                        $newMember->Password = SiteConfig::current_site_config()->DefaultPasswordMember;
                         $newMember->Status = "1";
                         if (!isset($this->arrKelamin[$data['Jenis_Kelamin']])){
                             $newMember->Sex = $this->arrKelamin[$data['Jenis_Kelamin']];
                         }
                         $newMember->write();
+                        
                         $Count += 1;
                     }
                     $index+=1;
@@ -184,11 +188,11 @@ class ImportAdmin extends LeftAndMain {
                 if (count($warningMsg) !=0) {
                     $msg = $this->writeError($warningMsg)." \n $Count Data Has Been Inserted";
                     $form->sessionMessage($msg, 'warning');
-                    return $this->redirectBack();
+                    return $this->redirectBack('admin/import');
                 }else{
                     $msg = " All good \n $Count Data Has Been Inserted";
                     $form->sessionMessage($msg, 'good');
-                    return $this->redirectBack();
+                    return $this->redirectBack('admin/import');
                 }
             }else{
                 die("Event Is Future Update");
@@ -196,7 +200,7 @@ class ImportAdmin extends LeftAndMain {
         }else{
             $msg = $this->writeError($validator['error']);
             $form->sessionMessage($msg, 'bad');
-            return $this->redirectBack();
+            return $this->redirectBack('admin/import');
         }       
     }
 
@@ -243,7 +247,6 @@ class ImportAdmin extends LeftAndMain {
             </table>
             </div>
             <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
-            Password Default untuk member baru 12345678
             </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
@@ -269,7 +272,6 @@ class ImportAdmin extends LeftAndMain {
             </table>
             </div>
             <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
-            Password Default untuk member baru 12345678
             </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>

@@ -11,7 +11,10 @@
 <script src="{$BaseHref}public/_resources/JS/vmap.jatim.js" crossorigin="anonymous"></script>
 
 
-    <div class="cms-content-header north" style="margin-top:-15px; margin-bottom:30px">
+    <div class="cms-content-header north" style="margin-top: -15px;
+        margin-bottom: 30px;
+        position: sticky;
+        top: 0;">
 		<div class="cms-content-header-info vertical-align-items flexbox-area-grow">
 			<div class="breadcrumbs-wrapper">
 				<span class="cms-panel-link crumb last">
@@ -128,7 +131,7 @@
                 </div>
                 <div style="height:400px; overflow-y:scroll">
                     <hr>
-                    <div class="table-responsive">
+                    <div>
                         <table class="table table-bordered">
                             <tr>
                                 <th>

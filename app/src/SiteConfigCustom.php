@@ -18,6 +18,7 @@ class SiteConfigCustom extends DataExtension
         'MetaDescription' => 'Text',
         'GoogleAnalytic' => 'Text',
         'EmailInfo' => 'Varchar(255)',
+        'DefaultPasswordMember' => 'Varchar(255)'
     ];
 
     private static $has_many = [
@@ -111,6 +112,17 @@ class SiteConfigCustom extends DataExtension
                 TextField::create(
                     'EmailInfo',
                     'Email Info, digunakan untuk email pengiriman notifikasi pada user, gunakan email dengan nama domain anda'
+                )
+            ]
+        );
+
+        
+        $fields->addFieldsToTab(
+            'Root.Default Data',
+            [
+                TextField::create(
+                    'DefaultPasswordMember',
+                    'Default Password Member'
                 )
             ]
         );

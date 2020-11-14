@@ -18,7 +18,7 @@ class DashboardAdminExtension extends LeftAndMainExtension{
         // $strJson = file_get_contents($jsonPath);
         // $array = json_decode($strJson, true);   
         // foreach($array as $k=>$v ){
-        //     $kab = DataObject::get('KabupatenData', "Title Like '%".$v['name']."%'")->first();
+        //     $kab = DataObject::get('KabupatenData', "Title Like '%".$v['name']."%' and ProvinsiDataID = '".ProvinsiData::getJatim()->ID."'")->first();
         //     $kab->PathVmap = $k;
         //     $kab->write();
         // }
@@ -143,7 +143,7 @@ class DashboardAdminExtension extends LeftAndMainExtension{
         $member = Member::currentUser();
         if ($member->inGroup(CT::getGroupID("admin-cabang")->ID)){
             return "Pada sistem ini anda bisa melakukan managerial data member untuk 
-                    Kwarcab anda (".$member->Kwarcab()->Title.")dan anda juga dapat melakukan import data member kwarcab anda";
+                    Kwarcab anda (".$member->Kwarcab()->Title.") dan melakukan import data member";
         }else{
             return "Pada sistem ini anda bisa melakukan managerial data member,
             Event, admin cabang dan data lainnya.";
@@ -172,7 +172,7 @@ class DashboardAdminExtension extends LeftAndMainExtension{
     }
 
     public function getSakaList(){
-        return SakaData::get();
+        return DataObject::get('SakaData', "Title not Like '%-%' OR Title != ''");
     }
 
     public function countMemberBySakaKwarcab($kwarcabID){
