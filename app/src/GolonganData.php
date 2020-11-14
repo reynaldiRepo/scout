@@ -45,6 +45,14 @@ class SakaData extends DataObject{
         'Title' => 'Saka'
     ];
 
+    public function getTitleShort(){
+        $t = $this->Title;
+        $t = explode(' ', $t);
+        $t = array_slice($t, 1);
+        $t = implode(" ", $t);
+        return $t;  
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

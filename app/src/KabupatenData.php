@@ -6,6 +6,7 @@ use SilverStripe\Security\Permission;
 class KabupatenData extends DataObject {
     private static $db = [
         'Title' => 'Varchar(255)',
+        'PathVmap' => 'Varchar(255)'
     ];
     private static $summary_fields = [
         'Title' => 'Nama Kabupaten',
@@ -40,6 +41,14 @@ class KabupatenData extends DataObject {
             $res[$pd->ID] = $pd->Title." Provinsi ".$pd->ProvinsiData()->Title;
         }
         return $res;
+    }
+
+    public function getTitleShort(){
+        $t = $this->Title;
+        $t = explode(' ', $t);
+        $t = array_slice($t, 1);
+        $t = implode(" ", $t);
+        return $t;  
     }
 
     public function toJsonArray(){

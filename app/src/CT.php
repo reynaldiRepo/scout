@@ -13,6 +13,11 @@ use SilverStripe\Security\IdentityStore;
 use SilverStripe\Control\Email\Email;
 
 class CT { 
+
+    public function getKabupatenJatim(){
+        return KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC");
+    }
+
     static function currentUser(){
         return Security::getCurrentUser();
     }

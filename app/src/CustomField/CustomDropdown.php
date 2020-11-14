@@ -19,6 +19,9 @@ class CustomDropdown extends DropdownField{
                 $validator->validationError(
                     $this->name, $this->title." Tidak Boleh Kosong", "required"
                 );
+                $validator->validationError(
+                    '', $this->title." Tidak Boleh Kosong", "required"
+                );
                 return false;
             }
         }

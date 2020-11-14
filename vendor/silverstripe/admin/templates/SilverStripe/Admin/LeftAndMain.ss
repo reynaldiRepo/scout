@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 	<title>$Title</title>
+	<link rel="shortcut icon" type="image/x-icon" href="$SiteConfig.FavicoImage.Fill(16,16).URL">
 </head>
 <body class="loading cms" data-frameworkpath="$ModulePath(silverstripe/framework)"
 	data-member-tempid="$CurrentMember.TempIDHash.ATT"

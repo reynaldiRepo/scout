@@ -12,8 +12,22 @@ use SilverStripe\ORM\ArrayList;
 
 class DashboardAdminExtension extends LeftAndMainExtension{
     public function init(){
-        parent::init();   
+        parent::init();
+        // for update vpath
+        // $jsonPath =  "../app/src/JSON/vmap.json";
+        // $strJson = file_get_contents($jsonPath);
+        // $array = json_decode($strJson, true);   
+        // foreach($array as $k=>$v ){
+        //     $kab = DataObject::get('KabupatenData', "Title Like '%".$v['name']."%'")->first();
+        //     $kab->PathVmap = $k;
+        //     $kab->write();
+        // }
+        // die("success");
     }
+
+    private static $allowed_actions = [
+        'exportmemberbysakakwarcab'
+    ];
 
     public function rand_color() {
         return 'rgba('.rand(120,255).','.rand(120,255).','.rand(120,255).', 0.8)';
@@ -75,6 +89,20 @@ class DashboardAdminExtension extends LeftAndMainExtension{
         }
     }
 
+    public function getNumMemberByKab(){
+        $data = new ArrayList();
+        $kab = CT::getKabupatenJatim();
+        foreach ($kab as $k){
+            $member = MemberData::get()->filter(['KwarcabID'=>$k->ID])->count();
+            if ($member) {
+                $data->push(['path'=>$k->PathVmap, 'jumlah'=>$member, 'color'=>$this->rand_color()]);
+            }else{
+                $data->push(['path'=>$k->PathVmap, 'jumlah'=>0, 'color'=>$this->rand_color()]);
+            }
+        }
+        return $data;
+    }
+
     public function getNumMemberBySaka(){
         $sql = "SELECT COUNT(MemberData.ID) as 'Jumlah', SakaData.Title FROM MemberData, Member, SakaData
         WHERE MemberData.ID = Member.ID AND SakaData.ID = MemberData.SakaDataID
@@ -109,5 +137,80 @@ class DashboardAdminExtension extends LeftAndMainExtension{
         // var_dump(EventData::get());
         // die();
         return EventData::get()->limit($limit);
+    }
+
+    public function getMsgAdmin(){
+        $member = Member::currentUser();
+        if ($member->inGroup(CT::getGroupID("admin-cabang")->ID)){
+            return "Pada sistem ini anda bisa melakukan managerial data member untuk 
+                    Kwarcab anda (".$member->Kwarcab()->Title.")dan anda juga dapat melakukan import data member kwarcab anda";
+        }else{
+            return "Pada sistem ini anda bisa melakukan managerial data member,
+            Event, admin cabang dan data lainnya.";
+        }
+    }
+
+    public function getDate(){
+        return date("d F Y");
+    }
+
+    public function getNMember(){
+        return MemberData::get()->count();
+    }
+
+    public function getNEvent(){
+        return EventData::get()->count();
+    }
+
+    public function getAdminCabang(){
+        return AdminCabangData::get()->count();
+    }
+
+
+    public function getKabJatim(){
+        return CT::getKabupatenJatim();
+    }
+
+    public function getSakaList(){
+        return SakaData::get();
+    }
+
+    public function countMemberBySakaKwarcab($kwarcabID){
+        $res = new ArrayList();
+        foreach($this->getSakaList() as $Saka){            
+            $c = MemberData::get()->filter(['SakaDataID'=>$Saka->ID, 'KwarcabID'=>$kwarcabID])->count();
+            $res->push(['jumlah'=>$c]);
+        }
+        return $res;
+    }
+
+    public function exportmemberbysakakwarcab(){
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="member.csv"');
+
+        $user_CSV[0] = array('Kabupaten');
+        foreach ($this->getSakaList() as $Saka) {
+           array_push($user_CSV[0], $Saka->getTitleShort());
+        }        
+        
+
+        // very simple to increment with i++ if looping through a database result 
+        $index = 1;
+        foreach ($this->getKabJatim() as $Kab) {
+            $user_CSV[$index] = [$Kab->getTitleShort()];
+            foreach ($this->getSakaList() as $Saka) {
+                $c = MemberData::get()->filter(['SakaDataID'=>$Saka->ID, 'KwarcabID'=>$Kab->ID])->count();
+                array_push($user_CSV[$index], $c);
+            }
+            $index += 1;
+        }
+
+        $fp = fopen('php://output', 'wb');
+        foreach ($user_CSV as $line) {
+            // though CSV stands for "comma separated value"
+            // in many countries (including France) separator is ";"
+            fputcsv($fp, $line, ',');
+        }
+        fclose($fp);
     }
 }

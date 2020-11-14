@@ -26,6 +26,11 @@ class ImportAdmin extends LeftAndMain {
         'ImportForm'
     ];
 
+    private $arrKelamin = [
+        'Laki-laki'=>'L',
+        'Perempuan'=>'P'
+    ];
+
 
     public function validateCSV($type, $array){
         $member = Member::currentUser();
@@ -33,15 +38,16 @@ class ImportAdmin extends LeftAndMain {
             $patternMember = [
                 'Nama',
                 'Email',
-                'Kwarcab',
                 'Saka',
-                'Golongan',];
+                'Golongan',
+                'Jenis_Kelamin'];
         }else{
             $patternMember = [
                 'Nama',
                 'Email',
                 'Saka',
                 'Golongan',
+                'Jenis_Kelamin'
             ];
         }   
 
@@ -132,6 +138,13 @@ class ImportAdmin extends LeftAndMain {
                     if (empty($data['Nama'])){
                         array_push($warningMsg, "Nama Empty ,warning at row ".$index);
                     }
+                    if (empty($data['Jenis_Kelamin'])){
+                        array_push($warningMsg, "Jenis_Kelamin Empty ,warning at row ".$index);
+                    }else{
+                        if (!isset($this->arrKelamin[$data['Jenis_Kelamin']])){
+                            array_push($warningMsg, "Jenis_Kelamin ".$data['Jenis_Kelamin']." not found ,warning at row ".$index);
+                        }
+                    }
                     // var_dump($warningMsg);
                     if (count($warningMsg) !=0){
                         array_push($IndexWarningMsg, $index);
@@ -146,17 +159,23 @@ class ImportAdmin extends LeftAndMain {
                         }else{
                             $newMember->FirstName = $nama[0];
                         }
-                        if (!$member->inGroup(CT::getGroupID("admin-cabang"))){
-                            $newMember->KwarcabID = $Kwarcab->first()->ID;
-                        }else{
-                            $newMember->KwarcabID = $member->Kwarcab()->ID;
-                        }
+                        if (isset($data['Kwarcab'])) {
+                            if (!$member->inGroup(CT::getGroupID("admin-cabang"))) {
+                                $newMember->KwarcabID = $Kwarcab->first()->ID;
+                            } else {
+                                $newMember->KwarcabID = $member->Kwarcab()->ID;
+                            }
+                        }   
                         if (isset($data['Kwarran'])) {
                             $newMember->KwarranID = $Kwarran->first()->ID;
                         }
                         $newMember->SakaDataID = $Saka->first()->ID;
                         $newMember->GolonganDataID = $Golongan->first()->ID;
                         $newMember->Password = "12345678";
+                        $newMember->Status = "1";
+                        if (!isset($this->arrKelamin[$data['Jenis_Kelamin']])){
+                            $newMember->Sex = $this->arrKelamin[$data['Jenis_Kelamin']];
+                        }
                         $newMember->write();
                         $Count += 1;
                     }
@@ -213,16 +232,19 @@ class ImportAdmin extends LeftAndMain {
                 <tr>
                     <td>Nama</td>
                     <td>*Email</td>
-                    <td>*Kwarcab</td>
-                    <td>Kwarran</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
+                    <td>*Jenis_Kelamin</td>
+                    <td>Kwarcab</td>
+                    <td>Kwarran</td>
                     <td>NTA_SIPA</td>
                     <td>Address</td>
                 </tr>
             </table>
             </div>
-            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
+            Password Default untuk member baru 12345678
+            </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
             <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>
@@ -242,10 +264,13 @@ class ImportAdmin extends LeftAndMain {
                     <td>*Email</td>
                     <td>*Saka</td>
                     <td>*Golongan</td>
+                    <td>*Jenis_Kelamin</td>
                 </tr>
             </table>
             </div>
-            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv</p>
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
+            Password Default untuk member baru 12345678
+            </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
             <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>

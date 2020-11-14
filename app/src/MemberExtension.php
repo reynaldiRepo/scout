@@ -7,6 +7,7 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Security\Permission;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ValidationResult;
 
 
 
@@ -16,8 +17,7 @@ class MemberExtension extends DataExtension
         'Kwarcab' => KabupatenData::class,
         'Kwarran' => KecamatanData::class,
         'PhotoProfile' => CustomImage::class,
-];
-
+    ];
     
     public function onAfterWrite()
     {
@@ -25,8 +25,6 @@ class MemberExtension extends DataExtension
         if ($this->owner->ClassName == 'SilverStripe\Security\Member'){
             $this->owner->addToGroupByCode("administrators"); 
         }
-        
-        
     }
 
     

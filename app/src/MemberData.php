@@ -80,7 +80,7 @@ class MemberData extends Member
     private static $summary_fields = [
         'Kwarcab.Title' => 'Kwarcab',
         'SakaData.Title' => 'Saka',
-        'getStatusStr' => 'Status'
+        'GolonganData.Title' => 'Golongan'
     ];
 
     
@@ -122,18 +122,7 @@ class MemberData extends Member
 
     public function onAfterWrite()
     {
-        parent::onAfterWrite();
-        $this->addToGroupByCode("member");     
-
-        if ($this->owner->isChanged('Status') && $this->owner->Status == '1'){
-            $from = SiteConfig::current_site_config()->EmailInfo;
-            $subject = "Akun anda telah aktif";
-            $to = $this->owner->Email;
-            $body = "Akun anda telah terkonfirmasi, selamat datang di Peransaka Jawa Timur, silahkan login dengan link dibawah<br>
-                    <a href='".Director::baseURL()."member/login"."'>Login</a>";
-            $member = $this->owner;
-            CT::sendmail($from, $subject ,$to, $body, $member);
-        }
+        parent::onAfterWrite(); 
     }
 
 
