@@ -1838,8 +1838,8 @@ class LeftAndMain extends Controller implements PermissionProvider
      */
     public function Title()
     {
-        $app = $this->getApplicationName();
-
+        // $app = $this->getApplicationName();
+        $app = "Admin ".SiteConfig::current_site_config()->Title;
         return ($section = $this->SectionTitle()) ? sprintf('%s - %s', $app, $section) : $app;
     }
 

@@ -7,7 +7,6 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Security\Permission;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\ValidationResult;
 
 
 
@@ -18,7 +17,7 @@ class MemberExtension extends DataExtension
         'Kwarran' => KecamatanData::class,
         'PhotoProfile' => CustomImage::class,
     ];
-    
+
     public function onAfterWrite()
     {
         parent::onAfterWrite();

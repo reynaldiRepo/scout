@@ -26,4 +26,5 @@ class LeftAndMainExt extends LeftAndMainExtension{
             CMSMenu::remove_menu_class(AdminCabangAdmin::class);
         }   
     }
+
 }
