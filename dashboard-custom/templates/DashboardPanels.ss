@@ -33,9 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="row pl-3 pr-3">
+    <div class="row pl-3 pr-3"> 
         <div class="col-md-3 p-1">
-            <a href="{$BaseHref}admin/member">
+            <a href="{$BaseHref}admin/Member">
                 <div class="dashboard-panel bg-info text-white">
                         <h2 style="margin-bottom:0; text-transform:uppercase">Member</h2>
                         <div class="d-block">

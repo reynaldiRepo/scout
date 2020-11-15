@@ -172,7 +172,7 @@ class DashboardAdminExtension extends LeftAndMainExtension{
     }
 
     public function getSakaList(){
-        return DataObject::get('SakaData', "Title not Like '%-%' OR Title != ''");
+        return DataObject::get('SakaData', "Title != '-'");
     }
 
     public function countMemberBySakaKwarcab($kwarcabID){

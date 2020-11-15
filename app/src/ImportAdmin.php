@@ -162,21 +162,21 @@ class ImportAdmin extends LeftAndMain {
                         }else{
                             $newMember->FirstName = $nama[0];
                         }
-                        if (isset($data['Kwarcab']) && !$member->inGroup(CT::getGroupID("admin-cabang"))) {
+                        if (isset($data['Kwarcab']) && !$member->inGroup(CT::getGroupID("admin-cabang")) && $data['Kwarcab']!="") {
                             $newMember->KwarcabID = $Kwarcab->first()->ID;
                         }else{
                             if ($member->inGroup(CT::getGroupID("admin-cabang"))) {
                                 $newMember->KwarcabID = $member->Kwarcab()->ID;
                             }
                         }
-                        if (isset($data['Kwarran'])) {
+                        if (isset($data['Kwarran']) && $data['Kwarran']!="") {
                             $newMember->KwarranID = $Kwarran->first()->ID;
                         }
                         $newMember->SakaDataID = $Saka->first()->ID;
                         $newMember->GolonganDataID = $Golongan->first()->ID;
                         $newMember->Password = SiteConfig::current_site_config()->DefaultPasswordMember;
                         $newMember->Status = "1";
-                        if (!isset($this->arrKelamin[$data['Jenis_Kelamin']])){
+                        if (isset($this->arrKelamin[$data['Jenis_Kelamin']])){
                             $newMember->Sex = $this->arrKelamin[$data['Jenis_Kelamin']];
                         }
                         $newMember->write();

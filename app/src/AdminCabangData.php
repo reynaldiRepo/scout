@@ -81,14 +81,14 @@ class AdminCabangData extends Member
         $fields = parent::getCMSFields();
         $fields->removeFieldFromTab('Root', 'Permissions');
         $member = Member::currentUser();
-        if ($member->inGroup(CT::getGroupID('admin-cabang'))){
-            $fields->removeByName([
-                'KwarcabID',
-                'KwarranID',
-            ]);
+        $fields->removeByName([
+            'KwarcabID',
+            'KwarranID',
+        ]);
+        if ($member->inGroup(CT::getGroupID('admin-cabang'))){ 
             $fields->addFieldToTab(
                 'Root.Main',
-                DropdownField::create(
+                $kw = CustomDropdown::create(
                     'KwarcabID',
                     'KwarcabID',
                     [$member->KwarcabID=>$member->Kwarcab()->Title]
@@ -96,12 +96,40 @@ class AdminCabangData extends Member
             );
             $fields->addFieldToTab(
                 'Root.Main',
-                DropdownField::create(
+                $kwr = CustomDropdown::create(
                     'KwarranID',
                     'KwarranID',
                     KecamatanData::get()->filter(['KabupatenDataID'=>$member->KwarcabID])
                 )
             );
+            $kw->setIsRequired(true);
+        }else{
+            $fields->addFieldToTab(
+                'Root.Main',
+                $kw = CustomDropdown::create(
+                    'KwarcabID',
+                    'KwarcabID',
+                    KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC")->map("ID", "Title")
+                )->setValue($member->KwarcabID)
+            );
+            if ($this->KwarcabID != 0){
+                $Kwarran = CustomDropdown::create(
+                    'KwarranID',
+                    'Kwarran',
+                    KecamatanData::get()->filter(['KabupatenDataID'=>$this->KwarcabID])->sort("Title", "ASC")->map("ID", "Title")
+                )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
+            }else{
+                $Kwarran = CustomDropdown::create(
+                    'KwarranID',
+                    'Kwarran',
+                    []
+                )->setEmptyString('Pilih Kecamatan Kwarran')->setHasEmptyDefault(true);
+            }
+            $fields->addFieldToTab(
+                'Root.Main',
+                $Kwarran
+            );
+            $kw->setIsRequired(true);
         }
         return $fields;
     }
