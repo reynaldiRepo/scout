@@ -130,6 +130,7 @@
                     alertWarning(data.msg);
                 }
             }).fail(function(){
+                $.unblockUI();
                 alertError("ERROR");
             })
         })

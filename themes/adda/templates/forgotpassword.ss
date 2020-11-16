@@ -121,6 +121,8 @@
                 }
             }).fail(function(){
                 alertError("ERROR");
+                $.unblockUI();
+                alertError("ERROR");
             })
         })
     </script>
