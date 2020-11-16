@@ -25,8 +25,10 @@
                     </li>
                 </ul>
             </div>
+
             <div class="mobile-header-profile bg-white">
                 <!-- profile picture end -->
+                <% if $CurrentMember %>
                 <div class="profile-thumb profile-setting-box">
                     <a href="javascript:void(0)" class="profile-triger">
                         <figure class="profile-thumb-middle p-1">
@@ -50,6 +52,7 @@
                         </div>
                     </div>
                 </div>
+                <% end_if %>
                 <!-- profile picture end -->
             </div>
         </div>

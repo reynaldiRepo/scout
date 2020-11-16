@@ -2,7 +2,10 @@
 
 namespace {
 
+use SilverStripe\Security\Member;
     use SilverStripe\CMS\Controllers\ContentController;
+    use SilverStripe\ORM\DataObject;
+    use SilverStripe\ORM\DB;
 
     class PageController extends ContentController
     {
@@ -28,6 +31,27 @@ namespace {
             parent::init();
             // var_dump($_SESSION);
             // die();
+        }
+
+        public function getResourceV(){
+            return date("Ymdhis");
+        }
+
+        public function getUpcommingEvent($limit = 5){
+            $data = DataObject::get("EventData", "Mulai > '".date("Y-m-d H:i:s")."'"
+            ,"Mulai Desc","", "$limit");
+            return $data;
+        }
+
+        public function getRecentEvent($limit = 5){
+            $data = DataObject::get("EventData", ""
+            ,"Mulai Desc","", "$limit");
+            return $data;
+        }
+
+        public function getRandomMember($limit = 7){
+            $member = Member::currentUser();
+            return DataObject::get("MemberData", "Status = 1 AND MemberData.ID != '".$member->ID."'", "RAND()","", "$limit");
         }
 
         public function getSaka(){

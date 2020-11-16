@@ -1,4 +1,6 @@
 <?php
+use SilverStripe\Control\Director;
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Security\Member;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\LabelField;
@@ -99,6 +101,27 @@ class EventData extends DataObject {
 
     public function getJumlahParticipant(){
         return $this->MemberData()->count();
+    }
+
+    public function getURLSegment(){
+        $nama = $this->Title;
+        $nama = explode(" ",$nama);
+        $nama = implode("-",$nama);
+        return $nama;
+    }
+
+    public function getImageEvent(){
+        $sc = SiteConfig::current_site_config();
+        if ($this->ImageID != 0 && $this->Image()->exists()){
+            return $this->Image();
+        }else{
+            return $sc->DefaultPhoto();
+        }
+    }
+
+    public function Link(){
+        // {$BaseHref}event/v/$ID-$getURLSegment
+        return Director::baseURL()."event/".$this->ID."-".$this->getURLSegment();
     }
 
     public function getCMSValidator()

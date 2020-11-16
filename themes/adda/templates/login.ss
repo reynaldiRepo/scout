@@ -52,16 +52,16 @@
                                 <div class="login-area">
                                     <form action="{$Link}dologin" id="form-login" method="POST">
                                         <div class="row align-items-center">
-                                            <div class="col-12 col-sm">
+                                            <div class="col-12 col-sm p-0 pl-2 pt-2">
                                                 <input type="email" name="Email" required placeholder="Email" class="form-control">
                                             </div>
-                                            <div class="col-12 col-sm">
+                                            <div class="col-12 col-sm p-0 pl-2 pt-2">
                                                 <input type="password" name="Password" required placeholder="Password" class="form-control">
                                             </div>
-                                            <div class="col-12 col-sm-auto">
+                                            <div class="col-12 col-sm-auto p-0 pl-2 pt-2">
                                                 <button class="login-btn" type="submit">Login</button>
                                             </div>
-                                            <div class="col-12 col-sm-auto">
+                                            <div class="col-12 col-sm-auto p-0 pl-2 pt-2">
                                                 <a href="{$BaseHref}member/forgotpassword" class="text-white"
                                                     style="text-decoration: revert;">Lupa Password ?</a>
                                             </div>
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 order-1 order-lg-2 d-flex align-items-center justify-content-center">
-                                <div class="signup-form-wrapper">
+                                <div class="signup-form-wrapper p-3">
                                     <div class="signup-inner text-center">
                                         <h3 class="title">DAFTAR PERANSAKA DKDJATIM</h3>
                                         <form class="signup-inner--form" id="form-register" action ="{$Link}doregister" method="POST">
@@ -208,7 +208,8 @@
                 data = JSON.parse(data)
                 if (data.status == 200){
                     alertSuccess(data.msg);
-                    setTimeout(function(){ location.reload() }, 7000);
+                    $('input').val('');
+                    $('option').attr('selected', false);
                 }else{
                     alertWarning(data.msg);
                 }

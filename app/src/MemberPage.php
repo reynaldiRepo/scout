@@ -9,6 +9,7 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
+use SilverStripe\Assets\Upload;
 
 class MemberPage extends Page {
     public function getCMSFields()
@@ -30,8 +31,77 @@ class MemberPageController extends PageController{
         'forgotpassword',
         'dosendlinkpwd',
         'resetpassword',
-        'newpassword'
+        'newpassword',
+        'verifyemail',
+        'edit',
+        'updatebanner',
+        'updatepp',
     ];
+
+    public function index(HTTPRequest $request){
+        $member = Member::currentUser();
+        if ($member) {
+            $data['Title'] = $member->FirstName." Profile";
+            return $data;
+        }else{
+            $this->redirect(Director::baseURL());
+        }
+    }
+
+    public function edit(){
+        $member = Member::currentUser();
+        if ($member) {
+            $data['Title'] = "Edit Profile ".$member->FirstName;
+            return $data;
+        }else{
+            $this->redirect(Director::baseURL());
+        }
+    }
+
+    // 'updatebanner',
+    //     'updatepp',
+    // PhotoProfileID
+    public function updatebanner($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        $newImage = new CustomImage();
+        $upl = new Upload();
+        $upl->loadIntoFile($data['BannerImage'], $newImage, "/Uploads"); 
+        if ($newImage->ID != 0) {
+            $member->BannerImageID = $newImage->ID;
+            $member->write();
+            echo json_encode(['status'=>200, 'msg'=>'Success']);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Sistem Error']);
+            return;       
+        }
+    }
+
+    public function updatepp($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        $newImage = new CustomImage();
+        $upl = new Upload();
+        $upl->loadIntoFile($data['PhotoProfile'], $newImage, "/Uploads"); 
+        if ($newImage->ID != 0) {
+            $member->PhotoProfileID = $newImage->ID;
+            $member->write();
+            echo json_encode(['status'=>200, 'msg'=>'Success']);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Sistem Error']);
+            return;       
+        }
+    }
+
+
 
     public function login(){
         $member = Member::currentUser();
@@ -68,27 +138,37 @@ class MemberPageController extends PageController{
         return $this->redirect("member/login");
     }
 
+
+    public function sendverify($member){
+        $key = CT::encryptCT($member->ID."xxxverifikasiemail".date("Ymdhis"));
+        $url = Director::absoluteBaseURL()."member/verifyemail?key=".$key;
+        $from = SiteConfig::current_site_config()->EmailInfo;
+        $subject = "Registrasi Berhasil";
+        $to = $member->Email;
+        $body = "Terimakasih untuk mendaftar pada Peransaka Jawa Timur, 
+        silahkan lakukan validasi email dengan menekan link dibawah <br>
+        <a href='$url'>Verifikasi Email</a>";
+        CT::sendmail($from, $subject, $to, $body, $member);
+    }
+
     public function doregister($data){
         
-        $member = DataObject::get('MemberData', "Email = '".$data['Email']."' OR NTA_SIPA = '".$data['NTA_SIPA']."'");
+        $member = DataObject::get('MemberData', "Email = '".$data['Email']."'");
+        // $member = DataObject::get('MemberData', "Email = '".$data['Email']."' OR NTA_SIPA = '".$data['NTA_SIPA']."'");
         $allMember = Member::get()->filter(['Email'=>$data['Email']]);
         if ($member->count() != 0 || $allMember->count() != 0){
-            echo json_encode(['status'=>500, 'msg'=>'Email / NTA_SIPA sudah terdaftar']);
+            echo json_encode(['status'=>500, 'msg'=>'Email sudah terdaftar']);
+            // echo json_encode(['status'=>500, 'msg'=>'Email / NTA_SIPA sudah terdaftar']);
             return;
         }else{
             $newMember = new MemberData();
             $newMember->update($_POST);
-
-            #send mail
-            $from = SiteConfig::current_site_config()->EmailInfo;
-            $subject = "Pendaftaran Berhasil";
-            $to = $data['Email'];
-            $body = "Terimakasih untuk mendaftar pada Peransaka Jawa Timur, kami akan melakukan validasi pada akun anda, yang nantinya akan kami informasikan perihal konfirmasi akun anda";
+            $newMember->Status = "0";
             $newMember->write();
             if ($newMember) {
-                CT::sendmail($from, $subject, $to, $body, $newMember);
+                $this->sendverify($newMember);
             }
-            echo json_encode(['status'=>200, 'msg'=>'Registrasi Sukses, Silahkan Menunggu Konfirmasi Admin']);
+            echo json_encode(['status'=>200, 'msg'=>'Registrasi Sukses, Silahkan verifikasi check inbox email anda']);
             return;
         }
     }
@@ -181,6 +261,29 @@ class MemberPageController extends PageController{
                 return;
             }   
         }
+    }
+
+    public function verifyemail(){
+        if (!isset($_GET['key'])){
+            die("/404 not allowed");
+            return;
+        }
+
+        $dec = CT::decryptCT($_GET['key']);
+        $dec = explode("xxx", $dec);
+        $member = MemberData::get()->byID($dec[0]);
+        if ($member){
+            $member->Status = '1';
+            $member->write();
+            return $this->customise(array(
+                'member'=> $member
+            ))->renderWith(array('verifyemail'));
+        }else{
+            die("/404 not allowed");
+            return;
+        }
+
+        
     }
 
 }

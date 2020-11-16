@@ -7,7 +7,7 @@
 					<div class="header-top-navigation">
 						<nav>
 							<ul>
-								<li class="active"><a href="$BaseHref">Home</a></li>
+								<li class=""><a href="$BaseHref">Home</a></li>
 								<li class=""><a href="{$BaseHref}event/">Event</a></li>
 								<li class=""><a href="{$BaseHref}member/all">Anggota</a></li>
 							</ul>
@@ -33,7 +33,7 @@
 								<button class="top-search-btn" type="submit"><i class="flaticon-search"></i></button>
 							</form>
 						</div>
-						
+						<% if $CurrentMember %>
 						<div class="profile-setting-box">
 							<div class="profile-thumb-small">
 								<a href="javascript:void(0)" class="profile-triger">
@@ -60,6 +60,7 @@
 								</div>
 							</div>
 						</div>
+						<% end_if %>
 						<!-- profile picture end -->
 					</div>
 				</div>

@@ -115,6 +115,18 @@ class MemberData extends Member
         }
     }
 
+    public function getURLSegment(){
+        $nama = $this->FirstName." ".$this->Surname;
+        $nama = explode(" ",$nama);
+        $nama = implode("-",$nama);
+        return $nama;
+    }
+
+    public function Link(){
+        // {$BaseHref}event/v/$ID-$getURLSegment
+        return Director::baseURL()."event/".$this->ID."-".$this->getURLSegment();
+    }
+
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();

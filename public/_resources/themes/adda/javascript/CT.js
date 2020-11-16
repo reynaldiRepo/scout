@@ -15,7 +15,7 @@ function blockUI() {
       baseZ: 1500,
       overlayCSS: {
         backgroundColor: '#FFFFFF',
-        opacity: 1,
+        opacity: 0.6,
         cursor: 'wait'
       }
     });
@@ -57,4 +57,16 @@ function blockUI() {
       timeout: 10000,
       position: 'topRight',
     });
+  }
+
+  function loadInputToImage(input, target){
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          var file = input.files[0];
+          console.log(input.files[0]);
+          reader.onload = function (e) {
+              target.attr("src",e.target.result)
+          }
+          reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
   }
