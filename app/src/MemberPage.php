@@ -11,6 +11,7 @@ use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Assets\Upload;
+use SilverStripe\ORM\PaginatedList;
 
 class MemberPage extends Page {
     public function getCMSFields()
@@ -41,9 +42,96 @@ class MemberPageController extends PageController{
         'addsosmed',
         'deletesosmed',
         'addhobby',
-        'deletehobby'
+        'deletehobby',
+        'v',
+        'all'
     ];
 
+    /**
+     * Defines URL patterns.
+     * @var array
+     */
+    private static $url_handlers = [
+        'v/$ID' => 'v'
+    ];
+
+    public function all(){
+        $member = Member::currentUser();
+        if (!$member){
+            return $this->redirect(Director::baseURL());
+        }
+        $data['Title'] = "Member Peransaka";
+        $arrayFilter = [];
+        $arrayNama = [];
+        if (!empty($_GET)) {
+            if (isset($_GET['SakaDataID'])) {
+                if (!empty($_GET['SakaDataID'])) {
+                    $arrayFilter['SakaDataID'] = $_GET['SakaDataID'];
+                }
+            }
+            if (isset($_GET['GolonganDataID'])) {
+                if (!empty($_GET['GolonganDataID'])) {
+                    $arrayFilter['GolonganDataID'] = $_GET['GolonganDataID'];
+                }
+            }
+            if (isset($_GET['KwarcabID'])) {
+                if (!empty($_GET['KwarcabID'])) {
+                    $arrayFilter['KwarcabID'] = $_GET['KwarcabID'];
+                }
+            }
+            if (isset($_GET['Nama'])) {
+                if (!empty($_GET['Nama'])) {
+                    $nama = explode(" ", $_GET['Nama']);
+                    foreach ($nama as $s) {
+                        $arrayNama['FirstName:PartialMatch'] = $s;
+                        $arrayNama['Surname:PartialMatch'] = $s;
+                    }
+                }
+            }
+        }
+        if (empty($arrayFilter) && empty($arrayNama)){
+            $members = MemberData::get();
+        }elseif(!empty($arrayFilter) && empty($arrayNama)){
+            $members = MemberData::get()->filter($arrayFilter);
+        }elseif(empty($arrayFilter) && !empty($arrayNama)){
+            $members = MemberData::get()->filterAny($arrayNama);
+        }elseif(!empty($arrayFilter) && !empty($arrayNama)){
+            $members = MemberData::get()->filter($arrayFilter)->filterAny($arrayNama);
+        }
+        $pages = new PaginatedList($members, $this->getRequest());
+        $pages->setPageLength(24);
+        $data['Members'] = $pages;
+        if (!empty($arrayFilter)){
+            foreach($arrayFilter as $k=>$v){
+                $data[$k]=$v;
+            }
+        }
+        if (!empty($arrayNama)){
+            $data['Nama'] = $_GET['Nama'];
+        }
+        return $this->customise($data)->renderWith(array('CleanPage', 'MemberAll'));
+    }
+
+    public function v(){
+        $member = Member::currentUser();
+        if (!$member){
+            return $this->redirect(Director::baseURL());
+        }
+        if (!$this->getRequest()->param('ID')){
+            die("404/ not found");
+            return;
+        }
+        $id = $this->getRequest()->param('ID');
+        $id = explode("-", $id);
+        $id = $id[0];
+        if ($id == $member->ID){
+            return $this->redirect(Director::baseURL()."/member");
+        }
+        $member = MemberData::get()->byID($id);
+        $data ['Title'] = "Profile ".$member->FirstName;
+        $data['Member'] = $member;
+        return $data;
+    }
 
     public function index(HTTPRequest $request){
         $member = Member::currentUser();

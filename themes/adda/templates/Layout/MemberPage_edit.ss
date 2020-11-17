@@ -237,7 +237,7 @@
                     <div class="row">
                         <div class="col-md-12 p-2 pl-3 pr-3">
                             <label>jenis Sosial Media</label>
-                            <select class="slim-select" name="SosmedCategoryData">
+                            <select class="slim-select" name="SosmedCategoryDataID">
                                 <% loop getSosmedCategoryData %>
                                     <option value="$ID" >
                                         <i class="$IconCode"></i> $Title

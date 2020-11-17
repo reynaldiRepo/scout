@@ -62,3 +62,91 @@
 <script src="$ThemeDir/javascript/BlockUI.js?key=$getResourceV"></script>
 <script src="$ThemeDir/javascript/CT.js?key=$getResourceV"></script>
 <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+
+<style>
+    .bg-theme {
+        background-color: #dc4734 !important;
+    }
+
+    .banner-user {
+        display: flex;
+        justify-content: center;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+    }
+
+    .banner-user img {
+        position: absolute;
+        bottom: 15px;
+        height: 100px;
+        width: 100px;
+        background: #000;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .edit-prof-btn {
+        position: absolute;
+        z-index: 1;
+        top: 5px;
+        right: 30px;
+        padding: 5px;
+        -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+    }
+
+    .fa-theme {
+        color: #dc4734 !important
+    }
+
+    .btn-page {
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        border-radius: 0;
+        margin-right: 3px
+    }
+
+    .nav-a {
+        color: #333333 !important;
+        display: block;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 11px 0;
+        text-transform: capitalize;
+    }
+
+    .nav-a a {
+        color: #333333 !important;
+    }
+
+    .ss-single-selected {
+        height: 40px !important
+    }
+
+    .loading {
+        background-image: url("$SiteConfig.LoadingGif.URL");
+        height: 100px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .profile-thumb-small{
+        background : #000 !important;
+    }
+
+    .delete-btn {
+        float: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .5;
+    }
+
+</style>

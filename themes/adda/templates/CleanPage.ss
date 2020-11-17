@@ -10,6 +10,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <% include Resource %>
+
 </head>
 
 <body>
@@ -22,34 +23,16 @@
     <!-- header area end -->
 
     <main>
+
         <div class="main-wrapper pt-80">
+
+            <%-- <div class="profile-banner-large bg-img" data-bg="$CurrentMember.getBannerImage.URL"
+                style="background-image: url($CurrentMember.getBannerImage.URL)">
+            </div> --%>
+
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 order-2 order-lg-1">
-                        <aside class="widget-area">
-                            <% if $CurrentMember %>
-                            <% include ProfileCard %>
-                            <% end_if %>
-                            <% if $CurrentMember %>
-                            <% include Poeple %>
-                            <% end_if %>
-                        </aside>
-                    </div>
-
                     $Layout
-
-                    <div class="col-lg-3 order-3">
-                        <aside class="widget-area">
-                            <!-- widget single item start -->
-                            <% if $CurrentMember %>
-                            <% include UpcommingEvent %>
-                            <% end_if %>
-                            <% if $CurrentMember %>
-                            <% include RecentEvent %>
-                            <% end_if %>
-                            <!-- widget single item end -->
-                        </aside>
-                    </div>
                 </div>
             </div>
         </div>

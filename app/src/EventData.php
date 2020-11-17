@@ -121,7 +121,7 @@ class EventData extends DataObject {
 
     public function Link(){
         // {$BaseHref}event/v/$ID-$getURLSegment
-        return Director::baseURL()."event/".$this->ID."-".$this->getURLSegment();
+        return Director::baseURL()."event/v/".$this->ID."-".$this->getURLSegment();
     }
 
     public function getCMSValidator()
