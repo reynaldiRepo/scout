@@ -15,7 +15,7 @@
         </ul>
         <% if getRecentEvent  %>
         <hr>
-        <a href="{$BaseHref}event/all" class="text-dark">Lihat Lainnya...</a>
+        <a href="{$BaseHref}event/" class="text-dark">Lihat Lainnya...</a>
         <% else %>
         <a class="text-dark">Tidak Ada Data</a>
         <% end_if %>

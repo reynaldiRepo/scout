@@ -12,7 +12,7 @@
                     <li class="nav-a"><a href="{$BaseHref}event/">Event</a></li>
                     <li class="nav-a"><a href="{$BaseHref}member/all">Anggota</a></li>
                     <li>
-                        <button class="search-trigger">
+                        <button class="search-trigger sr-only">
                             <i class="search-icon flaticon-search"></i>
                             <i class="close-icon flaticon-cross-out"></i>
                         </button>
@@ -31,7 +31,7 @@
                 <% if $CurrentMember %>
                 <div class="profile-thumb profile-setting-box">
                     <a href="javascript:void(0)" class="profile-triger">
-                        <figure class="profile-thumb-middle p-1">
+                        <figure class="profile-thumb-middle p-1 bg-dark" style="border-radius:50%">
                             <img src="$CurrentMember.getPhotoProfileThumb.URL" alt="profile picture">
                         </figure>
                     </a>

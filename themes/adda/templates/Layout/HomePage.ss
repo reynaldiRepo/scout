@@ -1,13 +1,13 @@
 <div class="col-lg-6 order-1 order-lg-2">
 <% loop Events %>
-<div class="card">
-    <div class="post-title d-flex align-items-center">
-        <div class="posted-author m-0">
+    <div class="card">
+        <div class="post-title d-flex align-items-center">
+            <div class="posted-author m-0">
                 <h6 class="author"><a href="$Link" style="font-size: 22px;">$Title</a></h6>
                 <span class="post-time mt-1" style="opacity:0.8">
                     <i class="fa fa-calendar mr-1"></i>
-                    $Mulai.Format("dd-MM-YYYY") 
-                    <i class="ml-2 mr-1 fa fa-clock"></i>
+                    $Mulai.Format("dd-MM-YYYY")
+                    <i class="ml-2 mr-1 fa fa-clock-o"></i>
                     $Mulai.Format("hh.mm")
                 </span>
             </div>
@@ -17,8 +17,8 @@
                 <span></span>
                 <div class="post-settings arrow-shape">
                     <ul>
-                        <li><button><i class="fa fa-eye mr-2"></i> Detail</button></li>
-                        <li><button><i class="fa fa-sign-in-alt mr-2"></i> Ikuti Event</button></li>
+                        <li><a href="$Link()" class="text-dark"><i class="fa fa-eye mr-2"></i> Detail</a></li>
+                        <li><button><i class="fa fa-sign-in mr-2"></i> Ikuti Event</button></li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <li>
                         <button class="post-comment">
                             <i class="fa fa-users"></i>
-                            <span style="vertical-align: unset">41 Participant</span>
+                            <span style="vertical-align: unset">$getJumlahParticipant</span>
                         </button>
                     </li>
                 </ul>
@@ -62,7 +62,7 @@
         </div>
     </div>
     <% end_loop %>
-    <div class="col-lg-12 text-center">
+    <div class="col-lg-12 text-center mt-3 mb-2">
         <div>
             <% if $Events.MoreThanOnePage %>
             <% if $Events.NotFirstPage %>

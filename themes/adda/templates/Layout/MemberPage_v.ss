@@ -3,7 +3,6 @@
         <div class="col-lg-12 bg-dark banner-user lightgallery" data-bg="$Member.getBannerImage.Fill(360,180).URL">
                 <img data-src="$Member.getPhotoProfile.Fill(80,80).URL" src="$Member.getPhotoProfile.Fill(80,80).URL" class="pp-banner"/>\
         </div>
-    <a href="{$BaseHref}member/edit" class="edit-prof-btn text-white bg-info mt-2 pl-2 pr-2"><i class="fa fa-edit"></i> Edit Profile</a>
     </div>
     <div class="card widget-item pt-0">
         <h4 class="widget-title mt-3 mb-4">$Member.FirstName $Member.Surname</h4>

@@ -148,5 +148,12 @@
         text-shadow: 0 1px 0 #fff;
         opacity: .5;
     }
+    
+    .join-btn{
+        position: absolute;
+        top: 0px;
+        right: 20px;
+        width: fit-content;
+    }
 
 </style>

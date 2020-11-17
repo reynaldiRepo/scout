@@ -518,10 +518,10 @@
     function rendersosmed(data){
         console.log(data);
         $("#sosmed-place").append(
-        "<li class='list-group-item list-group-item-action'><i"+
-        "class='fa-theme "+data.SosmedCategoryData.IconCode+"'></i>"+
+        "<li class='list-group-item list-group-item-action'><i "+
+        "class='fa-theme "+data.SosmedCategoryData.IconCode+" mr-2'></i>"+
         "<a class='text-dark' href='"+data.URL+"'>"+data.Username+"</a>"+
-        "<button class='delete-btn del-sosmed' data-id='"+$ID+"' title='Delete'>"+
+        "<button class='delete-btn del-sosmed' data-id='"+data.ID+"' title='Delete'>"+
         "<span aria-hidden='true'><i class='fa fa-trash'></i></span>"+
         "</button>"+
         "</li>"       

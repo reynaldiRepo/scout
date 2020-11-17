@@ -1,19 +1,27 @@
-<div class="col-lg-12 order-1 order-lg-2">
+<div class="col-lg-3 order-2 order-lg-1">
+    <% if $CurrentMember %>
+    <% include ProfileCard %>
+    <% end_if %>
+    <% if $CurrentMember %>
+    <% include RecentEvent %>
+    <% end_if %>
+</div>
+<div class="col-lg-9 order-1 order-lg-2">
     <div class="card widget-item">
         <h3 class="widget-title mt-3 mb-4">$Title
             <button class="delete-btn search" data-toggle="modal" data-target="#modal-search">
                 <span aria-hidden="true"><i class="fa fa-search"></i> Search</span>
-            </button>    
+            </button>
         </h3>
         <div class="row">
-        <% loop $Members %>
-        <div class="col-lg-3 order-1 order-lg-2 mt-4 p-2">
-            <% include GeneralProfileCard %>
-        </div>
-        <% end_loop %>
+            <% loop $Members %>
+            <div class="col-lg-3 order-1 order-lg-2 mt-4 p-2">
+                <% include GeneralProfileCard %>
+            </div>
+            <% end_loop %>
         </div>
     </div>
-    <div class="col-lg-12 text-center">
+    <div class="col-lg-12 text-center mt-3 mb-2">
         <div>
             <% if $Members.MoreThanOnePage %>
             <% if $Members.NotFirstPage %>
@@ -56,23 +64,18 @@
                     <div class="row">
                         <div class="col-md-12 p-2 pl-3 pr-3">
                             <label>Nama</label>
-                            <input type="text" class="form-control" placeholder="Nama" name="Nama"
-                            value="$Nama"/>
+                            <input type="text" class="form-control" placeholder="Nama" name="Nama" value="$Nama" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 p-2 pl-3 pr-3">
                             <label>Saka</label>
                             <select class="slim-select" name="SakaDataID">
-                                <option value = "">Pilih Saka</option>
+                                <option value="">Pilih Saka</option>
                                 <% loop getSaka %>
-                                    <option value="$ID" 
-                                        <% if $Up.SakaDataID == $ID %>
-                                            selected
-                                        <% end_if %>
-                                        >
-                                        <i class="$IconCode"></i> $Title
-                                    </option>
+                                <option value="$ID" <% if $Up.SakaDataID == $ID %> selected <% end_if %>>
+                                    <i class="$IconCode"></i> $Title
+                                </option>
                                 <% end_loop %>
                             </select>
                         </div>
@@ -81,15 +84,11 @@
                         <div class="col-md-12 p-2 pl-3 pr-3">
                             <label>Golongan</label>
                             <select class="slim-select" name="GolonganDataID">
-                                <option value = "">Pilih Golongan</option>
+                                <option value="">Pilih Golongan</option>
                                 <% loop getGolongan %>
-                                    <option value="$ID" 
-                                        <% if $Up.GolonganDataID == $ID %>
-                                            selected
-                                        <% end_if %>
-                                        >
-                                        <i class="$IconCode"></i> $Title
-                                    </option>
+                                <option value="$ID" <% if $Up.GolonganDataID == $ID %> selected <% end_if %>>
+                                    <i class="$IconCode"></i> $Title
+                                </option>
                                 <% end_loop %>
                             </select>
                         </div>
@@ -98,15 +97,11 @@
                         <div class="col-md-12 p-2 pl-3 pr-3">
                             <label>Kwarcab</label>
                             <select class="slim-select" name="KwarcabID">
-                                <option value = "">Pilih Kwarcab</option>
+                                <option value="">Pilih Kwarcab</option>
                                 <% loop getKabupatenJatim %>
-                                    <option value="$ID" 
-                                        <% if $Up.KwarcabID == $ID %>
-                                            selected
-                                        <% end_if %>
-                                        >
-                                        <i class="$IconCode"></i> $Title
-                                    </option>
+                                <option value="$ID" <% if $Up.KwarcabID == $ID %> selected <% end_if %>>
+                                    <i class="$IconCode"></i> $Title
+                                </option>
                                 <% end_loop %>
                             </select>
                         </div>

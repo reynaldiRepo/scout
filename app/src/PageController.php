@@ -2,6 +2,7 @@
 
 namespace {
 
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Security\Member;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\ORM\DataObject;
@@ -30,8 +31,14 @@ use SilverStripe\ORM\ArrayList;
         protected function init()
         {
             parent::init();
-            // var_dump($_SESSION);
-            // die();
+            // $member = Member::currentUser();
+            // $from = SiteConfig::current_site_config()->EmailInfo;
+            // $subject = "Registrasi Berhasil";
+            // $to = "reynald.gresik@gmail.com";
+            // $body = "Terimakasih untuk mendaftar pada Peransaka Jawa Timur, 
+            // silahkan lakukan validasi email dengan menekan link dibawah <br>";
+            // CT::sendmail($from, $subject, $to, $body, $member);
+            // die("mail");
         }
 
         public function getResourceV(){
@@ -50,7 +57,7 @@ use SilverStripe\ORM\ArrayList;
             return $data;
         }
 
-        public function getRandomMember($limit = 7){
+        public function getRandomMember($limit = 5){
             $member = Member::currentUser();
             return DataObject::get("MemberData", "Status = 1 AND MemberData.ID != '".$member->ID."'", "RAND()","", "$limit");
         }

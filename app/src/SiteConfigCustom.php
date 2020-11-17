@@ -33,6 +33,7 @@ class SiteConfigCustom extends DataExtension
         'DefaultPhoto' => CustomImage::class,
         'FavicoImage' => CustomImage::class,
         'LoadingGif' => CustomImage::class,
+        'ImageOnLoginPage' => CustomImage::class,
         'FormatCSVMember' => CustomFile::class,
         'FormatCSVMemberCabang' => CustomFile::class,
     ];
@@ -74,6 +75,10 @@ class SiteConfigCustom extends DataExtension
                 UploadField::create(
                     'LoadingGif',
                     'Loading'
+                ),                
+                UploadField::create(
+                    'ImageOnLoginPage',
+                    'Image On Login Page'
                 ),
             ]
         );

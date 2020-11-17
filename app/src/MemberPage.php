@@ -125,7 +125,7 @@ class MemberPageController extends PageController{
         $id = explode("-", $id);
         $id = $id[0];
         if ($id == $member->ID){
-            return $this->redirect(Director::baseURL()."/member");
+            return $this->redirect("member/");
         }
         $member = MemberData::get()->byID($id);
         $data ['Title'] = "Profile ".$member->FirstName;

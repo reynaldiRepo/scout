@@ -77,7 +77,7 @@
                         <div class="row no-gutters">
                             <div class="col-lg-6 order-2 order-lg-1">
                                 <div class="timeline-bg-content bg-img"
-                                    data-bg="https://dkdjatim.or.id/wp-content/uploads/2020/11/MG_3358_copy-1140x570.jpg">
+                                    data-bg="$SiteConfig.ImageOnLoginPage.URL">
                                     <h3 style="background: rgba(255,0,0,0.5);padding: 10px;" class="timeline-bg-title">
                                         Kwartir Daerah Gerakan Pramuka Jawa Timur 2020</h3>
                                 </div>
