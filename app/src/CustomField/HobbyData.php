@@ -23,6 +23,14 @@ class HobbyData extends DataObject{
     private static $summary_fields = [
         'Title' => 'Hobi'
     ];
+    
+
+    public function toJsonArray(){
+        $res = [];
+        $res['Title'] = $this->Title;
+        $res['ID'] = $this->ID;
+        return $res;
+    }
 
     /**
      * CMS Fields

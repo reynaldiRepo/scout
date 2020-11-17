@@ -30,7 +30,6 @@ class HomePageController extends PageController{
     {
         parent::init();
         $member = Member::currentUser();
-        
         if (!$member){
             $this->redirect("member/login");
         }

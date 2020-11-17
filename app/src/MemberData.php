@@ -124,7 +124,7 @@ class MemberData extends Member
 
     public function Link(){
         // {$BaseHref}event/v/$ID-$getURLSegment
-        return Director::baseURL()."event/".$this->ID."-".$this->getURLSegment();
+        return Director::baseURL()."member/".$this->ID."-".$this->getURLSegment();
     }
 
     public function onBeforeWrite()

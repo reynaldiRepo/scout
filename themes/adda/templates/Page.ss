@@ -82,8 +82,18 @@
             background-repeat: no-repeat;
         }
 
-        .blockPage {
-            top: 346.005px !important;
+        .profile-thumb-small{
+            background : #000 !important;
+        }
+
+        .delete-btn {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: .5;
         }
 
     </style>
@@ -145,7 +155,14 @@
     <script>
         $(document).ready(function () {
             $(".lightgallery").lightGallery();
+            $(".slim-select").each(function () {
+            new SlimSelect({
+                    select: this
+                })
+            })
         });
+
+        
 
     </script>
 </body>

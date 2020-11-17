@@ -4,6 +4,7 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Control\Director;
 use SilverStripe\Security\Member;
 use SilverStripe\View\ArrayData;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
@@ -36,7 +37,13 @@ class MemberPageController extends PageController{
         'edit',
         'updatebanner',
         'updatepp',
+        'doupdate',
+        'addsosmed',
+        'deletesosmed',
+        'addhobby',
+        'deletehobby'
     ];
+
 
     public function index(HTTPRequest $request){
         $member = Member::currentUser();
@@ -58,9 +65,36 @@ class MemberPageController extends PageController{
         }
     }
 
-    // 'updatebanner',
-    //     'updatepp',
-    // PhotoProfileID
+    public function doupdate($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        
+
+        //chcek email
+        if ($data['Email'] != $member->Email){
+            $other = DataObject::get('MemberData', "Email='".$data['Email']."'");
+            if ($other->count() > 0){
+                echo json_encode(['status'=>500, 'msg'=>'Email telah digunakan']);
+                return;       
+            }
+        }
+
+        $member->update($_POST);  
+        $valid = $member->validate();
+        if ($valid->isValid()){
+            $member->write();
+            echo json_encode(['status'=>200, 'msg'=>'Update Success']);
+            return;       
+        }else{
+            echo json_encode(['status'=>200, 'msg'=>'Something Wrong !!!']);
+            return;     
+        }
+    }
+
+    
     public function updatebanner($data){
         $member = Member::currentUser();
         if (!$member){
@@ -96,12 +130,95 @@ class MemberPageController extends PageController{
             echo json_encode(['status'=>200, 'msg'=>'Success']);
             return;       
         }else{
-            echo json_encode(['status'=>500, 'msg'=>'Sistem Error']);
+            echo json_encode(['status'=>500, 'msg'=>'System Error']);
             return;       
         }
     }
 
 
+    // 'addsosmed',
+    // 'deletesosmed',
+    // 'addhobby',
+    // 'deletehobby'
+
+    public function addsosmed($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        $newSosmed = new SosmedData();
+        $newSosmed->update($_POST);
+        $id = $newSosmed->write();
+        if ($id) {
+            $member->SosmedData()->add($newSosmed);
+            echo json_encode(['status'=>200, 'msg'=>'Add Data Success', 'data'=>
+            $newSosmed->toJsonArray()]);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'System Error']);
+        }
+    }
+
+    public function deletesosmed(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+            return;       
+        }
+        $sosmed = SosmedData::get()->byID($_GET['id']);
+        if ($sosmed) {
+            $sosmed->delete();
+            echo json_encode(['status'=>200, 'msg'=>'Delete Data Success']);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Maybe this data has been deleted']);
+        }
+    }
+
+
+    public function addhobby($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        $newHobby = new HobbyData();
+        $newHobby->update($_POST);
+        $id = $newHobby->write();
+        if ($id) {
+            $member->HobbyData()->add($newHobby);
+            echo json_encode(['status'=>200, 'msg'=>'Add Data Success', 'data'=>
+            $newHobby->toJsonArray()]);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'System Error']);
+        }
+    }
+
+    public function deletehobby(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+            return;       
+        }
+        $hobby = HobbyData::get()->byID($_GET['id']);
+        if ($hobby) {
+            $hobby->delete();
+            echo json_encode(['status'=>200, 'msg'=>'Delete Data Success']);
+            return;       
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Maybe this data has been deleted']);
+        }
+    }
 
     public function login(){
         $member = Member::currentUser();

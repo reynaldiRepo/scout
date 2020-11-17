@@ -83,64 +83,70 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 order-1 order-lg-2 d-flex align-items-center justify-content-center">
-                                <div class="signup-form-wrapper p-3">
-                                    <div class="signup-inner text-center">
+                                <div class="signup-form-wrapper">
+                                    <div class="signup-inner">
+                                        <div class="text-center">
                                         <h3 class="title">DAFTAR PERANSAKA DKDJATIM</h3>
-                                        <form class="signup-inner--form" id="form-register" action ="{$Link}doregister" method="POST">
+                                        </div>
+                                        <form class="p-3 pl-5 pr-5 pb-4" id="form-register" action ="{$Link}doregister" method="POST">
                                             <div class="row">
-                                                <div class="p-2 col-12">
+                                                <div class="p-1 col-12">
+                                                <label>Email</label>
                                                     <input type="email" required name="Email" class="form-control"
                                                         placeholder="Email">
                                                 </div>
-                                                <div class="p-2 col-md-6">
+                                                <div class="p-1 col-md-6">
+                                                <label>Nama Depan</label>
                                                     <input type="text" required name="FirstName" class="form-control"
                                                         placeholder="First Name">
                                                 </div>
-                                                <div class="p-2 col-md-6">
+                                                <div class="p-1 col-md-6">
+                                                <label>Nama Belakang</label>
                                                     <input type="text" required name="Surname" class="form-control"
                                                         placeholder="Last Name">
                                                 </div>
-                                                <div class="p-2 col-12">
+                                                <div class="p-1 col-12">
+                                                <label>Password</label>
                                                     <input type="password" required name="Password" class="form-control"
                                                         placeholder="Password">
                                                 </div>
-                                                <div class="p-2 col-md-6">
+                                                <div class="p-1 col-md-6">
+                                                <label>Saka</label>
                                                     <select class="slim-select" required name="SakaDataID">
-                                                        <option value="">Pilih Saka</option>
                                                         <% loop $getSaka %>
                                                         <option value="$ID">$Title</option>
                                                         <% end_loop %>
                                                     </select>
                                                 </div>
-                                                <div class="p-2 col-md-6">
+                                                <div class="p-1 col-md-6">
+                                                <label>Kwarcab</label>
                                                     <select class="slim-select" required name="KwarcabID">
-                                                        <option value="">Pilih Kwarcab</option>
                                                         <% loop $getKabupatenJatim %>
                                                         <option value="$ID">$Title</option>
                                                         <% end_loop %>
                                                     </select>
                                                 </div>
                                                 
-                                                <div class="p-2 col-md-6">
+                                                <div class="p-1 col-md-6">
+                                                <label>Golongan</label>
                                                     <select class="slim-select" required name="GolonganDataID">
-                                                        <option value="">Pilih Golongan</option>
                                                         <% loop $getGolongan %>
                                                         <option value="$ID">$Title</option>
                                                         <% end_loop %>
                                                     </select>
                                                 </div>
 
-                                                <div class="p-2 col-6">
+                                                <div class="p-1 col-6">
+                                                <label>NTA SIPA</label>
                                                     <input type="text" required name="NTA_SIPA" class="form-control"
                                                         placeholder="NTA SIPA">
                                                 </div>
                                                 
-                                                <div class="p-2 col-12">
-                                                    <button class="submit-btn">Submit</button>
+                                                <div class="p-0 m-0 col-12">
+                                                    <button class="submit-btn">Submit</button>                                                    
                                                 </div>
                                             </div>
-                                            <h6 class="terms-condition">I have read & accepted the <a href="#">terms of
-                                                    use</a></h6>
+                                            
                                         </form>
                                     </div>
                                 </div>

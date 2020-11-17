@@ -27,7 +27,7 @@
 				<div class="col-md-5">
 					<div class="header-top-right d-flex align-items-center justify-content-end">
 						<!-- header top search start -->
-						<div class="header-top-search">
+						<div class="header-top-search sr-only">
 							<form class="top-search-box" action="{$BaseHref}home/search">
 								<input type="text" placeholder="Search" name="Key" class="top-search-field">
 								<button class="top-search-btn" type="submit"><i class="flaticon-search"></i></button>

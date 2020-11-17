@@ -3,9 +3,10 @@
 namespace {
 
 use SilverStripe\Security\Member;
-    use SilverStripe\CMS\Controllers\ContentController;
-    use SilverStripe\ORM\DataObject;
-    use SilverStripe\ORM\DB;
+use SilverStripe\CMS\Controllers\ContentController;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
+use SilverStripe\ORM\ArrayList;
 
     class PageController extends ContentController
     {
@@ -68,6 +69,43 @@ use SilverStripe\Security\Member;
 
         public function getKabupatenJatim(){
             return KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC");
+        }
+
+        public function getKecamatanbyKab($kabID){
+            return KecamatanData::get()->filter(['KabupatenDataID'=>$kabID])->sort("Title", "ASC");
+        }
+
+        public function getSosmedCategoryData(){
+            return SosmedCategoryData::get();
+        }
+
+        public function getArrSex(){
+            $arrKelamin = [
+                'L'=>'Laki - Laki',
+                'P'=>'Perempuan'
+            ];
+            $data = new ArrayList();
+            foreach($arrKelamin as $k=>$ak){
+                $data->push(['Sex'=>$k, 'Title'=>$ak]);
+            }
+            return $data;
+        }
+
+        public function getArrAgama(){
+            $arrAgama = [
+                'Islam' => 'Islam',
+                'Kristen' => 'Kristen',
+                'Protestan' => 'Protestan',
+                'Katolik' => 'Katolik',
+                'Hindu' => 'Hindu',
+                'Buddha' => 'Buddha',
+                'Khonghucu' => 'Khonghucu'
+            ];
+            $data = new ArrayList();
+            foreach($arrAgama as $k=>$ak){
+                $data->push(['Agama'=>$k, 'Title'=>$ak]);
+            }
+            return $data;
         }
     }
 }

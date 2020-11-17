@@ -16,7 +16,7 @@
                             <i class="search-icon flaticon-search"></i>
                             <i class="close-icon flaticon-cross-out"></i>
                         </button>
-                        <div class="mob-search-box">
+                        <div class="mob-search-box sr-only">
                             <form class="mob-search-inner" action="{$BaseHref}home/search">
                                 <input type="text" placeholder="Search Here" name="Key" class="mob-search-field">
                                 <button class="mob-search-btn"><i class="flaticon-search" type="submit"></i></button>

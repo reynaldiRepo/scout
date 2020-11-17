@@ -32,6 +32,15 @@ class SosmedData extends DataObject{
         'URL'
     ];
 
+    public function toJsonArray(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['Username'] = $this->Username;
+        $res['URL'] = $this->URL;
+        $res['SosmedCategoryData'] = $this->SosmedCategoryData()->toJsonArray();
+        return $res;
+    }
+
 
     public function getCMSFields()
     {
@@ -77,6 +86,14 @@ class SosmedCategoryData extends DataObject{
     private static $singular_name = "Jenis Sosial Media";
     private static $plural_name = "Jenis Sosial Media";
     
+    public function toJsonArray(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['Title'] = $this->Title;
+        $res['IconCode'] = $this->IconCode;
+        return $res;
+    }
+
     private $fontIconCode = [
         "fa fa-500px",
         "fa fa-amazon",
