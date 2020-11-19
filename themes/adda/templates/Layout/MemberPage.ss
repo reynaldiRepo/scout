@@ -1,7 +1,7 @@
 <div class="col-lg-6 order-1 order-lg-2">
     <div class="ctr-banner">
         <div class="col-lg-12 bg-dark banner-user lightgallery" data-bg="$CurrentMember.getBannerImage.Fill(360,180).URL">
-                <img data-src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" class="pp-banner"/>\
+                <img data-src="$CurrentMember.getPhotoProfile.URL" src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" class="pp-banner"/>
         </div>
     <a href="{$BaseHref}member/edit" class="edit-prof-btn text-white bg-info mt-2 pl-2 pr-2"><i class="fa fa-edit"></i> Edit Profile</a>
     </div>

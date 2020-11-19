@@ -12,9 +12,10 @@ use SilverStripe\Admin\SecurityAdmin;
 
 class LeftAndMainExt extends LeftAndMainExtension{
     public function init(){
+        CMSMenu::remove_menu_class(CMSPagesController::class);
+
         $member = Member::currentUser();
         $adminCabangGroup = CT::getGroupID("admin-cabang");
-        
         // handle on hide menu for user with admin cabang level
         if ($member->inGroup($adminCabangGroup->ID)){
             CMSMenu::remove_menu_class(CMSPagesController::class);

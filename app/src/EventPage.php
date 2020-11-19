@@ -27,7 +27,11 @@ class EventPageController extends PageController
 {
     private static $allowed_actions = [
         'index',
-        'v'
+        'v',
+        'join',
+        'unjoin',
+        'addcomment',
+        'deletecomment'
     ];
 
     protected function init()
@@ -56,10 +60,118 @@ class EventPageController extends PageController
         if ($Event){
             $data['Title'] = $Event->Title;
             $data['Event'] = $Event;
+            $Comment = new PaginatedList($Event->CommentEventData()->sort("Created", "DESC"), $this->getRequest());
+            $Comment->setPageLength(10);
+            $data['Comments'] = $Comment;
         }else{
             die("404/ not found");
             return;
         }
         return $this->customise($data)->renderWith(array('CleanPage', 'EventPage_v'));
+    }
+
+    public function join(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired, please login again']);
+            return;
+        }
+
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+
+        $event = EventData::get()->byID($_GET['id']);
+        if ($event){
+            $event->MemberData()->add($member);
+            echo json_encode(['status'=>200, 'msg'=>'Registrasi event success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+    }
+
+    public function unjoin(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired, please login again']);
+            return;
+        }
+
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+
+        $event = EventData::get()->byID($_GET['id']);
+        if ($event){
+            $event->MemberData()->remove($member);
+            echo json_encode(['status'=>200, 'msg'=>'Unregistrasi event success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+    }
+
+    // 'addcomment',
+    // 'deletecomment'
+
+    public function addcomment($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired, please login again']);
+            return;
+        }
+
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+        // id  =  id event
+        $event = EventData::get()->byID($_GET['id']);
+        if ($event){
+            $newComment = new CommentEventData();
+            $newComment->update($_POST);
+            $newComment->MemberDataID = $member->ID;
+            $newComment->write();
+            $event->CommentEventData()->add($newComment);
+            echo json_encode(['status'=>200, 'msg'=>'Add Comment Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+
+        
+    }
+
+
+    public function deletecomment($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired, please login again']);
+            return;
+        }
+
+        if (!isset($_GET['idevent']) || !isset($_GET['idcomment'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+        
+        $event = EventData::get()->byID($_GET['idevent']);
+        $comment = CommentEventData::get()->byID($_GET['idcomment']);
+        if ($event && $comment){
+            $event->CommentEventData()->remove($comment);
+            echo json_encode(['status'=>200, 'msg'=>'Delete Comment Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+
+        
     }
 }

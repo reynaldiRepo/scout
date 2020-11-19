@@ -110,6 +110,32 @@ class EventData extends DataObject {
         return $nama;
     }
 
+    public function isStillOpen(){
+        $date = date("Y-m-d H:i:s");
+        if ($date <= $this->Mulai){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
+    public function IsJoin(){
+        $member = Member::currentUser();
+        if (!$member){
+            return false;
+        }
+        if ($this->MemberData()->filter(['MemberDataID'=>$member->ID])->count() != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getCommentCount(){
+        return $this->CommentEventData()->count();
+    }
+
     public function getImageEvent(){
         $sc = SiteConfig::current_site_config();
         if ($this->ImageID != 0 && $this->Image()->exists()){
@@ -210,6 +236,8 @@ class EventData extends DataObject {
         );
         return $fields;
     }
+
+
 }
 
 

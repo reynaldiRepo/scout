@@ -501,7 +501,6 @@
             data = JSON.parse(data)
             if (data.status == 200) {
                 alertSuccess(data.msg);
-                location.reload();
             } else {
                 alertWarning(data.msg);
             }
@@ -521,14 +520,15 @@
         "<li class='list-group-item list-group-item-action'><i "+
         "class='fa-theme "+data.SosmedCategoryData.IconCode+" mr-2'></i>"+
         "<a class='text-dark' href='"+data.URL+"'>"+data.Username+"</a>"+
-        "<button class='delete-btn del-sosmed' data-id='"+data.ID+"' title='Delete'>"+
+        "<button class='delete-btn del-sosmed' onclick='deleteSosmed(this)' data-id='"+data.ID+"' title='Delete'>"+
         "<span aria-hidden='true'><i class='fa fa-trash'></i></span>"+
         "</button>"+
         "</li>"       
         )
     }
-    $(".del-sosmed").click(function(){
-        var button = $(this);
+    
+    function deleteSosmed(e){
+        var button = $(e);
         deleteQuestion(function(){
             var ctr = button.parent();
             console.log(ctr)
@@ -554,7 +554,12 @@
                 alertError("ERROR")
             })
         }, "Anda yakin menghaups data ini");
+    }
+
+    $(".del-sosmed").click(function(){
+        deleteSosmed(this)
     })
+
     $("#form-add-sosmed").submit(function (e) {
         for (instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].updateElement();
@@ -596,15 +601,15 @@
         $("#hobi-place").append(
             "<li class='list-group-item list-group-item-action'>"+
                 data.Title+
-                "<button class='delete-btn del-hobby' data-id='"+data.ID+"' title='Delete'>"+
+                "<button class='delete-btn del-hobby' onclick='deleteHobby(this)' data-id='"+data.ID+"' title='Delete'>"+
                     "<span aria-hidden='true'><i class='fa fa-trash'></i></span>"+
                 "</button>"+
             "</li>"
         )
     }
 
-    $(".del-hobby").click(function(){
-        var button = $(this);
+    function deleteHobby (e){
+        var button = $(e);
         deleteQuestion(function(){
             var ctr = button.parent();
             console.log(ctr)
@@ -630,6 +635,10 @@
                 alertError("ERROR")
             })
         }, "Anda yakin menghaups data ini");
+    }
+
+    $(".del-hobby").click(function(){
+        deleteHobby(this)  
     })
 
     $("#form-add-hobi").submit(function (e) {

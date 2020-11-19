@@ -95,13 +95,43 @@ function deleteQuestion(callback, msg){
         buttons: [
             ['<button><b>YES</b></button>', function (instance, toast) {
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                callback()
             }, true],
             ['<button>NO</button>', function (instance, toast) {
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
             }],
         ],
         onClosing: function(instance, toast, closedBy){
-            callback()
+            console.info('Closing | closedBy: ' + closedBy);
+        },
+        onClosed: function(instance, toast, closedBy){
+            console.info('Closed | closedBy: ' + closedBy);
+        }
+    });
+}
+
+
+function Question(callback, msg){
+    iziToast.question({
+        timeout: 100000,
+        close: true,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: '',
+        message: msg,
+        position: 'center',
+        buttons: [
+            ['<button><b>YES</b></button>', function (instance, toast) {
+                callback()
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }, true],
+            ['<button>NO</button>', function (instance, toast) {
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }],
+        ],
+        onClosing: function(instance, toast, closedBy){
             console.info('Closing | closedBy: ' + closedBy);
         },
         onClosed: function(instance, toast, closedBy){

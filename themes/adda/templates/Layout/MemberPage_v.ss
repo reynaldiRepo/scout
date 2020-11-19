@@ -1,7 +1,7 @@
 <div class="col-lg-6 order-1 order-lg-2">
     <div class="ctr-banner">
         <div class="col-lg-12 bg-dark banner-user lightgallery" data-bg="$Member.getBannerImage.Fill(360,180).URL">
-                <img data-src="$Member.getPhotoProfile.Fill(80,80).URL" src="$Member.getPhotoProfile.Fill(80,80).URL" class="pp-banner"/>\
+                <img data-src="$Member.getPhotoProfile.URL" src="$Member.getPhotoProfile.Fill(80,80).URL" class="pp-banner"/>\
         </div>
     </div>
     <div class="card widget-item pt-0">

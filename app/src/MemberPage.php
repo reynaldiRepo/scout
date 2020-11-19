@@ -58,7 +58,7 @@ class MemberPageController extends PageController{
     public function all(){
         $member = Member::currentUser();
         if (!$member){
-            return $this->redirect(Director::baseURL());
+            return $this->redirect('member/login');
         }
         $data['Title'] = "Member Peransaka";
         $arrayFilter = [];
@@ -115,7 +115,7 @@ class MemberPageController extends PageController{
     public function v(){
         $member = Member::currentUser();
         if (!$member){
-            return $this->redirect(Director::baseURL());
+            return $this->redirect('member/login');
         }
         if (!$this->getRequest()->param('ID')){
             die("404/ not found");
@@ -139,7 +139,7 @@ class MemberPageController extends PageController{
             $data['Title'] = $member->FirstName." Profile";
             return $data;
         }else{
-            $this->redirect(Director::baseURL());
+            $this->redirect('member/login');
         }
     }
 
@@ -149,7 +149,7 @@ class MemberPageController extends PageController{
             $data['Title'] = "Edit Profile ".$member->FirstName;
             return $data;
         }else{
-            $this->redirect(Director::baseURL());
+            $this->redirect('member/login');
         }
     }
 
@@ -311,7 +311,7 @@ class MemberPageController extends PageController{
     public function login(){
         $member = Member::currentUser();
         if ($member){
-            return $this->redirect(Director::baseURL());
+            return $this->redirect('member/login');
         }
         return $this->renderWith(array('login'));
     }
@@ -381,7 +381,7 @@ class MemberPageController extends PageController{
     public function forgotpassword(){
         $member = Member::currentUser();
         if ($member){
-            return $this->redirect(Director::baseURL());
+            return $this->redirect('member/login');
         }
         return $this->renderWith(array('forgotpassword'));
     }
