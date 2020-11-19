@@ -89,7 +89,15 @@ class ImportAdmin extends LeftAndMain {
     public function ImportData($data, $form){
         $member = Member::currentUser();
 
-        $parser = new Parser($_FILES['File']['tmp_name']);
+        //read delimiter
+        $x = array_shift(file($_FILES['File']['tmp_name']));
+        $delimiter = ",";
+        if (strpos($x, ';') !== false) {
+            $delimiter = ";";
+        }
+
+
+        $parser = new Parser($_FILES['File']['tmp_name'], $delimiter);
         $array = json_decode(json_encode($parser->all()), TRUE);
         $validator = $this->validateCSV($data['Type'], $array[0]);
         if ($validator['valid']){
