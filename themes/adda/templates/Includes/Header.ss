@@ -7,7 +7,7 @@
 					<div class="header-top-navigation">
 						<nav>
 							<ul>
-								<li class=""><a href="$BaseHref">Home</a></li>
+								<li class=""><a href="{$BaseHref}home/dashboard">Home</a></li>
 								<li class=""><a href="{$BaseHref}event/">Event</a></li>
 								<li class=""><a href="{$BaseHref}member/all">Anggota</a></li>
 							</ul>
@@ -18,7 +18,7 @@
 
 				<div class="col-md-2">
 					<div class="brand-logo text-center">
-						<a href="$BaseHref">
+						<a href="{$BaseHref}home/dashboard">
 							<img src="$SiteConfig.WebLogo.URL" alt="brand logo">
 						</a>
 					</div>
@@ -50,7 +50,7 @@
 									<div class="profile-body">
 										<ul>
 											<li><a href="{$BaseHref}member"><i class="flaticon-user"></i>Profile</a></li>
-											<li><a href="{$BaseHref}member/activity"><i class="flaticon-document"></i>Activity</a></li>
+											<%-- <li><a href="{$BaseHref}member/activity"><i class="flaticon-document"></i>Activity</a></li> --%>
 										</ul>
 										<ul>
 											<li><a href="{$BaseHref}member/logout"><i class="flaticon-unlock"></i>Sing out</a>

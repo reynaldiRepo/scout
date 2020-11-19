@@ -187,7 +187,7 @@
                 data = JSON.parse(data)
                 if (data.status == 200){
                     alertSuccess("Login Success");
-                    location.href = "{$BaseHref}"
+                    location.reload();
                 }else{
                     alertWarning(data.msg);
                 }

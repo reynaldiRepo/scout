@@ -25,6 +25,9 @@ class EventPage extends Page {
 
 class EventPageController extends PageController
 {
+
+    
+
     private static $allowed_actions = [
         'index',
         'v',
@@ -40,15 +43,99 @@ class EventPageController extends PageController
         $member = Member::currentUser();
         if (!$member){
             $this->redirect("member/login");
+            return;
+        }
+        $adminCabangGroup = CT::getGroupID("admin-cabang");
+        $admin = CT::getGroupID("administrators");
+        if ($member->inGroup($admin->ID) || $member->inGroup($adminCabangGroup->ID)){
+            $this->redirect("admin");
+            return;
         }
     }
 
+    public function arrSoort(){
+        $res = new ArrayList();
+        $arr = [
+            'Created-DESC'=>'Terbaru',
+            'Created-ASC'=>'Terlama',
+            'Title-ASC'=>'A - Z',
+            'Title-DESC'=>'Z - A',
+        ];
+        foreach($arr as $k=>$v){
+            $res->push(['q'=>$k, 'Title'=>$v]);
+        }
+        return $res;
+    }
+
     public function index(HTTPRequest $request){
-        die("/404 - Future Update");
-        return;
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+            return;
+        }
+
+        $arrayFilter = [];
+        $sort = "Created-DESC";
+        if (!empty($_GET)) {
+            if (isset($_GET['SakaDataID'])) {
+                if (!empty($_GET['SakaDataID'])) {
+                    $arrayFilter['SakaDataID'] = $_GET['SakaDataID'];
+                }
+            }
+            if (isset($_GET['KategoriEventDataID'])) {
+                if (!empty($_GET['KategoriEventDataID'])) {
+                    $arrayFilter['KategoriEventDataID'] = $_GET['KategoriEventDataID'];
+                }
+            }
+            if (isset($_GET['Title'])) {
+                if (!empty($_GET['Title'])) {
+                    $arrayFilter['Title:PartialMatch'] = $_GET['Title'];
+                }
+            }
+        }
+
+        if (!empty($arrayFilter)){
+            $Event = EventData::get()->filter($arrayFilter);
+            foreach($arrayFilter as $k=>$v){
+                if ($k != "Title:PartialMatch") {
+                    $data[$k] = $v;
+                }else{
+                    $data['TitleSearch'] = $v;
+                }
+            }
+        }else{
+            $Event = EventData::get();
+        }
+
+
+        $arrSort = [
+            'Created-DESC'=>'Terbaru',
+            'Created-ASC'=>'Terlama',
+            'Title-ASC'=>'A - Z',
+            'Title-DESC'=>'Z - A',
+        ];
+        if (isset($_GET['Sort'])) {
+            if (!empty($_GET['Sort']) && isset($arrSort[$_GET['Sort']])) {
+                $sort = $_GET['Sort'];
+            }
+        }
+        $sort = explode("-", $sort);
+        $Event = $Event->sort($sort[0], $sort[1]);
+        $Event = new PaginatedList($Event, $this->getRequest());
+        $Event->setPageLength(4);
+        $data['Events'] = $Event;
+        $sort = implode("-", $sort);
+        $data['Sort'] = $sort;
+        $data['Title'] = "Event Peransaka";
+        return $this->customise($data)->renderWith(array('CleanPage', 'EventPage'));
     }
 
     public function v(){
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+            return;
+        }
         if (!$this->getRequest()->param('ID')){
             die("404/ not found");
             return;

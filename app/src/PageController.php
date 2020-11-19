@@ -86,6 +86,10 @@ use SilverStripe\ORM\ArrayList;
             return SosmedCategoryData::get();
         }
 
+        public function getKategoriEventData(){
+            return KategoriEventData::get();
+        }
+
         public function getArrSex(){
             $arrKelamin = [
                 'L'=>'Laki - Laki',

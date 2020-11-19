@@ -155,5 +155,20 @@
         right: 20px;
         width: fit-content;
     }
+    .search-event {
+        display:none;
+    }
+    @media (max-width: 767.98px){
+        .search-event-side{
+            display:none;
+        }
+        .search-event {
+            display:unset;
+        }
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
 
 </style>

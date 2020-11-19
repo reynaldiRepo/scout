@@ -28,7 +28,7 @@
                 <% if $Kwarcab.Title %>
                 <a href="$Link" class="list-group-item list-group-item-action"><i class="fa-theme fa fa-home mr-2"></i> Kwarcab $Kwarcab.getTitleShort()</a>
                 <% end_if %>
-              </div>
+            </div>
         </div>
     </div>
 </div>

@@ -2,13 +2,13 @@
     <div class="mobile-header-wrapper sticky d-block d-lg-none">
         <div class="mobile-header position-relative ">
             <div class="mobile-logo bg-white">
-                <a href="$BaseHref">
+                <a href="{$BaseHref}home/dashboard">
                     <img src="$SiteConfig.SmallWebLogo.ScaleHeight(42).Link" alt="logo">
                 </a>
             </div>
             <div class="mobile-menu w-100">
                 <ul>
-                    <li class="nav-a"><a href="$BaseHref">Home</a></li>
+                    <li class="nav-a"><a href="{$BaseHref}home/dashboard">Home</a></li>
                     <li class="nav-a"><a href="{$BaseHref}event/">Event</a></li>
                     <li class="nav-a"><a href="{$BaseHref}member/all">Anggota</a></li>
                     <li>
@@ -43,7 +43,7 @@
                         <div class="profile-body">
                             <ul>
                                 <li><a href="{$BaseHref}member"><i class="flaticon-user"></i>Profile</a></li>
-                                <li><a href="{$BaseHref}member/activity"><i class="flaticon-document"></i>Activity</a></li>
+                                <%-- <li><a href="{$BaseHref}member/activity"><i class="flaticon-document"></i>Activity</a></li> --%>
                             </ul>
                             <ul>
                                 <li><a href="{$BaseHref}member/logout"><i class="flaticon-unlock"></i>Sing out</a>

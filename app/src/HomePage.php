@@ -24,23 +24,42 @@ class HomePage extends Page{
 class HomePageController extends PageController{
     private static $allowed_actions = [
         'index',
+        'dashboard'
     ];
 
     protected function init()
     {
         parent::init();
         $member = Member::currentUser();
-        if (!$member){
-            $this->redirect("member/login");
-        }
+        if ($member) {
+            $adminCabangGroup = CT::getGroupID("admin-cabang");
+            $admin = CT::getGroupID("administrators");
+            if ($member->inGroup($admin->ID) || $member->inGroup($adminCabangGroup->ID)) {
+                $this->redirect("admin");
+                return ;
+            }
+        }   
     }
 
     public function index(HTTPRequest $request){
-        $data['Title'] = "Homepage";
+        $data['Title'] = "Selamat Datang di peransaka";
+        return $this->customise($data)->renderWith(array('Peransaka'));
+    }
+
+    public function dashboard(){
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+        }
+        $data['Title'] = "Peransaka Home";
         $pages = new PaginatedList(EventData::get(), $this->getRequest());
         $pages->setPageLength(2);
         $data['Events'] = $pages;
         return $data;
+    }
+
+    public function getYear(){
+        return date("Y");
     }
 
     

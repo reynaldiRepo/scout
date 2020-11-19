@@ -1,3 +1,7 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.js"></script>
+
+
 <div class="col-lg-3 order-2 order-lg-1">
     <% if $CurrentMember %>
     <% include ProfileCard %>
@@ -7,6 +11,15 @@
     <% end_if %>
 </div>
 <div class="col-lg-9 order-1 order-lg-2">
+    <div class="col-lg-12 bg-light p-0 d-flex"
+        style="-webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);">
+        <button class="submit-btn mt-0 bg-theme" id="info-tab">
+            Informasi
+        </button>
+        <button class="submit-btn mt-0 bg-dark" id="participant-tab">
+            Peserta
+        </button>
+    </div>
     <% with Event %>
     <div class="card">
         <div class="post-title d-flex align-items-center">
@@ -15,7 +28,34 @@
                 </h6>
             </div>
         </div>
-        <div class="post-content">
+        <div class="post-content" id="participant">
+            <hr>
+            <h4>Daftar Peserta</h4>
+            <hr>
+            <div class="col-md-12 table-responsive">
+                <table class="table table-striped" id="table-peserta">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Saka</th>
+                            <th>Kwarcab</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% loop MemberData %>
+                        <tr>
+                            <td>$FirstName $Surname</td>
+                            <td>$Email</td>
+                            <td>$SakaData.Title</td>
+                            <td>$Kwarcab.Title</td>
+                        </tr>
+                        <% end_loop %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="post-content" id="informasi">
             <div class="mr-auto" style="width: fit-content;">
                 <% if $SakaData %>
                 <i class="fa fa-building"></i>
@@ -100,8 +140,8 @@
                         <tr>
                             <td colspan="2">
                                 <button class="btn btn-dark bg-secondary text-white btn-block pt-2 pb-2 btn-unjoin"
-                                    data-id="$ID" data-url="{$BaseHref}event/unjoin?id=$ID">Anda Telah terdaftar, klik
-                                    untuk keluar dari event</button>
+                                    data-id="$ID" data-url="{$BaseHref}event/unjoin?id=$ID">Sudah Terdaftar, Klik Untuk
+                                    Cancel</button>
                             </td>
                         </tr>
                         <% else %>
@@ -128,10 +168,10 @@
             <div class="post-meta">
                 <ul class="comment-share-meta">
                     <li>
-                        <button class="post-comment mr-3">
+                        <a href="#comment" class="post-comment mr-3">
                             <i class="fa fa-comment"></i>
                             <span style="vertical-align: unset">$getCommentCount</span>
-                        </button>
+                        </a>
                         <button class="post-comment">
                             <i class="fa fa-users"></i>
                             <span style="vertical-align: unset">$getJumlahParticipant</span>
@@ -144,7 +184,7 @@
     <% end_with %>
 
     <%-- comment place --%>
-    <div class="card widget-item">
+    <div class="card widget-item mb-3" id="comment">
         <h4 class="widget-title mt-3 mb-4">$CurrentMember.FirstName $CurrentMember.Surname Post Komentar anda</h4>
         <div class="post-desc mt-3">
             <div class="share-box-inner mt-2">
@@ -214,7 +254,7 @@
                                     <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
                                 </span>
                                 <% if $Up.CurrentMember.ID == $MemberData.ID %>
-                                <button class="float-right del-comment" data-id="$ID" 
+                                <button class="float-right del-comment" data-id="$ID"
                                     data-url="{$BaseHref}event/deletecomment?idevent=$EventData.ID&idcomment=$ID">
                                     <i style="font-size:18px" class="fa fa-trash"></i>
                                 </button>
@@ -268,7 +308,25 @@
             $(this).addClass("table table-bordered")
         }
     })
+    $('#table-peserta').DataTable();
 
+    var tabInfoBtn = $("#info-tab")
+    var tabPesertaBtn = $("#participant-tab")
+    var tabInfo = $("#informasi")
+    var tabPeserta = $("#participant");
+    tabPeserta.hide();
+    tabInfoBtn.click(function(){
+        $(this).addClass("bg-theme").removeClass("bg-dark")
+        tabPesertaBtn.addClass("bg-dark").removeClass("bg-theme")
+        tabInfo.show();
+        tabPeserta.hide();
+    })
+    tabPesertaBtn.click(function(){
+        $(this).addClass("bg-theme").removeClass("bg-dark")
+        tabInfoBtn.addClass("bg-dark").removeClass("bg-theme")        
+        tabInfo.hide();
+        tabPeserta.show();
+    })
 </script>
 
 <script>
@@ -407,4 +465,5 @@
             })
         }, "Anda yakin menghapus comment ini ? ")
     })
+
 </script>

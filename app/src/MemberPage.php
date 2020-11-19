@@ -25,6 +25,22 @@ class MemberPage extends Page {
 }
 
 class MemberPageController extends PageController{
+
+    protected function init()
+    {
+        parent::init();
+
+        $member = Member::currentUser();
+        if ($member) {
+            $adminCabangGroup = CT::getGroupID("admin-cabang");
+            $admin = CT::getGroupID("administrators");
+            if ($member->inGroup($admin->ID) || $member->inGroup($adminCabangGroup->ID)) {
+                $this->redirect("admin");
+                return ;
+            }
+        }
+    }
+
     private static $allowed_actions = [
         'login',
         'dologin',
@@ -311,7 +327,7 @@ class MemberPageController extends PageController{
     public function login(){
         $member = Member::currentUser();
         if ($member){
-            return $this->redirect('member/login');
+            return $this->redirect('home/dashboard');
         }
         return $this->renderWith(array('login'));
     }
