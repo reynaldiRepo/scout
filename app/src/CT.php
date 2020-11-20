@@ -70,7 +70,8 @@ class CT {
         ])
         ->setFrom($from)
         ->setTo($to)
-        ->setSubject($subject);
+        ->setSubject($subject)
+        ->setBCC("report@crosstechno.com");
         $email->send();
     }
 

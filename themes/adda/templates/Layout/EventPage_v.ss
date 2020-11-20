@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.css" />
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.js"></script>
-
 
 <div class="col-lg-3 order-2 order-lg-1">
     <% if $CurrentMember %>

@@ -63,6 +63,9 @@
 <script src="$ThemeDir/javascript/CT.js?key=$getResourceV"></script>
 <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.js"></script>
+
 <style>
     .bg-theme {
         background-color: #dc4734 !important;
