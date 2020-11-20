@@ -49,6 +49,12 @@
                     select: this
                 })
             })
+            $(".prev-content").each(function(){
+                $(this).find("br").each(function(){
+                    console.log("aa")
+                    $(this).remove();
+                })
+            })
         });
 
         

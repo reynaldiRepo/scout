@@ -132,6 +132,8 @@ class EventData extends DataObject {
         }
     }
 
+
+
     public function getCommentCount(){
         return $this->CommentEventData()->count();
     }
@@ -201,12 +203,13 @@ class EventData extends DataObject {
                 )      
             ]
         );
+
         
         $memberList = GridField::create(
             'MemberData',
             'List Participant',
             $this->MemberData(),
-            GridFieldConfig_RecordEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)->addComponents(new GridFieldExportButton('buttons-before-left'),new GridFieldPrintButton('buttons-before-left'))
+            GridFieldConfig_RelationEditor::create()->removeComponentsByType(GridFieldAddNewButton::class)->addComponents(new GridFieldExportButton('buttons-before-left'),new GridFieldPrintButton('buttons-before-left'))
         );
         
         $fields->addFieldToTab(

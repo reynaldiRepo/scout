@@ -46,7 +46,9 @@ class KabupatenData extends DataObject {
     public function getTitleShort(){
         $t = $this->Title;
         $t = explode(' ', $t);
-        $t = array_slice($t, 1);
+        if (strtolower($t[0]) == "kabupaten") {
+            $t = array_slice($t, 1);
+        }
         $t = implode(" ", $t);
         return $t;  
     }

@@ -56,7 +56,7 @@
                         <div class="btn-group none">
                             <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-sign-in"></i>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
@@ -78,6 +78,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{$BaseHref}home/dashboard">Dashboard</a>
                         </li>
+                        <% else %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{$BaseHref}member/login">Masuk / Daftar</a>
+                        </li>
                         <% end_if %>
                     </ul>
                 </div>
@@ -85,7 +89,7 @@
                 <div class="dropdown none d-md-none d-none d-lg-inline">
                     <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2">Masuk</span><i class="fas fa-users"></i>
+                        <span class="mr-2">Masuk</span><i class="fas fa-sign-in-alt"></i>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
@@ -268,27 +272,27 @@
         <div class="container">
             <div class="container">
                 <h3 class="section-header dark my-5">
-                    <span class="text-dark">Jadwal Kegiatan</span>
+                    <span class="text-dark">Kegiatan</span>
                 </h3>
-                <% loop getRecentEvent(2) %>
-                <a href="$Link">
-                    <div class="row justify-content-center">
+                <div class="row">
+                    <% loop getRecentEvent(2) %>
                         <div class="col-md-6">
+                            <a href="$Link">
                             <div class="alert alert-flicon alert-info">
                                 <div class="icon-wrapper">
                                     <i class="fas fa-4x fa-info-circle"></i>
                                 </div>
                                 <div class="message-wrapper">
                                     <h3>$Title</h3>
-                                    <p>
+                                    <div class="prev-content">
                                         $Content.LimitWordCount(16,'...')
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
+                            <a href="$Link">
                         </div>
-                    </div>
-                </a>
-                <% end_loop %>
+                    <% end_loop %>
+                </div>
                 <a href="{$BaseHref}event">
                     <div class="row justify-content-center">
                         <div class="col-md-6">
@@ -324,6 +328,15 @@
     <script src="$ThemeDir/peransaka/assets/modules/sweetalert/sweetalert2.all.min.js"></script>
     <script src="$ThemeDir/peransaka/assets/modules/sweetalert/sweetalert2.min.js"></script>
     <script src="$ThemeDir/peransaka/js/main.js"></script>
+    <script>
+        $(".prev-content").each(function () {
+            $(this).find("br").each(function () {
+                console.log("aa")
+                $(this).remove();
+            })
+        })
+
+    </script>
 </body>
 
 </html>

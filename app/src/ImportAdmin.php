@@ -254,11 +254,13 @@ class ImportAdmin extends LeftAndMain {
                 </tr>
             </table>
             </div>
-            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv, Delimiter atau pemisah data 
+            dalam file csv bisa berupa <b>" , "</b> atau <b>" ; "</b><br>
             </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
-            <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>
+            <a href="'.$file.'" class="btn btn-info text-white"><i class="fa fa-download mr-2"></i> Template Excel</a>
+            <a href="'.SiteConfig::current_site_config()->PanduanAdmin()->URL.'" class="btn btn-info text-white"><i class="fa fa-info mr-2"></i> Download Panduan Admin</a>
             </div>');
         }else{
             $file = SiteConfig::current_site_config()->FormatCSVMember()->URL;
@@ -279,11 +281,13 @@ class ImportAdmin extends LeftAndMain {
                 </tr>
             </table>
             </div>
-            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv<br>
+            <p>NB : Kolom(*) Bersifat Wajib, namun tidak perlu dicantumkan pada header csv, Delimiter atau pemisah data 
+            dalam file csv bisa berupa <b>" , "</b> atau <b>" ; "</b><br>
             </p>
             <hr>
             <p>Anda dapat mengunduh format file csv untuk import data Member  dengan menekan tombol download dibawah ini.</p>
-            <a href="'.$file.'" class="btn btn-info text-white">Format CSV</a>
+            <a href="'.$file.'" class="btn btn-info text-white"><i class="fa fa-download mr-2"></i> Template Excel</a>
+            <a href="'.SiteConfig::current_site_config()->PanduanAdmin()->URL.'" class="btn btn-info text-white"><i class="fa fa-info mr-2"></i> Download Panduan Admin</a>
             </div>
             ');
         }

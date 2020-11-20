@@ -10,19 +10,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js" integrity="sha512-Zk7h8Wpn6b9LpplWXq1qXpnzJl8gHPfZFf8+aR4aO/4bcOD5+/Si4iNu9qE38/t/j1qFKJ08KWX34d2xmG0jrA==" crossorigin="anonymous"></script>
 <script src="{$BaseHref}public/_resources/JS/vmap.jatim.js" crossorigin="anonymous"></script>
 
-
-    <div class="cms-content-header north" style="margin-top: -15px;
-        margin-bottom: 30px;
-        position: sticky;
-        top: 0;">
-		<div class="cms-content-header-info vertical-align-items flexbox-area-grow">
-			<div class="breadcrumbs-wrapper">
-				<span class="cms-panel-link crumb last">
-                    Dashboard
-				</span>
-			</div>
-		</div>
-	</div>
+<div class="cms-content-header north" style="margin-top: -15px;
+    margin-bottom: 30px;
+    position: sticky;
+    top: 0;">
+    <div class="cms-content-header-info vertical-align-items flexbox-area-grow">
+        <div class="breadcrumbs-wrapper">
+            <span class="cms-panel-link crumb last">
+                Dashboard
+            </span>
+        </div>
+    </div>
+</div>
 
 
 <div class="container-fluid">
@@ -67,12 +66,18 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3 p-1 clock">
-                <div class="dashboard-panel p-3">
-                    <div class="overlay"></div>
-                    <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="90" frameborder="0" seamless></iframe>
-                </div>
+        <div class="col-md-3 p-1">
+            <div class="dashboard-panel bg-white">
+                    <h2 style="margin-bottom:0; text-transform:uppercase; opacity:0">Admin Cabang</h2>
+                    <div class="d-block" style="opacity:0">
+                        <b style="font-size:48px">$getAdminCabang</b>
+                        <i class="fa fa-user-shield mt-1 float-right" style="font-size:48px"></i>
+                    </div>
+                <div class="overlay"></div>
+                <iframe style="position: absolute;top: 1.4rem;left: 0px;" src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="93" frameborder="0" seamless></iframe>
+            </div>
         </div>
+        
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -84,20 +89,26 @@
                     <b class="text mt-3 text-center">$getMsgAdmin</b>
                     <hr>
                 </div>
-                <div class="col-lg-12 mb-2">
+                <div class="col-lg-12 mb-3">
                     <div>
-                        <i class="ml-auto">Today is good day : $getDate</i>
+                        <i class="ml-auto mt-2">Today is good day : $getDate</i>
+                        <a href="$SiteConfig.PanduanAdmin.URL" target="_blank" class="float-right btn btn-info text-white"><i class="fa fa-download mr-2"></i>Download Panduan Admin</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="dashboard-panel">
+            <div class="dashboard-panel pb-4">
                 <h2>Jumlah Member Berdasarkan Golongan</h2>
                 <div>
                     <canvas id="baseGolonganChart"></canvas>
+                    <canvas id="baseGolonganPieChart"></canvas>
                     <hr>
                     <a href="admin/Member" class="btn btn-info text-white">Lihat Lainnya</a>
+                    <div class="form-check float-right">
+                        <input type="checkbox" class="form-check-input" id="golongan-pie">
+                        <label class="form-check-label" for="golongan-pie">Show Pie Chart</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,8 +117,13 @@
                 <h2>Jumlah Member Berdasarkan Saka</h2>
                 <div>
                     <canvas id="baseSakaChart"></canvas>
+                    <canvas id="baseSakaPieChart"></canvas>
                     <hr>
                     <a href="admin/Member" class="btn btn-info text-white">Lihat Lainnya</a>
+                    <div class="form-check float-right">
+                        <input type="checkbox" class="form-check-input" id="saka-pie">
+                        <label class="form-check-label" for="saka-pie">Show Pie Chart</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,10 +148,10 @@
                 <div style="height:400px; overflow-y:scroll">
                     <hr>
                     <div>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-striped" id="table-detail">
                             <tr>
                                 <th>
-                                    Kabupaten
+                                    Kabupaten / Kota
                                 </th>
                                 <% loop $getSakaList %>
                                     <th>
@@ -160,6 +176,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 <script>
@@ -191,6 +209,40 @@
                 }
             },
         }
+
+    var optpie = {
+        legend : {
+            display: true,
+            position: 'left'
+        },
+        plugins: {
+            datalabels: {
+                align: 'start',
+                anchor: 'end',
+                formatter: (value, ctx) => {
+                    let sum = 0;
+                    let dataArr = ctx.chart.data.datasets[0].data;
+                    console.log(dataArr)
+                    dataArr.map(data => {
+                        sum += parseFloat(data);
+                    });
+                    console.log(sum)
+                    let percentage = (value / sum * 100).toFixed(2)+"%";
+                    return percentage;
+                },
+                color: function(context) {
+                    return "#FFF";
+                },
+                font: function(context) {
+                    var w = context.chart.width;
+                    return {
+                        size: w < 512 ? 12 : 14
+                    };
+                },
+            }
+        },
+    }
+
     var ctx = document.getElementById('baseSakaChart').getContext('2d');
     var baseSakaChart = new Chart(ctx, {
         type: 'horizontalBar',
@@ -214,6 +266,32 @@
             }]
         },
         options: optBar
+    });
+
+
+    var ctx = document.getElementById('baseSakaPieChart').getContext('2d');
+    var baseSakaPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [
+                <% loop $getNumMemberBySaka %>
+                        '$Title.LimitWordCount(2,'...')',
+                <% end_loop %>
+            ],
+            datasets: [{
+				data: [
+                    <% loop $getNumMemberBySaka %>
+                        '$Jumlah',
+                    <% end_loop %>
+                ],
+                backgroundColor: [
+                    <% loop $getNumMemberBySaka %>
+                        '$Color',
+                    <% end_loop %>
+                ],
+            }]
+        },
+        options:  optpie
     });
 
 
@@ -241,6 +319,64 @@
         },
         options: optBar
     });
+
+
+    var ctx = document.getElementById('baseGolonganPieChart').getContext('2d');
+    var baseSakaPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [
+                <% loop $getNumMemberByGolongan %>
+                        '$Title.LimitWordCount(2,'...')',
+                <% end_loop %>
+            ],
+            datasets: [{
+				data: [
+                    <% loop $getNumMemberByGolongan %>
+                        '$Jumlah',
+                    <% end_loop %>
+                ],
+                backgroundColor: [
+                    <% loop $getNumMemberByGolongan %>
+                        '$Color',
+                    <% end_loop %>
+                ],
+            }]
+        },
+        options: optpie
+    });
+</script>
+
+<script>
+var sakaChart = jQuery("#baseSakaChart")
+var sakaPieChart = jQuery("#baseSakaPieChart")
+var GolonganChart = jQuery("#baseGolonganChart")
+var GolonganPieChart = jQuery("#baseGolonganPieChart")
+var sakacb = jQuery("#saka-pie")
+var golongancb = jQuery("#golongan-pie")
+
+sakaPieChart.hide()
+GolonganPieChart.hide()
+
+sakacb.change(function(){
+    if (jQuery(this).is(":checked")){
+        sakaChart.hide()
+        sakaPieChart.show()
+    }else{
+        sakaChart.show()
+        sakaPieChart.hide()
+    }
+})
+
+golongancb.change(function(){
+    if (jQuery(this).is(":checked")){
+        GolonganChart.hide()
+        GolonganPieChart.show()
+    }else{
+        GolonganChart.show()
+        GolonganPieChart.hide()
+    }
+})
 
 </script>
 

@@ -21,7 +21,7 @@
                                 <img src="$getImageEvent.URL" alt="Photo Gallery">
                             </div>
                             <div class="gallery-overlay">
-                                <img src="$getImageEvent.Fill(380,270).URL" alt="Photo Gallery">
+                                <img src="$getImageEvent.Fill(400,200).URL" alt="Photo Gallery">
                                 <div class="view-icon"></div>
                             </div>
                         </div>
@@ -45,8 +45,8 @@
                                         class="fa-theme fa fa-folder mr-2"></i> $KategoriEventData.Title</a>
                                 <% end_if %>
                                 <% if $Content %>
-                                <a href="$Link" class="list-group-item list-group-item-action text-left">
-                                    $Content.LimitCharacters(50,'...read more...')
+                                <a href="$Link" class="list-group-item list-group-item-action text-left prev-content">
+                                    $Content.LimitWordCount(26,'...Read more...')
                                 </a>
                                 <% end_if %>
                             </div>

@@ -124,8 +124,13 @@
                 console.log(data);
                 data = JSON.parse(data)
                 if (data.status == 200){
+                    <% if not $CurrentMember %>
                     alertSuccess(data.msg);
-                    setTimeout(function(){ location.href = "{$BaseHref}" }, 3000);
+                    setTimeout(function(){ location.href = "{$BaseHref}member/login" }, 3000);
+                    <% else %>
+                    alertSuccess("Reset Password Success");
+                    setTimeout(function(){ location.href = "{$BaseHref}member/edit" }, 3000);
+                    <% end_if %>
                 }else{
                     alertWarning(data.msg);
                 }

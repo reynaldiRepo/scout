@@ -89,17 +89,36 @@ class DashboardAdminExtension extends LeftAndMainExtension{
         }
     }
 
+    public function colorByPercentage($total, $n){;
+        $percentage = $n / $total;
+        if ($percentage < 0.4){
+            $percentage = 0.4;
+        }
+        $percentage = str_replace(",",".", $percentage);
+        $color = "rgba(255,100,0,$percentage)";
+        return $color;
+    }
+
     public function getNumMemberByKab(){
         $data = new ArrayList();
         $kab = CT::getKabupatenJatim();
-        foreach ($kab as $k){
+        $temp = 0;
+        foreach ($kab as $k) {
             $member = MemberData::get()->filter(['KwarcabID'=>$k->ID])->count();
-            if ($member) {
-                $data->push(['path'=>$k->PathVmap, 'jumlah'=>$member, 'color'=>$this->rand_color()]);
-            }else{
-                $data->push(['path'=>$k->PathVmap, 'jumlah'=>0, 'color'=>$this->rand_color()]);
+            if ($temp < $member){
+                $temp = $member;
             }
         }
+        $countMember = $temp;
+        foreach ($kab as $k) {
+            $member = MemberData::get()->filter(['KwarcabID'=>$k->ID])->count();
+            if ($member) {
+                $data->push(['path'=>$k->PathVmap, 'jumlah'=>$member, 'color'=>$this->colorByPercentage($countMember, $member)]);
+            } else {
+                $data->push(['path'=>$k->PathVmap, 'jumlah'=>0, 'color'=>"rgba(255,255,255)"]);
+            }
+        }
+        
         return $data;
     }
 

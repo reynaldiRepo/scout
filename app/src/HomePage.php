@@ -9,6 +9,8 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\PaginatedList;
 
+
+
 class HomePage extends Page{
     
     public function getCMSFields()
@@ -24,9 +26,10 @@ class HomePage extends Page{
 class HomePageController extends PageController{
     private static $allowed_actions = [
         'index',
-        'dashboard'
+        'dashboard',
+        'hidemsg'
     ];
-
+    
     protected function init()
     {
         parent::init();
@@ -53,13 +56,25 @@ class HomePageController extends PageController{
         }
         $data['Title'] = "Peransaka Home";
         $pages = new PaginatedList(EventData::get(), $this->getRequest());
-        $pages->setPageLength(2);
+        $pages->setPageLength(5);
         $data['Events'] = $pages;
         return $data;
     }
 
     public function getYear(){
         return date("Y");
+    }
+
+    public function hidemsg(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session expired please login']);
+            return;       
+        }
+        $member->HideWelcome = "1";
+        $member->write();
+        echo json_encode(['status'=>500, 'msg'=>'Good']);
+        return;       
     }
 
     

@@ -163,6 +163,10 @@ class MemberPageController extends PageController{
         $member = Member::currentUser();
         if ($member) {
             $data['Title'] = "Edit Profile ".$member->FirstName;
+            $url = Director::absoluteBaseURL()."member/resetpassword";
+            $encrypt = CT::encryptCT($member->ID."xax".date("Ymdhis")."xax".$member->FirstName);
+            $url .= "?key=".$encrypt;
+            $data['URL_PWD'] = $url;
             return $data;
         }else{
             $this->redirect('member/login');
@@ -382,9 +386,14 @@ class MemberPageController extends PageController{
             // echo json_encode(['status'=>500, 'msg'=>'Email / NTA_SIPA sudah terdaftar']);
             return;
         }else{
+            if ($data['Password'] != $data['Password2']){
+                echo json_encode(['status'=>500, 'msg'=>'Password dan Konfirmasi Password Tidak Sama']);
+                return;
+            }
             $newMember = new MemberData();
             $newMember->update($_POST);
             $newMember->Status = "0";
+            $newMember->NoNeedChangePassword = "1";
             $newMember->write();
             if ($newMember) {
                 $this->sendverify($newMember);

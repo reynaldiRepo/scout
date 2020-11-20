@@ -2,12 +2,16 @@
 
 namespace {
 
+use SilverStripe\Control\Director;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Security\Member;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\ArrayList;
+
+use SilverStripe\View\ArrayData;
+use SilverStripe\Security\MemberPassword;
 
     class PageController extends ContentController
     {
@@ -39,6 +43,28 @@ use SilverStripe\ORM\ArrayList;
             // silahkan lakukan validasi email dengan menekan link dibawah <br>";
             // CT::sendmail($from, $subject, $to, $body, $member);
             // die("mail");
+        }
+
+        public function MemberWarning(){
+            $member = Member::currentUser();
+            if (!$member){
+                return null;
+            }
+            $res = new ArrayList();
+            
+            //check password
+            $pwdlog = MemberPassword::get()->filter(['MemberID'=>$member->ID]);        
+            $pwdlog = $pwdlog->count();
+            if ($member->NoNeedChangePassword){
+                return null;
+            }
+            if ($pwdlog <= 1){
+                $url = Director::absoluteBaseURL()."member/edit";
+                $res->push(['Title'=>"Harap untuk ganti password anda <a href='$url'>disini</a>"]);
+                return $res;
+            }else{
+                return null;
+            }
         }
 
         public function getResourceV(){

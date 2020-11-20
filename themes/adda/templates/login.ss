@@ -58,6 +58,7 @@
                                             <div class="col-12 col-sm p-0 pl-2 pt-2">
                                                 <input type="password" name="Password" required placeholder="Password" class="form-control">
                                             </div>
+                                            
                                             <div class="col-12 col-sm-auto p-0 pl-2 pt-2">
                                                 <button class="login-btn" type="submit">Login</button>
                                             </div>
@@ -109,6 +110,11 @@
                                                 <label>Password</label>
                                                     <input type="password" required name="Password" class="form-control"
                                                         placeholder="Password">
+                                                </div>
+                                                <div class="p-1 col-12">
+                                                <label>Konfirmasi Password</label>
+                                                    <input type="password" required name="Password2" class="form-control"
+                                                        placeholder="Konfirmasi Password">
                                                 </div>
                                                 <div class="p-1 col-md-6">
                                                 <label>Saka</label>

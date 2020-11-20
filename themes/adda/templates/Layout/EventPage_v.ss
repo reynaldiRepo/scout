@@ -76,7 +76,7 @@
                 </figure>
             </div>
             <% end_if %>
-            <div class="post-desc">
+            <div class="post-desc table-responsive">
                 $Content.RAW
                 <hr>
                 <table class="table table-striped mt-2">
@@ -196,8 +196,8 @@
                     </a>
                 </div>
                 <div class="share-content-box w-100">
-                    <form class="share-text-box">
-                        <textarea id="out-input-comment" name="share" class="share-text-field" aria-disabled="true"
+                    <form class="share-text-box" action="{$BaseHref}event/addcomment?id=$Event.ID" id="form-add-comment-out" method="POST">
+                        <textarea id="out-input-comment" name="Content" class="share-text-field" aria-disabled="true"
                             placeholder="Say Something" data-toggle="modal" data-target="#comment-box"></textarea>
                         <button class="btn-share" type="submit">Comment</button>
                     </form>
@@ -218,7 +218,7 @@
                                     <textarea id="in-input-comment" name="Content"
                                         class="share-field-big custom-scroll ps" placeholder="Say Something"></textarea>
                                     <div class="modal-footer">
-                                        <button type="reset" class="post-share-btn" data-dismiss="modal">cancel</button>
+                                        <button id="cancel-comment-btn" class="post-share-btn" data-dismiss="modal">cancel</button>
                                         <button type="submit" class="post-share-btn">post</button>
                                     </div>
                                 </form>
@@ -404,7 +404,25 @@
 
 
 <script>
-    $("#form-add-comment").submit(function (e) {
+    var outcomment = $("#out-input-comment");
+    var incomment = $("#in-input-comment");
+    var cancelcomment = $("#cancel-comment-btn");
+    outcomment.change(function(){
+        incomment.val($(this).val())
+    })
+
+    incomment.change(function(){
+        outcomment.val($(this).val())
+    })
+
+    cancelcomment.click(function(){
+        outcomment.val(incomment.val())
+    })
+
+
+
+
+    $("#form-add-comment, #form-add-comment-out").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this)
         $.ajax({

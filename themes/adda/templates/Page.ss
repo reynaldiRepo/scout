@@ -66,6 +66,28 @@
                     select: this
                 })
             })
+            $(".prev-content").each(function(){
+                $(this).find("br").each(function(){
+                    console.log("aa")
+                    $(this).remove();
+                })
+            })
+            $(".close-div").click(function(){
+                var process = $(this).attr("data-process");
+                var div = $($(this).attr("data-target"))
+                div.hide();
+                if (process == 1){
+                    var url = $(this).attr("data-url");
+                    $.ajax({
+                        url: url,
+                        method: "GET"
+                    }).done(function(data){
+                        console.log(data)
+                    }).fail(()=>{
+                        console.log("Error")
+                    })
+                }
+            })
         });
 
         

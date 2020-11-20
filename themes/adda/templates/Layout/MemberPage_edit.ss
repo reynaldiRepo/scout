@@ -33,6 +33,9 @@
                             <input type="email" required name="Email" class="form-control" placeholder="Email"
                                 value="$CurrentMember.Email">
                         </div>
+                        <div class="p-2 col-12 text-center">
+                            <a href="$URL_PWD" id="pwd-trigger">Reset Password</a>
+                        </div>
                         <div class="p-2 col-md-6">
                             <label>Nama Depan</label>
                             <input type="text" required name="FirstName" class="form-control" placeholder="First Name"
@@ -86,6 +89,12 @@
                             </select>
                         </div>
 
+                        <div class="p-2 col-md-12">
+                            <label>Nomor Ponsel</label>
+                            <input type="text" name="PhoneNumber" class="form-control"
+                                placeholder="Nomor Ponsel" value="$CurrentMember.PhoneNumber">
+                        </div>
+
                         <div class="p-2 col-md-6">
                             <label>Kabupaten Domisili</label>
                             <select class="slim-select" name="Kabupaten" id="kabupaten-select">
@@ -119,7 +128,7 @@
                         <div class="p-2 col-md-12">
                             <label>Alamat</label>
                             <Textarea name="Address" class="form-control"
-                                placeholder="Alamat">$CurrentMember.Address</Textarea>
+                                placeholder="Alamat">$CurrentMember.Address.RAW</Textarea>
                         </div>
 
                         <div class="p-2 col-md-6">
@@ -161,6 +170,16 @@
                                 <% end_if %>
                             </select>
                         </div>
+                        <div class="p-2 col-md-6">
+                            <label>Gugus Depan</label>
+                            <input type="text" name="Gugusdepan" class="form-control"
+                                placeholder="Nama Sekolah Gugus Depan" value="$CurrentMember.Gugusdepan">
+                        </div>
+                        <div class="p-2 col-md-6">
+                            <label>Pangkalan Saka</label>
+                            <input type="text" name="PangkalanSaka" class="form-control"
+                                placeholder="Nama Pangkalan Saka" value="$CurrentMember.PangkalanSaka">
+                        </div>
                         <div class="p-2 col-md-12">
                             <label>Bio</label>
                             <Textarea name="Bio" class="form-control" placeholder="Bio"
@@ -201,7 +220,7 @@
         <div class="widget-body">
             <div class="about-author">
                 <button data-toggle="modal" data-target="#modalhobi"
-                class="btn btn-info bg-theme mt-2 mb-2 p-1 pl-2 pr-2"><i class="fa fa-plus"></i> Data</button>
+                    class="btn btn-info bg-theme mt-2 mb-2 p-1 pl-2 pr-2"><i class="fa fa-plus"></i> Data</button>
                 <div class="list-group" id="hobi-place">
                     <% if $CurrentMember.HobbyData %>
                     <% loop $CurrentMember.HobbyData %>
@@ -239,9 +258,9 @@
                             <label>jenis Sosial Media</label>
                             <select class="slim-select" name="SosmedCategoryDataID">
                                 <% loop getSosmedCategoryData %>
-                                    <option value="$ID" >
-                                        <i class="$IconCode"></i> $Title
-                                    </option>
+                                <option value="$ID">
+                                    <i class="$IconCode"></i> $Title
+                                </option>
                                 <% end_loop %>
                             </select>
                         </div>
@@ -270,8 +289,7 @@
 
 <%-- modal add hobi --%>
 <!-- Modal -->
-<div class="modal fade" id="modalhobi" tabindex="-1" role="dialog" aria-labelledby="modalhobiLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modalhobi" tabindex="-1" role="dialog" aria-labelledby="modalhobiLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-theme">
@@ -299,6 +317,7 @@
 
 <script>
     CKEDITOR.replace('Bio');
+
 </script>
 
 <script>
@@ -514,49 +533,52 @@
 
 <%-- form-add-sosmed --%>
 <script>
-    function rendersosmed(data){
+    function rendersosmed(data) {
         console.log(data);
         $("#sosmed-place").append(
-        "<li class='list-group-item list-group-item-action'><i "+
-        "class='fa-theme "+data.SosmedCategoryData.IconCode+" mr-2'></i>"+
-        "<a class='text-dark' href='"+data.URL+"'>"+data.Username+"</a>"+
-        "<button class='delete-btn del-sosmed' onclick='deleteSosmed(this)' data-id='"+data.ID+"' title='Delete'>"+
-        "<span aria-hidden='true'><i class='fa fa-trash'></i></span>"+
-        "</button>"+
-        "</li>"       
+            "<li class='list-group-item list-group-item-action'><i " +
+            "class='fa-theme " + data.SosmedCategoryData.IconCode + " mr-2'></i>" +
+            "<a class='text-dark' href='" + data.URL + "'>" + data.Username + "</a>" +
+            "<button class='delete-btn del-sosmed' onclick='deleteSosmed(this)' data-id='" + data.ID +
+            "' title='Delete'>" +
+            "<span aria-hidden='true'><i class='fa fa-trash'></i></span>" +
+            "</button>" +
+            "</li>"
         )
     }
-    
-    function deleteSosmed(e){
+
+    function deleteSosmed(e) {
         var button = $(e);
-        deleteQuestion(function(){
+        deleteQuestion(function () {
             var ctr = button.parent();
             console.log(ctr)
             $.ajax({
-                url:"{$BaseHref}member/deletesosmed",
-                data:{id:button.attr("data-id")},
-                method:"GET",
-                beforeSend:function(){
+                url: "{$BaseHref}member/deletesosmed",
+                data: {
+                    id: button.attr("data-id")
+                },
+                method: "GET",
+                beforeSend: function () {
                     blockUI();
                 }
-            }).done(function(data){
+            }).done(function (data) {
                 data = JSON.parse(data)
-                if (data.status == 200){
+                if (data.status == 200) {
                     $.unblockUI();
                     alertSuccess(data.msg)
                     ctr.hide();
-                }else{
+                } else {
                     $.unblockUI();
                     alertWarning(data.msg)
                 }
-            }).fail(function(){
+            }).fail(function () {
                 $.unblockUI();
                 alertError("ERROR")
             })
         }, "Anda yakin menghaups data ini");
     }
 
-    $(".del-sosmed").click(function(){
+    $(".del-sosmed").click(function () {
         deleteSosmed(this)
     })
 
@@ -591,54 +613,58 @@
             alertError("ERROR");
         })
     })
+
 </script>
 
 
 <%-- form-add-sosmed --%>
 <script>
-    function renderhobi(data){
+    function renderhobi(data) {
         console.log(data);
         $("#hobi-place").append(
-            "<li class='list-group-item list-group-item-action'>"+
-                data.Title+
-                "<button class='delete-btn del-hobby' onclick='deleteHobby(this)' data-id='"+data.ID+"' title='Delete'>"+
-                    "<span aria-hidden='true'><i class='fa fa-trash'></i></span>"+
-                "</button>"+
+            "<li class='list-group-item list-group-item-action'>" +
+            data.Title +
+            "<button class='delete-btn del-hobby' onclick='deleteHobby(this)' data-id='" + data.ID +
+            "' title='Delete'>" +
+            "<span aria-hidden='true'><i class='fa fa-trash'></i></span>" +
+            "</button>" +
             "</li>"
         )
     }
 
-    function deleteHobby (e){
+    function deleteHobby(e) {
         var button = $(e);
-        deleteQuestion(function(){
+        deleteQuestion(function () {
             var ctr = button.parent();
             console.log(ctr)
             $.ajax({
-                url:"{$BaseHref}member/deletehobby",
-                data:{id:button.attr("data-id")},
-                method:"GET",
-                beforeSend:function(){
+                url: "{$BaseHref}member/deletehobby",
+                data: {
+                    id: button.attr("data-id")
+                },
+                method: "GET",
+                beforeSend: function () {
                     blockUI();
                 }
-            }).done(function(data){
+            }).done(function (data) {
                 data = JSON.parse(data)
-                if (data.status == 200){
+                if (data.status == 200) {
                     $.unblockUI();
                     alertSuccess(data.msg)
                     ctr.hide();
-                }else{
+                } else {
                     $.unblockUI();
                     alertWarning(data.msg)
                 }
-            }).fail(function(){
+            }).fail(function () {
                 $.unblockUI();
                 alertError("ERROR")
             })
         }, "Anda yakin menghaups data ini");
     }
 
-    $(".del-hobby").click(function(){
-        deleteHobby(this)  
+    $(".del-hobby").click(function () {
+        deleteHobby(this)
     })
 
     $("#form-add-hobi").submit(function (e) {
@@ -672,4 +698,5 @@
             alertError("ERROR");
         })
     })
+
 </script>

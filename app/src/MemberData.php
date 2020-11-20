@@ -39,6 +39,10 @@ class MemberData extends Member
         'SakaDataID' => [
             'filter'=>'ExactMatchFilter',
             'title' => 'Saka',
+        ],
+        'GolonganDataID' => [
+            'filter'=>'ExactMatchFilter',
+            'title' => 'Golongan',
         ]
     ];
 
@@ -51,7 +55,11 @@ class MemberData extends Member
         'PhoneNumber' => 'Varchar(255)',
         'Address' => 'Text',
         'Bio' => 'HTMLText',
-        'Status' => 'Boolean'
+        'Status' => 'Boolean',
+        'Gugusdepan'=>'Varchar(255)',
+        'PangkalanSaka'=>'Varchar(255)',
+        'HideWelcome' => 'Boolean',
+        'NoNeedChangePassword' => 'Boolean'
     ];
 
     private static $has_one = [
@@ -167,7 +175,11 @@ class MemberData extends Member
             'KecamatanID',
             'DirectGroups',
             'BannerImage',
-            'PhotoProfile'
+            'PhotoProfile',
+            'Gugusdepan',
+            'PangakalanSaka',
+            'HideWelcome',
+            'NoNeedChangePassword'
         ]);
         $fields->addFieldToTab(
             'Root.Main',
@@ -338,7 +350,15 @@ class MemberData extends Member
                     'SakaDataID',
                     'Saka',
                     SakaData::get()->sort("Title", "ASC")->map("ID", "Title")
-                )->setEmptyString('Pilih Saka')
+                )->setEmptyString('Pilih Saka'),
+                TextField::create(
+                    'Gugusdepan',
+                    'Gugus Depan'
+                ),
+                TextField::create(
+                    'PangkalanSaka',
+                    'Pangkalan Saka'
+                )
             ]
         );
         $saka->setIsRequired(true);

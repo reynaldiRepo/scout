@@ -18,7 +18,8 @@ class SiteConfigCustom extends DataExtension
         'MetaDescription' => 'Text',
         'GoogleAnalytic' => 'Text',
         'EmailInfo' => 'Varchar(255)',
-        'DefaultPasswordMember' => 'Varchar(255)'
+        'DefaultPasswordMember' => 'Varchar(255)',
+        "WelcomeMsg" => "Varchar(255)"
     ];
 
     private static $has_many = [
@@ -36,6 +37,7 @@ class SiteConfigCustom extends DataExtension
         'ImageOnLoginPage' => CustomImage::class,
         'FormatCSVMember' => CustomFile::class,
         'FormatCSVMemberCabang' => CustomFile::class,
+        'PanduanAdmin' => CustomFile::class,
     ];
 
     public function onAfterWrite()
@@ -85,6 +87,13 @@ class SiteConfigCustom extends DataExtension
 
         $fields->addFieldToTab("Root.Main", 
             TextareaField::create(
+                'WelcomeMsg',
+                'Pesan Selamat Datang Untuk Member'
+            )
+        );
+
+        $fields->addFieldToTab("Root.Main", 
+        TextareaField::create(
                 'DeskripsiWeb',
                 'Deskripsi Singkat'
             )
@@ -143,6 +152,11 @@ class SiteConfigCustom extends DataExtension
                 UploadField::create(
                     'FormatCSVMemberCabang',
                     'Format CSV Import Member untuk admin Cabang'
+                ),
+
+                UploadField::create(
+                    'PanduanAdmin',
+                    'File Untuk Panduan User Admin'
                 ),
 
             ]

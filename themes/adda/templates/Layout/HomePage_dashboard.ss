@@ -1,4 +1,27 @@
 <div class="col-lg-6 order-1 order-lg-2">
+    
+    <div class="col-lg-12 pl-0 pr-0">
+        <% if not $CurrentMember.HideWelcome %>
+        <div class="alert alert-info mb-3" id="alert-welcome">
+            <button type="button" class="close close-div" data-target ="#alert-welcome" data-process="1" title="Hide"
+                data-url="{$BaseHref}home/hidemsg">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            $SiteConfig.WelcomeMsg.RAW
+        </div>
+        <% end_if %>
+        <% if $MemberWarning %>
+            <% loop $MemberWarning %>
+            <div class="alert alert-warning" id ="alert-warning">
+                <button type="button" class="close close-div" data-target ="#alert-warning" data-process="0" title="Hide">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                $Title.RAW
+            </div>
+            <% end_loop %>
+        <% end_if %>
+    </div>
+
     <% loop Events %>
     <div class="card">
         <div class="post-title d-flex align-items-center">
@@ -36,8 +59,8 @@
             </div>
             <hr class="mt-1">
 
-            <p class="post-desc">
-                $Content.LimitCharacters(320,'...')
+            <p class="post-desc prev-content">
+                $Content.LimitWordCount(26,'...')
                 <a href="{$BaseHref}event/v/$ID-$getURLSegment">Read More</a>
             </p>
             <% if $Image %>

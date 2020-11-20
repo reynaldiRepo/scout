@@ -24,6 +24,9 @@
                             <li><a><i class="fa-theme fa fa-home mr-1"></i>Kwarcab
                                     $Member.Kwarcab.getTitleShort()</a></li>
                             <% end_if %>
+                            <% if $Member.PangkalanSaka %>
+                            <li><a><i class="fa-theme fa fa-flag"></i>$Member.PangkalanSaka</a></li>
+                            <% end_if %>
                         </ul>
                     </div>
                     <div class="col-md-6">
@@ -33,8 +36,11 @@
                             <li><a><i class="fa-theme fa fa-phone mr-1"></i>$Member.PhoneNumber</a></li>
                             <% end_if %>
                             <% if $Member.TglLahir %>
-                            <li><a><i class="fa-theme fa fa-calendar mr-1"></i>
-                                    (Birthday) $Member.TglLahir.Format('dd-MM-Y')</a></li>
+                            <li><a><i class="fa-theme fa fa-calendar mr-1"></i>(Birthday) $Member.TglLahir.Format('dd-MM-Y')</a></li>
+                            <% end_if %>
+                            <% if $Member.Gugusdepan %>
+                            <li><a><i class="fa-theme fa fa-graduation-cap" style="padding-right: 15px;"></i>(Gudep) $Member.Gugusdepan</a>
+                            </li>
                             <% end_if %>
                         </ul>
                     </div>
