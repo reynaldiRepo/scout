@@ -212,7 +212,7 @@
 
     var optpie = {
         legend : {
-            display: true,
+            display: jQuery(window).width() < 785 ? false : true,
             position: 'left'
         },
         plugins: {

@@ -45,9 +45,10 @@
                                         class="fa-theme fa fa-folder mr-2"></i> $KategoriEventData.Title</a>
                                 <% end_if %>
                                 <% if $Content %>
-                                <a href="$Link" class="list-group-item list-group-item-action text-left prev-content">
-                                    $Content.LimitWordCount(26,'...Read more...')
-                                </a>
+                                <li href="$Link" class="list-group-item list-group-item-action text-left prev-content">
+                                $Content.LimitWordCount(26,'...') <a href="$Link">Read More</a>
+                                </li>
+                                
                                 <% end_if %>
                             </div>
                         </div>

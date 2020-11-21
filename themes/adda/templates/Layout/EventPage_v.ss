@@ -42,7 +42,7 @@
                     <tbody>
                         <% loop MemberData %>
                         <tr>
-                            <td>$FirstName $Surname</td>
+                            <td><a href="$Link">$FirstName $Surname</a></td>
                             <td>$Email</td>
                             <td>$SakaData.Title</td>
                             <td>$Kwarcab.Title</td>

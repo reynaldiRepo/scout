@@ -42,10 +42,10 @@ class MemberExtension extends DataExtension
 
     public function getPhotoProfileThumb(){
         if ($this->owner->PhotoProfileID != 0 && $this->owner->PhotoProfile()->exists()){
-            return $this->owner->PhotoProfile()->Fill(32,32);
+            return $this->owner->PhotoProfile()->Fill(80,80);
         }else{
             $sc = SiteConfig::current_site_config();
-            return $sc->DefaultPhotoMember()->Fill(32,32);
+            return $sc->DefaultPhotoMember()->Fill(80,80);
         }
     }
 

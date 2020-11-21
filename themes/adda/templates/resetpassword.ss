@@ -39,9 +39,14 @@
                             <div class="col-lg-3 mb-4"></div>
                             <div class="col-lg-6 mb-4 mt-3">
                                 <div class="timeline-logo-area d-flex align-items-center">
-                                    <div class="timeline-logo">
+                                    <div class="timeline-logo timeline-logo-big">
                                         <a href="$BaseHref">
                                             <img src="$SiteConfig.WebLogo.ScaleHeight(50).URL" alt="timeline logo">
+                                        </a>
+                                    </div>
+                                    <div class="timeline-logo timeline-logo-small">
+                                        <a href="$BaseHref">
+                                            <img src="$SiteConfig.SmallWebLogo.ScaleHeight(50).URL" alt="timeline logo">
                                         </a>
                                     </div>
                                     <div class="timeline-tagline">

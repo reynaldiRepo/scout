@@ -161,6 +161,10 @@
     .search-event {
         display:none;
     }
+
+    .timeline-logo-small{
+        display:none
+    }
     @media (max-width: 767.98px){
         .search-event-side{
             display:none;
@@ -168,10 +172,42 @@
         .search-event {
             display:unset;
         }
+        
+        .login-ctr{
+            display:none
+        }
+
+        .signup-form-wrapper{
+            padding :17px 30px
+        }
+
+        .timeline-logo-big{
+            display:none
+        }
+
+        .timeline-logo-small{
+            display:unset
+        }
+
+        .timeline-bg-content{
+            display:none;
+        }
     }
 
     html {
         scroll-behavior: smooth;
     }
 
+    
+
 </style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N1CDZLLSEJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N1CDZLLSEJ');
+</script>

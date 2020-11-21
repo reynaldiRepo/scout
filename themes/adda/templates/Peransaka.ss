@@ -36,6 +36,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
         integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
         crossorigin="anonymous" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1CDZLLSEJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N1CDZLLSEJ');
+
+    </script>
 </head>
 
 <body>
@@ -86,17 +99,7 @@
                     </ul>
                 </div>
                 <% if not $CurrentMember %>
-                <div class="dropdown none d-md-none d-none d-lg-inline">
-                    <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2">Masuk</span><i class="fas fa-sign-in-alt"></i>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="{$BaseHref}member/login">Masuk Anggota</a>
-                        <a class="dropdown-item" href="{$BaseHref}member/login">Mendaftar</a>
-                    </div>
-                </div>
+                
                 <% else %>
                 <div class="dropdown none d-md-none d-none d-lg-inline">
                     <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -276,8 +279,8 @@
                 </h3>
                 <div class="row">
                     <% loop getRecentEvent(2) %>
-                        <div class="col-md-6">
-                            <a href="$Link">
+                    <div class="col-md-6">
+                        <a href="$Link">
                             <div class="alert alert-flicon alert-info">
                                 <div class="icon-wrapper">
                                     <i class="fas fa-4x fa-info-circle"></i>
@@ -290,7 +293,7 @@
                                 </div>
                             </div>
                             <a href="$Link">
-                        </div>
+                    </div>
                     <% end_loop %>
                 </div>
                 <a href="{$BaseHref}event">
