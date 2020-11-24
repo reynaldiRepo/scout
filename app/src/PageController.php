@@ -43,6 +43,11 @@ use SilverStripe\Security\MemberPassword;
             // silahkan lakukan validasi email dengan menekan link dibawah <br>";
             // CT::sendmail($from, $subject, $to, $body, $member);
             // die("mail");
+
+            //check login state;
+
+            
+
         }
 
         public function MemberWarning(){

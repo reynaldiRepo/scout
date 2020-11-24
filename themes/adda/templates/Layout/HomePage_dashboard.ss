@@ -1,5 +1,6 @@
 <div class="col-lg-6 order-1 order-lg-2">
     
+    
     <div class="col-lg-12 pl-0 pr-0">
         <% if not $CurrentMember.HideWelcome %>
         <div class="alert alert-info mb-3" id="alert-welcome">
@@ -22,6 +23,12 @@
         <% end_if %>
     </div>
 
+
+    <div class="col-lg-12 d-flex p-0 text-center mb-3 shadowed">
+        <button class="submit-btn m-0 bg-dark btn-href" href="{$BaseHref}home/feed">Feed Anggota</button>
+        <button class="submit-btn m-0 btn-href" href="{$BaseHref}home/dashboard">Event</button>
+    </div>
+
     <% loop Events %>
     <div class="card">
         <div class="post-title d-flex align-items-center">
@@ -41,7 +48,7 @@
                 <div class="post-settings arrow-shape">
                     <ul>
                         <li><a href="$Link()" class="text-dark"><i class="fa fa-eye mr-2"></i> Detail</a></li>
-                        <li><button><i class="fa fa-sign-in mr-2"></i> Ikuti Event</button></li>
+                        <li><a href="$Link()" class="text-dark"><i class="fa fa-sign-in mr-2"></i> Ikuti Event</a></li>
                     </ul>
                 </div>
             </div>

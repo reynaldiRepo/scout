@@ -110,7 +110,8 @@
     .btn-page {
         box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
         border-radius: 0;
-        margin-right: 3px
+        margin-right: 3px;
+        margin-bottom: 7px;
     }
 
     .nav-a {
@@ -196,6 +197,11 @@
 
     html {
         scroll-behavior: smooth;
+    }
+
+    .shadowed { 
+        -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
     }
 
     

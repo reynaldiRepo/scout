@@ -30,7 +30,7 @@ class DashboardAdminExtension extends LeftAndMainExtension{
     ];
 
     public function rand_color() {
-        return 'rgba('.rand(120,255).','.rand(120,255).','.rand(120,255).', 0.8)';
+        return 'rgba('.rand(80,255).','.rand(80,255).','.rand(80,255).', 1)';
     }
 
 

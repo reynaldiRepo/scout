@@ -11,8 +11,11 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\IdentityStore;
 
 use SilverStripe\Control\Email\Email;
+use SilverStripe\Control\Cookie;
 
 class CT { 
+
+    private static $cookie_login_name = "CTLogin";
 
     public function getKabupatenJatim(){
         return KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC");

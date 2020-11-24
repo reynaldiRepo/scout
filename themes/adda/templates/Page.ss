@@ -88,7 +88,14 @@
                     })
                 }
             })
+            $(".btn-href").click(function(e){
+                e.preventDefault();
+                blockUI();
+                location.href = $(this).attr("href")
+            })
         });
+
+
 
         
 
