@@ -1,4 +1,5 @@
 <?php 
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Control\Director;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\AssetAdmin\Forms\UploadField;
@@ -73,7 +74,11 @@ class MemberData extends Member
     private static $has_many = [
         'SosmedData' => SosmedData::class,
         'HobbyData' => HobbyData::class,
-        'CommentEventData' => CommentEventData::class
+        'CommentEventData' => CommentEventData::class,
+        'FeedData' => FeedData::class,
+        'CommentFeedData' => CommentFeedData::class,
+        'LikeData' => LikeData::class,
+        'CommentFeedData' => CommentFeedData::class
     ];
 
     private static $belongs_many_many = [
@@ -155,6 +160,9 @@ class MemberData extends Member
         $fields->removeFieldFromTab('Root', 'Permissions');
         $fields->removeFieldFromTab('Root', 'CommentEventData');
         $fields->removeFieldFromTab('Root', 'EventData');
+        $fields->removeFieldFromTab('Root', 'FeedData');
+        $fields->removeFieldFromTab('Root', 'LikeData');
+        $fields->removeFieldFromTab('Root', 'CommentFeedData');
 
         $fields->removeByName([
             'Sex',
@@ -382,6 +390,19 @@ class MemberData extends Member
             $gridFieldConfig            
         );
         $fields->addFieldToTab('Root.Hobi', $itemHobby);
+
+        if ($this->ID != 0){
+            $gridFieldConfig = GridFieldConfig_RelationEditor::create();
+            $itemFeed = GridField::create(
+                'FeedData',
+                'List Hobi',
+                $this->FeedData(),
+                $gridFieldConfig            
+            );
+            $fields->addFieldToTab('Root.Feed Data', $itemFeed);
+
+        }
+        
         return  $fields;
     }
 
