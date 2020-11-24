@@ -204,6 +204,13 @@
         box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
     }
 
+    .thumb-upload {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 100%;
+        height: 150px;
+    }
     
 
 </style>

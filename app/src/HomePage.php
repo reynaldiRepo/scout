@@ -27,8 +27,10 @@ class HomePageController extends PageController{
     private static $allowed_actions = [
         'index',
         'dashboard',
+        'feed',
         'hidemsg'
     ];
+
     
     protected function init()
     {
@@ -58,6 +60,26 @@ class HomePageController extends PageController{
         $pages = new PaginatedList(EventData::get(), $this->getRequest());
         $pages->setPageLength(5);
         $data['Events'] = $pages;
+        return $data;
+    }
+
+    public function feed(){
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+        }
+        $start = isset($_GET['Start']) ? $_GET['Start'] : 0;
+        $data['Title'] = "Feed Anggota Peransaka";
+        $Feed = FeedData::get()->sort("Created", "ASC");
+        $pages = new PaginatedList($Feed, $this->getRequest());
+        $pages->setPageLength(10);
+        $data['Feed'] = $pages;
+
+        //check future page
+        $tempStart = $start + 20;
+        if (DataObject::get('FeedData','','','',"$tempStart, 10")->count() != 0){
+            $data['NextPage'] = $tempStart;
+        }
         return $data;
     }
 

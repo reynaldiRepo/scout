@@ -343,6 +343,7 @@
             $("#edit-pp").submit();
         }
     })
+
     inputBanner.change(function () {
         if ($(this).val() != "") {
             if (!imgsizevalidation(1, this)) {
@@ -362,6 +363,7 @@
             $("#edit-banner").submit();
         }
     })
+
     $("#edit-pp").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -389,6 +391,7 @@
             alertError("ERROR");
         })
     })
+    
     $("#edit-banner").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);

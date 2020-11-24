@@ -4,6 +4,7 @@ use SilverStripe\ORM\DB;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
+use SilverStripe\Assets\Upload;
 
 class ApiHelperPage extends Page{
     
@@ -18,6 +19,8 @@ class ApiHelperPageController extends PageController{
         'getProvinsi' => true,
         'getKabupaten' => true,
         'getKecamatan' => true,
+        'uploadimage',
+        'deleteimage'
     ];
     
     function index(HTTPRequest $request){
@@ -62,5 +65,36 @@ class ApiHelperPageController extends PageController{
         }
         echo json_encode($res);
         return; 
+    }
+
+    public function uploadimage($data){
+        $newImage = CustomImage::create();
+        $upl = new Upload();
+        $upl->loadIntoFile($data['Image'], $newImage, "/Uploads");
+        if ($newImage->ID != 0){
+            echo json_encode(['status'=>200, 'msg'=>'Upload Success', 'ID'=>$newImage->ID, 'FileName'=>"Upload Success", 'URL'=>$newImage->URL]);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Upload Failed']);
+            return;
+        }
+    }
+
+
+    public function deleteimage(){
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Error Data Not found']);
+            return;
+        }
+
+        $image = CustomImage::get()->byID($_GET['id']);
+        if ($image){
+            $image->delete();
+            echo json_encode(['status'=>200, 'msg'=>'Delete Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Error Data Not found']);
+            return;
+        }
     }
 }
