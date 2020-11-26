@@ -60,7 +60,13 @@ class MemberPageController extends PageController{
         'addhobby',
         'deletehobby',
         'v',
-        'all'
+        'all',
+        
+        //new feature feed
+        'addfeed',
+        'deletefeed',
+        'updatefeed',
+        'feed',
     ];
 
     /**
@@ -512,7 +518,36 @@ class MemberPageController extends PageController{
             die("/404 not allowed");
             return;
         }
+    }
 
+    //new feature feed
+    // 'addfeed',
+    // 'deletefeed',
+    // 'updatefeed',
+    // 'feed',
+
+    public function addfeed($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired']);
+            return;
+        }
+        $newFeed = new FeedData();
+        $newFeed->update($_POST);
+        $newFeed->MemberDataID = $member->ID;
+        $newFeed->write();
+        if ($newFeed) {
+            if (isset($data['Images'])) {
+                foreach ($data['Images'] as $i) {
+                    $newFeed->Image()->add($i);
+                }
+            }  
+            echo json_encode(['status'=>200, 'msg'=>'Add Feed Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+            return;
+        }
         
     }
 

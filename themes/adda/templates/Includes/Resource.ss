@@ -66,6 +66,10 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.js"></script>
 
+<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.theme.default.min.css">
+<script src="$ThemeDir/javascript/owlcarousel/dist/owl.carousel.js"></script>
+
 <style>
     .bg-theme {
         background-color: #dc4734 !important;
@@ -211,6 +215,16 @@
         width: 100%;
         height: 150px;
     }
+
+    .lg {
+        background : rgba(0,0,0,0.7) !important;
+    }
+
+    .post-meta-like span, .post-comment span {
+        vertical-align: middle !important;
+    }
+    
+
     
 
 </style>

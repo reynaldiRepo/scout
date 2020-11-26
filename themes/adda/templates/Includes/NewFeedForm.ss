@@ -14,7 +14,7 @@
         <!-- share content box start -->
         <div class="share-content-box w-100">
             <div class="share-text-box mb-2">
-                <textarea name="share" class="share-text-field" aria-disabled="true" placeholder="Say Something"
+                <textarea readonly name="share" class="share-text-field" aria-disabled="true" placeholder="Say Something"
                     id="input-out" data-toggle="modal" data-target="#addfeed-modal" id="email"></textarea>
                 <button class="btn-share" id="out-submit" type="button">share</button>
             </div>
@@ -44,9 +44,8 @@
                         <div class="modal-body custom-scroll">
                             <textarea name="Content" class="share-field-big custom-scroll" id= "input-in"
                                 placeholder="Say Something"></textarea>
-                            <button class="col-lg-12 p-0 bg-theme p-2 rounded text-white" type="button"
-                                onclick="$('#uploadimage-trigger').click()">
-                                <i class="fa fa-plus"></i> Tambah Image
+                            <button class="col-lg-12 p-0 bg-info p-2 rounded text-white" type="button"
+                                onclick="$('#uploadimage-trigger').click()">Tambah Image <i class="ml-2 fa fa-image"></i>
                             </button>
                             <div class="col-lg-12 mt-2">
                                 <div class="row" id="image-place">
@@ -68,4 +67,43 @@
 <!-- share box end -->
 
 <%-- for image upload --%>
-<% ScriptUploadImageFeed  %>
+<% include ScriptUploadImageFeed  %>
+<script>
+$("#addfeed").submit(function(e){
+    e.preventDefault();
+    var formData = new FormData(this);
+    var imageData = Object.keys(tempIDImage)
+    if (imageData.length == 0 && $("#input-in").val()==""){
+        alertWarning("Tambahkan data Teks / Image");
+        return;
+    }
+    if (imageData.length != 0){
+        imageData.forEach((data)=>{
+            formData.append("Images[]", data)
+        })
+    }
+    $.ajax({
+        url : $(this).attr("action"),
+        data : formData,
+        method : "POST",
+        processData: false,
+        contentType: false,
+        beforeSend: function(){
+            blockUI();
+        }
+    }).done(function(data){
+        console.log(data);
+        data = JSON.parse(data);
+        if (data.status == 200){
+            alertSuccess(data.msg);
+            location.reload();
+        }else{
+            alertWarning(data.msg);
+            location.reload();
+        }
+    }).fail(function(){
+        alertError("ERROR");
+        location.reload();
+    })
+})
+</script>

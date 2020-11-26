@@ -70,7 +70,7 @@ class HomePageController extends PageController{
         }
         $start = isset($_GET['Start']) ? $_GET['Start'] : 0;
         $data['Title'] = "Feed Anggota Peransaka";
-        $Feed = FeedData::get()->sort("Created", "ASC");
+        $Feed = FeedData::get()->sort("Created", "DESC");
         $pages = new PaginatedList($Feed, $this->getRequest());
         $pages->setPageLength(10);
         $data['Feed'] = $pages;
