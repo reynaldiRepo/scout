@@ -337,7 +337,7 @@ class MemberPageController extends PageController{
     public function login(){
         $member = Member::currentUser();
         if ($member){
-            return $this->redirect('home/dashboard');
+            return $this->redirect('home/feed');
         }
         return $this->renderWith(array('login'));
     }

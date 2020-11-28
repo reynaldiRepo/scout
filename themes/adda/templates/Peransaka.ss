@@ -82,14 +82,14 @@
                 <div class="nav-menus collapse show" id="navbar-navs">
                     <ul class="nav float-lg-right justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{$BaseHref}home/dashboard"><i class="fas fa-home"></i></a>
+                            <a class="nav-link active" href="{$BaseHref}home/feed"><i class="fas fa-home"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">Satuan Karya</a>
                         </li>
                         <% if $CurrentMember %>
                         <li class="nav-item">
-                            <a class="nav-link" href="{$BaseHref}home/dashboard">Dashboard</a>
+                            <a class="nav-link" href="{$BaseHref}home/feed">Dashboard</a>
                         </li>
                         <% else %>
                         <li class="nav-item">

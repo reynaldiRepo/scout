@@ -1,16 +1,16 @@
 <div class="col-md-12 p-0">
     <div class="card" style="height:650px !important">
-        <h4 class="widget-title mt-0 mb-4">$CurrentMember.FirstName $CurrentMember.Surname Post Komentar anda</h4>
+        <div class="profile-thumb d-flex">
+            <a href="$CurrentMember.Link" target="_parent"> 
+                <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
+                    <img src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
+                </figure>
+            </a>
+            <h4 class="widget-title mt-0 mb-4">$CurrentMember.FirstName $CurrentMember.Surname</h4>
+        </div>
         <div class="share-box-inner mt-2">
-            <div class="profile-thumb">
-                <a href="$CurrentMember.Link" target="_parent"> 
-                    <figure class="profile-thumb-middle bg-dark">
-                        <img src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
-                    </figure>
-                </a>
-            </div>
             <div class="share-content-box w-100">
-                <form class="share-text-box" action="{$BaseHref}feed/addcomment?id=$FeedDataID" method="POST"
+                <form class="share-text-box p-0" action="{$BaseHref}feed/addcomment?id=$FeedDataID" method="POST"
                     id="form-add-comment" method="POST">
                     <textarea id="out-input-comment" name="Content" required class="share-text-field"
                         style="height:100px;border-radius:10px;padding:10px" placeholder="Say Something"></textarea>
@@ -25,17 +25,19 @@
                 <% loop $Comment %>
                     <div class="post-desc  mt-2">
                         <div class="share-box-inner">
-                            <div class="profile-thumb">
-                                <a href="$MemberData.Link">
-                                    <figure class="profile-thumb-middle bg-dark">
-                                        <img src="$MemberData.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
-                                    </figure>
-                                </a>
-                            </div>
-                            <div class="share-content-box w-100">
-                                <div class="share-text-box">
+                            <div class="share-content-box w-100 p-0">
+                                <div class="share-text-box p-0">
                                     <div class="share-text-field bg-white p-3" style="border-radius:10px; height:unset">
-                                        <b>$MemberData.FirstName $MemberData.Surname</b>
+                                        <div class="d-flex">
+                                            <div class="profile-thumb">
+                                                <a href="$MemberData.Link">
+                                                    <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
+                                                        <img src="$MemberData.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <b>$MemberData.FirstName $MemberData.Surname</b>
+                                        </div>
                                         <hr class="m-0 mt-2 mb-2">
                                         <p>$Content</p>
                                         <hr>

@@ -7,7 +7,7 @@
 					<div class="header-top-navigation">
 						<nav>
 							<ul>
-								<li class=""><a href="{$BaseHref}home/dashboard">Home</a></li>
+								<li class=""><a href="{$BaseHref}home/feed">Home</a></li>
 								<li class=""><a href="{$BaseHref}event/">Event</a></li>
 								<li class=""><a href="{$BaseHref}member/all">Anggota</a></li>
 							</ul>
@@ -18,7 +18,7 @@
 
 				<div class="col-md-2">
 					<div class="brand-logo text-center">
-						<a href="{$BaseHref}home/dashboard">
+						<a href="{$BaseHref}home/feed">
 							<img src="$SiteConfig.WebLogo.URL" alt="brand logo">
 						</a>
 					</div>

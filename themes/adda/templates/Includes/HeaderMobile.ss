@@ -2,13 +2,13 @@
     <div class="mobile-header-wrapper sticky d-block d-lg-none">
         <div class="mobile-header position-relative ">
             <div class="mobile-logo bg-white">
-                <a href="{$BaseHref}home/dashboard">
+                <a href="{$BaseHref}home/feed">
                     <img src="$SiteConfig.SmallWebLogo.ScaleHeight(42).Link" alt="logo">
                 </a>
             </div>
             <div class="mobile-menu w-100">
                 <ul>
-                    <li class="nav-a"><a href="{$BaseHref}home/dashboard">Home</a></li>
+                    <li class="nav-a"><a href="{$BaseHref}home/feed">Home</a></li>
                     <li class="nav-a"><a href="{$BaseHref}event/">Event</a></li>
                     <li class="nav-a"><a href="{$BaseHref}member/all">Anggota</a></li>
                     <li>
