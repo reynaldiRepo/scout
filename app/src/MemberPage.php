@@ -74,7 +74,8 @@ class MemberPageController extends PageController{
      * @var array
      */
     private static $url_handlers = [
-        'v/$ID' => 'v'
+        'v/$ID' => 'v',
+        'feed/$ID' => 'feed',
     ];
 
     public function all(){
@@ -525,6 +526,47 @@ class MemberPageController extends PageController{
     // 'deletefeed',
     // 'updatefeed',
     // 'feed',
+
+
+
+    public function feed(){
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+        }
+        $data['urlstate'] = Director::absoluteBaseURL()."member/feed/";
+        $data['urlfetch'] = Director::absoluteBaseURL()."api-helper/getfeedmember/".$member->ID;
+        $data['isme'] = true;
+
+        if ($this->getRequest()->param('ID') !== null) {
+            $id = $this->getRequest()->param('ID');
+            $id = explode("-", $id);
+            $id = $id[0];
+            $member = MemberData::get()->byID($id);
+            $data['member'] = $member;
+            $data['urlstate'] = Director::absoluteBaseURL()."member/feed/".$member->ID."-".$member->getURLSegment();
+            $data['urlfetch'] = Director::absoluteBaseURL()."api-helper/getfeedmember/".$member->ID;
+            $data['isme'] = null;
+        }
+
+        $start = isset($_GET['Start']) ? $_GET['Start'] : 0;
+        $count = isset($_GET['Count']) ? $_GET['Count'] : 10;
+        // var_dump($start, $count);
+        // die();
+        $data['Title'] = "Feed Anggota Peransaka";
+        $Feed = DataObject::get("FeedData", "MemberDataID = '".$member->ID."'","ID Desc","", "$start, $count");
+        $data['Feed'] = $Feed;
+
+        // var_dump( DataObject::get("FeedData", "MemberDataID = '".$member->ID."'")->count());
+        // die();
+
+        //check future page for 3 ajax load
+        if ($count != 10){
+            $data['startPage'] = $count;    
+        }
+        $data['startPage'] = $start  + $count;
+        return $data;
+    }
 
     public function addfeed($data){
         $member = Member::currentUser();

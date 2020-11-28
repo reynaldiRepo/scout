@@ -166,23 +166,38 @@ class FeedData extends DataObject{
                                     </script>';
                     }
             }
+
+            if ($this->isLike()) {
+                $LikeHtml = '<button class="post-meta-like like-btn" data-ID="'.$this->ID.'" onclick="likefeed(this)">
+                        <i class="fa fa-heart color-theme" id="icon-like-'.$this->ID.'"></i>
+                        <span id="num-like-'.$this->ID.'">'.$this->LikeData()->count().'</span>
+                    </button>';
+            }else{
+                $LikeHtml =  '<button class="post-meta-like like-btn" data-ID="'.$this->ID.'" onclick="likefeed(this)">
+                    <i class="fa fa-heart-o color-theme" id="icon-like-'.$this->ID.'"></i>
+                    <span id="num-like-'.$this->ID.'">'.$this->LikeData()->count().'</span>
+                </button>';
+            }
+
+            $CommentHtml = '<ul class="comment-share-meta">
+                    <li>
+                        <button class="post-comment comment-btn" data-ID="'.$this->ID.'" data-frame-open="0"  onclick="togglecomment(this)">
+                            <i class="bi bi-chat-bubble"></i>
+                            <span id="num-comment-'.$this->ID.'">'.$this->CommentFeedData()->count().'</span>
+                        </button>
+                    </li>
+                </ul>';
                     
-            $postMeta = '<div class="post-meta">
-                            <button class="post-meta-like">
-                                <i class="fa fa-heart-o"></i>
-                                <span>'.$this->LikeData()->count().'</span>
-                            </button>
-                            <ul class="comment-share-meta">
-                                <li>
-                                    <button class="post-comment">
-                                        <i class="bi bi-chat-bubble"></i>
-                                        <span>'.$this->CommentFeedData()->count().'</span>
-                                    </button>
-                                </li>
-                            </ul>
+            $postMeta = 
+                    '<div class="post-meta">
+                            '.$LikeHtml.'
+                            '.$CommentHtml.'
                         </div>
-                    </div>
-                </div>';
+                        </div>
+                        <hr>
+                        <div class="frame-content mt-2" id="comment-frame-'.$this->ID.'">
+                        </div>
+                    </div>';
 
             return $profileHtml." ".$posHtml." " .$ImageHtml." ".$postMeta;
     }

@@ -1,4 +1,10 @@
 <div class="col-lg-6 order-1 order-lg-2">
+    
+    <div class="col-lg-12 d-flex p-0 text-center mb-3 shadowed">
+        <button class="submit-btn m-0 btn-href" href="{$BaseHref}member">Profile</button>
+        <button class="submit-btn m-0 bg-dark btn-href" href="{$BaseHref}member/feed">Feed</button>
+    </div>
+    
     <div class="ctr-banner">
         <div class="col-lg-12 bg-dark banner-user lightgallery"
             data-bg="$CurrentMember.getBannerImage.Fill(360,180).URL">
@@ -8,6 +14,7 @@
         <a href="{$BaseHref}member/edit" class="edit-prof-btn text-white bg-info mt-2 pl-2 pr-2"><i
                 class="fa fa-edit"></i> Edit Profile</a>
     </div>
+
     <div class="card widget-item pt-0">
         <h4 class="widget-title mt-3 mb-4">$CurrentMember.FirstName $CurrentMember.Surname</h4>
         <div class="widget-body">

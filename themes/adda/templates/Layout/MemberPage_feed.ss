@@ -1,12 +1,18 @@
 <div class="col-lg-6 order-1 order-lg-2">
 
 
+    <% if $isme %>
     <div class="col-lg-12 d-flex p-0 text-center mb-3 shadowed">
-        <button class="submit-btn m-0 btn-href" href="{$BaseHref}home/feed">Feed Anggota</button>
-        <button class="submit-btn m-0  bg-dark btn-href" href="{$BaseHref}home/dashboard">Event</button>
+        <button class="submit-btn m-0 bg-dark btn-href" href="{$BaseHref}member">Profile</button>
+        <button class="submit-btn m-0 btn-href" href="{$BaseHref}member/feed">Feed</button>
     </div>
-
     <% include NewFeedForm %>
+    <% else %>
+    <div class="col-lg-12 d-flex p-0 text-center mb-3 shadowed">
+        <button class="submit-btn m-0 bg-dark btn-href" href="$member.Link">Profile</button>
+        <button class="submit-btn m-0 btn-href" href="{$BaseHref}member/feed/{$member.ID}-{$member.Link}">Feed</button>
+    </div>
+    <% end_if %>
 
     <!-- post status start -->
 
@@ -60,7 +66,7 @@
 
 
     function loadfeed(Url = null) {
-        Url = Url == null ? "{$BaseHref}api-helper/getfeed"+"?start=" + start + "&count=10" : Url;
+        Url = Url == null ? "{$urlfetch}?start=" + start + "&count=10" : Url;
         $.ajax({
             method: "GET",
             url: Url,
@@ -73,7 +79,7 @@
                 data = JSON.parse(data);
                 if (data.status == 200) {
                     window.start += 10;
-                    window.history.pushState("", "", '{$BaseHref}home/feed?Start=0&Count=' + start);
+                    window.history.pushState("", "", '{$urlstate}?Start=0&Count=' + start);
                     realData = JSON.parse(data.data);
                     realData.forEach(data => {
                         feedCtr.append(data.cardAdda)
@@ -83,27 +89,27 @@
                 if (data.status == 417) {
                     endload = true;
                     window.loadstate = true;
-                    window.history.pushState("", "", '{$BaseHref}home/feed?Start=0&Count=' + start);
+                    window.history.pushState("", "", '{$urlstate}?Start=0&Count=' + start);
                 }
             } catch (e) {
                 window.loadstate = true;
                 loader.hide();
                 loadmoreBtn.show();
-                loadmoreBtn.attr("data-url", "{$BaseHref}home/feed?Start="+ start + "&Count=10")
+                loadmoreBtn.attr("data-url", "{$urlfetch}?start=" + start + "&count=10")
             }
             console.log(data)
         }).fail(function () {
             window.loadstate = true;
             loader.hide();
             loadmoreBtn.show();
-            loadmoreBtn.attr("data-url", "{$BaseHref}home/feed?Start="+ start + "&Count=10")
+            loadmoreBtn.attr("data-url", "{$urlfetch}?start=" + start + "&count=10")
         })
     }
 
-    loadmoreBtn.click(function(){
+    loadmoreBtn.click(function () {
         loadmoreBtn.hide();
         window.loadstate = false;
-        window.scrollBy(0,-50)
+        window.scrollBy(0, -50)
         loadfeed($(this).attr("data-url"))
     })
 
@@ -125,83 +131,48 @@
 
 <%-- for like and comment --%>
 <script>
-    $(".like-btn").click(function(){
+    $(".like-btn").click(function () {
         var id = $(this).attr("data-ID")
-        var numcomment = parseInt($("#num-like-"+id).text());
-        var icon = $("#icon-like-"+id);
+        var numcomment = parseInt($("#num-like-" + id).text());
+        var icon = $("#icon-like-" + id);
         $.ajax({
-            url:"{$BaseHref}api-helper/likefeed",
-            data: {'FeedDataID':id}
-        }).done(function(data){
+            url: "{$BaseHref}api-helper/likefeed",
+            data: {
+                'FeedDataID': id
+            }
+        }).done(function (data) {
             data = JSON.parse(data)
-            if (data.status == 200){
+            if (data.status == 200) {
                 //success like
                 icon.attr('class', 'fa fa-heart color-theme');
                 numcomment += 1;
-                $("#num-like-"+id).text(numcomment);
-            }else if(data.status == 205){
+                $("#num-like-" + id).text(numcomment);
+            } else if (data.status == 205) {
                 icon.attr('class', 'fa fa-heart-o color-theme');
                 numcomment -= 1;
-                $("#num-like-"+id).text(numcomment);
-            }else{
+                $("#num-like-" + id).text(numcomment);
+            } else {
                 console.log(data);
             }
-        }).fail(function(){
+        }).fail(function () {
             console.log(data);
         })
     })
 
 
-    $(".comment-btn").click(function(){
+    $(".comment-btn").click(function () {
         //<iframe src="{$BaseHref}feed/comment?FeedDataID={$ID}" width="100%" height="500" frameBorder="0"></iframe>
         var id = $(this).attr("data-ID")
-        var ctr = $("#comment-frame-"+id)
+        var ctr = $("#comment-frame-" + id)
         var isopen = $(this).attr("data-frame-open");
-        if (isopen == "0"){
+        if (isopen == "0") {
             $(this).attr("data-frame-open", "1");
-            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='650' frameBorder='0'></iframe>")
-        }else{
+            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID=" + id +
+                "' width='100%' height='650' frameBorder='0'></iframe>")
+        } else {
             $(this).attr("data-frame-open", "0");
             ctr.find("iframe").first().remove();
         }
     })
 
-    function likefeed(e){
-        var id = $(e).attr("data-ID")
-        var numcomment = parseInt($("#num-like-"+id).text());
-        var icon = $("#icon-like-"+id);
-        $.ajax({
-            url:"{$BaseHref}api-helper/likefeed",
-            data: {'FeedDataID':id}
-        }).done(function(data){
-            data = JSON.parse(data)
-            if (data.status == 200){
-                //success like
-                icon.attr('class', 'fa fa-heart color-theme');
-                numcomment += 1;
-                $("#num-like-"+id).text(numcomment);
-            }else if(data.status == 205){
-                icon.attr('class', 'fa fa-heart-o color-theme');
-                numcomment -= 1;
-                $("#num-like-"+id).text(numcomment);
-            }else{
-                console.log(data);
-            }
-        }).fail(function(){
-            console.log(data);
-        })
-    }
-
-    function togglecomment(e){
-        var id = $(e).attr("data-ID")
-        var ctr = $("#comment-frame-"+id)
-        var isopen = $(e).attr("data-frame-open");
-        if (isopen == "0"){
-            $(e).attr("data-frame-open", "1");
-            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='650' frameBorder='0'></iframe>")
-        }else{
-            $(e).attr("data-frame-open", "0");
-            ctr.find("iframe").first().remove();
-        }
-    }
 </script>

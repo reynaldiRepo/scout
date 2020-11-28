@@ -99,7 +99,7 @@ $("#addfeed").submit(function(e){
         data = JSON.parse(data);
         if (data.status == 200){
             alertSuccess(data.msg);
-            location.href="{$BaseHref}home/feed";
+            location.reload();
         }else{
             alertWarning(data.msg);
             location.reload();

@@ -104,7 +104,7 @@
     .edit-prof-btn {
         position: absolute;
         z-index: 1;
-        top: 5px;
+        top: 65px;
         right: 30px;
         padding: 5px;
         -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);

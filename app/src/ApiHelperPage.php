@@ -1,4 +1,5 @@
 <?php
+use SilverStripe\Control\Director;
 use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
@@ -26,8 +27,14 @@ class ApiHelperPageController extends PageController{
 
         //for feed
         'getfeed' => true,
+        'getfeedmember' => true,
         'likefeed' => true,
 
+    ];
+
+    
+    private static $url_handlers = [
+        'getfeedmember/$ID'
     ];
     
     function index(HTTPRequest $request){
@@ -124,6 +131,53 @@ class ApiHelperPageController extends PageController{
         $count = $_GET['count'];
         
         $feed = DataObject::get("FeedData", "","ID Desc","", "$start, $count");
+        // var_dump("a");
+        if ($feed->count() == 0){
+            echo json_encode(['status'=>417, 'msg'=>'End Of Data']);
+            return;
+        }
+
+        $result = [];
+        foreach($feed as $f){
+            array_push($result, $f->toJsonArray());
+        }
+        
+        echo json_encode(['status'=>200, 'msg'=>'OK', 'data'=>json_encode($result)]);
+        return;
+    }
+
+    public function getfeedmember(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session Expired']);
+            return;
+        }
+        if (!isset($_GET['start'])){
+            echo json_encode(['status'=>500, 'msg'=>'start Required']);
+            return;
+        }
+        if (!isset($_GET['count'])){
+            echo json_encode(['status'=>500, 'msg'=>'count Required']);
+            return;
+        }
+
+        $start = $_GET['start'];
+        $count = $_GET['count'];
+
+        $data['urlstate'] = Director::absoluteBaseURL()."member/feed/";
+        $data['urlfetch'] = Director::absoluteBaseURL()."api-helper/getfeedmember/".$member->ID;
+
+        if ($this->getRequest()->param('ID') !== null) {
+            $id = $this->getRequest()->param('ID');
+            $membertoget =  MemberData::get()->byID($id);
+        }else{
+            if (!isset($_GET['count'])){
+                echo json_encode(['status'=>500, 'msg'=>'No data']);
+                return;
+            }
+        }
+        
+        $feed = DataObject::get("FeedData", "MemberDataID = '$id'","ID Desc","", "$start, $count");
         // var_dump("a");
         if ($feed->count() == 0){
             echo json_encode(['status'=>417, 'msg'=>'End Of Data']);
