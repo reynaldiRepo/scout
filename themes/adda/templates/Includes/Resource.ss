@@ -107,7 +107,7 @@
         box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
     }
 
-    .fa-theme {
+    .fa-theme, .color-theme {
         color: #dc4734 !important
     }
 

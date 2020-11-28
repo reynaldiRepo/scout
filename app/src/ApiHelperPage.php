@@ -26,6 +26,7 @@ class ApiHelperPageController extends PageController{
 
         //for feed
         'getfeed' => true,
+        'likefeed' => true,
 
     ];
     
@@ -136,7 +137,39 @@ class ApiHelperPageController extends PageController{
         
         echo json_encode(['status'=>200, 'msg'=>'OK', 'data'=>json_encode($result)]);
         return;
-        
+    }
+
+    public function likefeed(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session Expired']);
+            return;
+        }
+        if (!isset($_GET['FeedDataID'])){
+            echo json_encode(['status'=>500, 'msg'=>'FeedDataID Required']);
+            return;
+        }
+
+        $feedID = $_GET['FeedDataID'];
+
+        // check if user has been like post
+        $like = LikeData::get()->filter(['MemberDataID'=>$member->ID, 'FeedDataID'=>$feedID]);
+        if ($like->count() != 0){
+            $like->first()->delete();
+            echo json_encode(['status'=>205, 'msg'=>'Delete Success']);
+            return;
+        }else{
+            $newLike = new LikeData();
+            $newLike->MemberDataID = $member->ID;
+            $newLike->FeedDataID = $feedID;
+            $newLike->write();
+            if ($newLike->ID == 0){
+                echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+                return;    
+            }
+            echo json_encode(['status'=>200, 'msg'=>'Like Success']);
+            return;
+        }
 
     }
 }

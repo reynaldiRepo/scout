@@ -88,6 +88,16 @@ class FeedData extends DataObject{
         return false;
     }
 
+    public function isLike(){
+        $member = Member::currentUser();
+        $like = LikeData::get()->filter(['MemberDataID'=>$member->ID, 'FeedDataID'=>$this->ID]);
+        if ($like->count() != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     public function renderCardThemeAdda(){
         $date = DateTime::createFromFormat("Y-m-d H:i:s", $this->Created);

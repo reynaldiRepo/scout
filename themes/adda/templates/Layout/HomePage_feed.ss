@@ -121,3 +121,33 @@
     });
 
 </script>
+
+
+<%-- for like and comment --%>
+<script>
+    $(".like-btn").click(function(){
+        var id = $(this).attr("data-ID")
+        var numcomment = parseInt($("#num-like-"+id).text());
+        var icon = $("#icon-like-"+id);
+        $.ajax({
+            url:"{$BaseHref}api-helper/likefeed",
+            data: {'FeedDataID':id}
+        }).done(function(data){
+            data = JSON.parse(data)
+            if (data.status == 200){
+                //success like
+                icon.attr('class', 'fa fa-heart color-theme');
+                numcomment += 1;
+                $("#num-like-"+id).text(numcomment);
+            }else if(data.status == 205){
+                icon.attr('class', 'fa fa-heart-o color-theme');
+                numcomment -= 1;
+                $("#num-like-"+id).text(numcomment);
+            }else{
+                console.log(data);
+            }
+        }).fail(function(){
+            console.log(data);
+        })
+    })
+</script>
