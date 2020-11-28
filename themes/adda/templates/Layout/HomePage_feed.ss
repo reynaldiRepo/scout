@@ -150,4 +150,19 @@
             console.log(data);
         })
     })
+
+
+    $(".comment-btn").click(function(){
+        //<iframe src="{$BaseHref}feed/comment?FeedDataID={$ID}" width="100%" height="500" frameBorder="0"></iframe>
+        var id = $(this).attr("data-ID")
+        var ctr = $("#comment-frame-"+id)
+        var isopen = $(this).attr("data-frame-open");
+        if (isopen == "0"){
+            $(this).attr("data-frame-open", "1");
+            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='650' frameBorder='0'></iframe>")
+        }else{
+            $(this).attr("data-frame-open", "0");
+            ctr.find("iframe").first().remove();
+        }
+    })
 </script>

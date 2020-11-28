@@ -80,12 +80,18 @@
             <% end_if %>
             <ul class="comment-share-meta">
                 <li>
-                    <button class="post-comment comment-btn" data-ID="$ID">
+                    <button class="post-comment comment-btn" data-ID="$ID" data-frame-open="0">
                         <i class="bi bi-chat-bubble"></i>
-                        <span>$CommentFeedData.count()</span>
+                        <span id="num-comment-{$ID}">$CommentFeedData.count()</span>
                     </button>
                 </li>
             </ul>
         </div>
+        <hr>
+        <div class="frame-content mt-2" id="comment-frame-{$ID}">
+            
+        </div>
     </div>
 </div>
+
+

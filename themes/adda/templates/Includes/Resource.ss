@@ -3,11 +3,11 @@
 <!-- CSS
 ============================================ -->
 <!-- google fonts -->
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="$ThemeDir/css/vendor/bootstrap.min.css?key=$getResourceV">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 
 <!-- Icon Font CSS -->
@@ -29,7 +29,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.css"
     integrity="sha512-mFWppJpPTKV+oKy18RnwA/YwACBlOyPjbJH7U78JWwEo724CApxbcmDKVZIs8K3rTfQ/SRCuaperpNRqiOnruw=="
     crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+    integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
+    crossorigin="anonymous" />
 
 
 <!-- Modernizer JS -->
@@ -57,7 +59,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"
     integrity="sha512-adAL21xXWSA8ejZPKCFuxjWBNtmFXrW8OUeKkRsqn42yKyg2VkX+MO+YdMBftzLG07fcdR/FJCy8mk5iMgrezw=="
     crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+    crossorigin="anonymous"></script>
 
 <script src="$ThemeDir/javascript/BlockUI.js?key=$getResourceV"></script>
 <script src="$ThemeDir/javascript/CT.js?key=$getResourceV"></script>
@@ -107,7 +111,8 @@
         box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
     }
 
-    .fa-theme, .color-theme {
+    .fa-theme,
+    .color-theme {
         color: #dc4734 !important
     }
 
@@ -141,19 +146,19 @@
         height: 100px;
         background-position: center;
         background-repeat: no-repeat;
-        background-size:contain;
+        background-size: contain;
     }
-    
-    #loader-feed{
+
+    #loader-feed {
         background-image: url("$SiteConfig.LoadingGif.URL");
         height: 50px;
         background-position: center;
         background-repeat: no-repeat;
-        background-size:contain;
+        background-size: contain;
     }
 
-    .profile-thumb-small{
-        background : #000 !important;
+    .profile-thumb-small {
+        background: #000 !important;
     }
 
     .delete-btn {
@@ -165,46 +170,49 @@
         text-shadow: 0 1px 0 #fff;
         opacity: .5;
     }
-    
-    .join-btn{
+
+    .join-btn {
         position: absolute;
         top: 0px;
         right: 20px;
         width: fit-content;
     }
+
     .search-event {
-        display:none;
+        display: none;
     }
 
-    .timeline-logo-small{
-        display:none
+    .timeline-logo-small {
+        display: none
     }
-    @media (max-width: 767.98px){
-        .search-event-side{
-            display:none;
+
+    @media (max-width: 767.98px) {
+        .search-event-side {
+            display: none;
         }
+
         .search-event {
-            display:unset;
-        }
-        
-        .login-ctr{
-            display:none
+            display: unset;
         }
 
-        .signup-form-wrapper{
-            padding :17px 30px
+        .login-ctr {
+            display: none
         }
 
-        .timeline-logo-big{
-            display:none
+        .signup-form-wrapper {
+            padding: 17px 30px
         }
 
-        .timeline-logo-small{
-            display:unset
+        .timeline-logo-big {
+            display: none
         }
 
-        .timeline-bg-content{
-            display:none;
+        .timeline-logo-small {
+            display: unset
+        }
+
+        .timeline-bg-content {
+            display: none;
         }
     }
 
@@ -212,7 +220,7 @@
         scroll-behavior: smooth;
     }
 
-    .shadowed { 
+    .shadowed {
         -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
         box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
     }
@@ -226,24 +234,44 @@
     }
 
     .lg {
-        background : rgba(0,0,0,0.7) !important;
+        background: rgba(0, 0, 0, 0.7) !important;
     }
 
-    .post-meta-like span, .post-comment span {
+    .post-meta-like span,
+    .post-comment span {
         vertical-align: middle !important;
     }
-    
 
-    
+
+    html {
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        /* Remove scrollbar space */
+        background: transparent;
+        /* Optional: just make scrollbar invisible */
+    }
+
+    /* Optional: show position indicator in red */
+    ::-webkit-scrollbar-thumb {
+        background: #FF0000;
+    }
 
 </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1CDZLLSEJ"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-N1CDZLLSEJ');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-N1CDZLLSEJ');
+
 </script>

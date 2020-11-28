@@ -21,6 +21,23 @@ function blockUI() {
     });
     $('.blockUI.blockMsg').center();
 }
+
+function blockEl(target){
+    $(target).blockUI({
+        css: {
+            backgroundColor: 'transparent',
+            border: 'none'
+        },
+        message: '<div class="loading"></div>',
+        baseZ: 1500,
+        overlayCSS: {
+            backgroundColor: '#FFFFFF',
+            opacity: 0.6,
+            cursor: 'wait'
+        }
+    });
+    $('.blockUI.blockMsg').center();
+}
 //end Blockui 
 
 iziToast.settings({
