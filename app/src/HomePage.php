@@ -68,18 +68,20 @@ class HomePageController extends PageController{
         if (!$member){
             $this->redirect("member/login");
         }
-        $start = isset($_GET['Start']) ? $_GET['Start'] : 0;
-        $data['Title'] = "Feed Anggota Peransaka";
-        $Feed = FeedData::get()->sort("Created", "DESC");
-        $pages = new PaginatedList($Feed, $this->getRequest());
-        $pages->setPageLength(10);
-        $data['Feed'] = $pages;
 
-        //check future page
-        $tempStart = $start + 20;
-        if (DataObject::get('FeedData','','','',"$tempStart, 10")->count() != 0){
-            $data['NextPage'] = $tempStart;
+        $start = isset($_GET['Start']) ? $_GET['Start'] : 0;
+        $count = isset($_GET['Count']) ? $_GET['Count'] : 10;
+        // var_dump($start, $count);
+        // die();
+        $data['Title'] = "Feed Anggota Peransaka";
+        $Feed = DataObject::get("FeedData", "","ID Desc","", "$start, $count");
+        $data['Feed'] = $Feed;
+
+        //check future page for 3 ajax load
+        if ($count != 10){
+            $data['startPage'] = $count;    
         }
+        $data['startPage'] = $start  + $count;
         return $data;
     }
 

@@ -9,29 +9,113 @@
     <% include NewFeedForm %>
 
     <!-- post status start -->
-    <% if $Feed %>
-    <% loop $Feed %>
-    <% include CardFeed %>
-    <% end_loop %>
-    <% else %>
 
+    <% if $Feed %>
+    <div id="feed-ctr">
+        <% loop $Feed %>
+        <% include CardFeed %>
+        <% end_loop %>
+
+    </div>
+    <div class="col-lg-12 text-center p-0 mt-2" id="loader-feed">
+        &nbsp
+    </div>
+    <div class="col-lg-12 text-center alert alert-info mt-3" id="end-feed">
+        End of data
+    </div>
+
+    <button class="submit-btn" id="load-more-btn" data-url=""> Load More </button>
+
+    <% else %>
+    <div class="card">
+        <div class="post-title d-flex align-items-center">
+            <div class="post-content">
+                <div class="alert alert-warning">Feed Peransaka Masih Kosong mari bagi ceritamu kepada seluruh teman
+                    peransaka</div>
+                <p class="post-desc">
+                    <img src="https://www.genx.ae/resources/assets/frontend/img/nodatafound.png"
+                        class="img-fluid w-100">
+                </p>
+            </div>
+        </div>
+    </div>
     <% end_if %>
-    <!-- post status end -->
 </div>
 
+
 <script>
-    $(".owl-carousel").owlCarousel({
-        dots:true,
-        responsiveClass:true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 3
+    window.loadmoreCtr = $("#load-more-ctr");
+    window.loadmoreBtn = $("#load-more-btn");
+    window.loader = $("#loader-feed")
+    window.endFeed = $("#end-feed");
+    window.feedCtr = $("#feed-ctr");
+    window.endload = false;
+    window.loadstate = false;
+    window.start = $startPage
+
+    loader.hide();
+    endFeed.hide();
+    loadmoreBtn.hide();
+
+
+
+    function loadfeed(Url = null) {
+        Url = Url == null ? "{$BaseHref}api-helper/getfeed"+"?start=" + start + "&count=10" : Url;
+        $.ajax({
+            method: "GET",
+            url: Url,
+            beforeSend: function () {
+                loader.show();
+            }
+        }).done(function (data) {
+            window.loadstate = false;
+            try {
+                data = JSON.parse(data);
+                if (data.status == 200) {
+                    window.start += 10;
+                    window.history.pushState("", "", '{$BaseHref}home/feed?Start=0&Count=' + start);
+                    realData = JSON.parse(data.data);
+                    realData.forEach(data => {
+                        feedCtr.append(data.cardAdda)
+                    })
+                    window.owl.trigger('refresh.owl.carousel');
+                }
+                if (data.status == 417) {
+                    endload = true;
+                    window.loadstate = true;
+                    window.history.pushState("", "", '{$BaseHref}home/feed?Start=0&Count=' + start);
+                }
+            } catch (e) {
+                window.loadstate = true;
+                loader.hide();
+                loadmoreBtn.show();
+                loadmoreBtn.attr("data-url", "{$BaseHref}home/feed?Start="+ start + "&Count=10")
+            }
+            console.log(data)
+        }).fail(function () {
+            window.loadstate = true;
+            loader.hide();
+            loadmoreBtn.show();
+            loadmoreBtn.attr("data-url", "{$BaseHref}home/feed?Start="+ start + "&Count=10")
+        })
+    }
+
+    loadmoreBtn.click(function(){
+        loadmoreBtn.hide();
+        window.loadstate = false;
+        window.scrollBy(0,-50)
+        loadfeed($(this).attr("data-url"))
+    })
+
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 30) {
+            if (endload == false && loadstate == false) {
+                loadstate = true;
+                loadfeed();
+            } else if (endload == true) {
+                loader.hide();
+                endFeed.show();
             }
         }
     });

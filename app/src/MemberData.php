@@ -96,7 +96,15 @@ class MemberData extends Member
         'GolonganData.Title' => 'Golongan'
     ];
 
-    
+    public function toJsonArrayMin(){
+        $res = [];
+        $res['ID'] = $this->ID;
+        $res['FirstName'] = $this->FirstName;
+        $res['Surname'] = $this->Surname;
+        $res['Link'] = $this->Link();
+        $res['PhotoProfile'] = $this->getPhotoProfileThumb()->URL;
+        return $res;
+    }
     
     private $arrKelamin = [
         'L'=>'Laki - Laki',

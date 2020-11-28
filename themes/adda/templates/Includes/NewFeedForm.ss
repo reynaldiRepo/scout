@@ -14,7 +14,7 @@
         <!-- share content box start -->
         <div class="share-content-box w-100">
             <div class="share-text-box mb-2">
-                <textarea readonly name="share" class="share-text-field" aria-disabled="true" placeholder="Say Something"
+                <textarea maxlength ="320" readonly name="share" class="share-text-field" aria-disabled="true" placeholder="Say Something"
                     id="input-out" data-toggle="modal" data-target="#addfeed-modal" id="email"></textarea>
                 <button class="btn-share" id="out-submit" type="button">share</button>
             </div>
@@ -42,7 +42,10 @@
 
                     <form action="{$BaseHref}member/addfeed" id="addfeed" method="POST">
                         <div class="modal-body custom-scroll">
-                            <textarea name="Content" class="share-field-big custom-scroll" id= "input-in"
+                            <div class="col-lg-12">
+                                <label><span id="char-counter">0</span> / 320 Karakter</label>
+                            </div>
+                            <textarea maxlength ="320" name="Content" class="share-field-big custom-scroll" id= "input-in"
                                 placeholder="Say Something"></textarea>
                             <button class="col-lg-12 p-0 bg-info p-2 rounded text-white" type="button"
                                 onclick="$('#uploadimage-trigger').click()">Tambah Image <i class="ml-2 fa fa-image"></i>
@@ -96,7 +99,7 @@ $("#addfeed").submit(function(e){
         data = JSON.parse(data);
         if (data.status == 200){
             alertSuccess(data.msg);
-            location.reload();
+            location.href="{$BaseHref}home/feed";
         }else{
             alertWarning(data.msg);
             location.reload();

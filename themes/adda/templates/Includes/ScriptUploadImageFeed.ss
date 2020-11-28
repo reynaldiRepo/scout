@@ -2,6 +2,7 @@
     window.UploadStatus = false;
     window.tempIDImage = {};
     window.ctrImage = $("#image-place");
+    window.counterchar = 0;
     var lgopt = {
                     selector : ".thumb-upload",
                     download: false,
@@ -104,6 +105,10 @@
 
     $("#imageupload").change(function(){
         if ($(this).val() != ""){
+            if (Object.keys(tempIDImage).length == 5){
+                alertWarning("Jumlah Image tidak boleh lebih dari 5");
+                return;
+            }
             if (!imgsizevalidation(1, this)) {
                 return;
             }else{
@@ -125,9 +130,15 @@
 
     $("#input-in").change(function(){
         $("#input-out").val($("#input-in").val())
+        $("#char-counter").text($(this).val().length)
     })
 
     $("#input-out").change(function(){
         $("#input-in").val($("#input-out").val())
+        $("#char-counter").text($(this).val().length)
     })
+
+    $("#input-out, #input-in").on('change keyup paste', function() {
+        $("#char-counter").text($(this).val().length);
+    });
 </script>

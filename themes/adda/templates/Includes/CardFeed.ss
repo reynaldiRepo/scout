@@ -12,7 +12,7 @@
         <!-- profile picture end -->
 
         <div class="posted-author">
-            <h6 class="author"><a href="profile.html">$MemberData.FirstName $MemberData.Surname</a></h6>
+            <h6 class="author"><a href="$MemberData.Link">$MemberData.FirstName $MemberData.Surname</a></h6>
             <span class="post-time"><i class="fa fa-calendar mr-1"></i> $Created.Format('dd/MM/YYYY')
             <i class="fa fa-clock-o mr-1 ml-1"></i> $Created.Format('HH:mm')</span>
         </div>

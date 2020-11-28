@@ -141,6 +141,15 @@
         height: 100px;
         background-position: center;
         background-repeat: no-repeat;
+        background-size:contain;
+    }
+    
+    #loader-feed{
+        background-image: url("$SiteConfig.LoadingGif.URL");
+        height: 50px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size:contain;
     }
 
     .profile-thumb-small{

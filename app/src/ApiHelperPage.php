@@ -1,10 +1,12 @@
 <?php
+use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Assets\Upload;
+use SilverStripe\ORM\PaginatedList;
 
 class ApiHelperPage extends Page{
     
@@ -20,7 +22,11 @@ class ApiHelperPageController extends PageController{
         'getKabupaten' => true,
         'getKecamatan' => true,
         'uploadimage',
-        'deleteimage'
+        'deleteimage',
+
+        //for feed
+        'getfeed' => true,
+
     ];
     
     function index(HTTPRequest $request){
@@ -96,5 +102,41 @@ class ApiHelperPageController extends PageController{
             echo json_encode(['status'=>500, 'msg'=>'Error Data Not found']);
             return;
         }
+    }
+
+    public function getfeed(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session Expired']);
+            return;
+        }
+        if (!isset($_GET['start'])){
+            echo json_encode(['status'=>500, 'msg'=>'start Required']);
+            return;
+        }
+        if (!isset($_GET['count'])){
+            echo json_encode(['status'=>500, 'msg'=>'count Required']);
+            return;
+        }
+
+        $start = $_GET['start'];
+        $count = $_GET['count'];
+        
+        $feed = DataObject::get("FeedData", "","ID Desc","", "$start, $count");
+        // var_dump("a");
+        if ($feed->count() == 0){
+            echo json_encode(['status'=>417, 'msg'=>'End Of Data']);
+            return;
+        }
+
+        $result = [];
+        foreach($feed as $f){
+            array_push($result, $f->toJsonArray());
+        }
+        
+        echo json_encode(['status'=>200, 'msg'=>'OK', 'data'=>json_encode($result)]);
+        return;
+        
+
     }
 }

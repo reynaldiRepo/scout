@@ -74,14 +74,14 @@ function loadInputToImage(input, target) {
 function imgsizevalidation(max, form) {
     const size = (form.files[0].size / 1024 / 1024).toFixed(2);
     if (size > max) {
-        alertWarning("Ukuran image tidak boleh lebih dari "+max+" Mb");
-       return false;
-    }else{
-       return true
+        alertWarning("Ukuran image tidak boleh lebih dari " + max + " Mb");
+        return false;
+    } else {
+        return true
     }
 }
 
-function deleteQuestion(callback, msg){
+function deleteQuestion(callback, msg) {
     iziToast.question({
         timeout: 20000,
         close: false,
@@ -94,24 +94,28 @@ function deleteQuestion(callback, msg){
         position: 'center',
         buttons: [
             ['<button><b>YES</b></button>', function (instance, toast) {
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                instance.hide({
+                    transitionOut: 'fadeOut'
+                }, toast, 'button');
                 callback()
             }, true],
             ['<button>NO</button>', function (instance, toast) {
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                instance.hide({
+                    transitionOut: 'fadeOut'
+                }, toast, 'button');
             }],
         ],
-        onClosing: function(instance, toast, closedBy){
+        onClosing: function (instance, toast, closedBy) {
             console.info('Closing | closedBy: ' + closedBy);
         },
-        onClosed: function(instance, toast, closedBy){
+        onClosed: function (instance, toast, closedBy) {
             console.info('Closed | closedBy: ' + closedBy);
         }
     });
 }
 
 
-function Question(callback, msg){
+function Question(callback, msg) {
     iziToast.question({
         timeout: 100000,
         close: true,
@@ -125,17 +129,40 @@ function Question(callback, msg){
         buttons: [
             ['<button><b>YES</b></button>', function (instance, toast) {
                 callback()
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                instance.hide({
+                    transitionOut: 'fadeOut'
+                }, toast, 'button');
             }, true],
             ['<button>NO</button>', function (instance, toast) {
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                instance.hide({
+                    transitionOut: 'fadeOut'
+                }, toast, 'button');
             }],
         ],
-        onClosing: function(instance, toast, closedBy){
+        onClosing: function (instance, toast, closedBy) {
             console.info('Closing | closedBy: ' + closedBy);
         },
-        onClosed: function(instance, toast, closedBy){
+        onClosed: function (instance, toast, closedBy) {
             console.info('Closed | closedBy: ' + closedBy);
         }
     });
+}
+
+
+//config json
+//owl 
+window.configowl = {
+    dots: true,
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 1
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 3
+        }
+    }
 }

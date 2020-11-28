@@ -60,6 +60,20 @@ class FeedData extends DataObject{
         return $this->CommentFeedData()->count();
     }
 
+    public function toJsonArray(){
+        $res = [];
+        $date = DateTime::createFromFormat("Y-m-d H:i:s", $this->Created);
+
+        $res['ID'] = $this->ID;
+        $res['Content'] = $this->Content;
+        $res['Created'] = $date->format("Y-m-d H:i");
+        $res['MemberData'] = $this->MemberData()->toJsonArrayMin();
+        $res['CountLike'] = $this->CountLike();
+        $res['CountComment'] = $this->CountComment();
+        $res['cardAdda'] = $this->renderCardThemeAdda();
+        return $res;
+    }
+
     public function Link(){
         return Director::absoluteBaseURL()."member/post/".$this->ID;
     }
@@ -73,6 +87,96 @@ class FeedData extends DataObject{
     {
         return false;
     }
+
+
+    public function renderCardThemeAdda(){
+        $date = DateTime::createFromFormat("Y-m-d H:i:s", $this->Created);
+        $profileHtml = '<div class="card">
+            <div class="post-title d-flex align-items-center">
+                <div class="profile-thumb">
+                    <a href="'.$this->MemberData()->Link().'">
+                        <figure class="profile-thumb-middle">
+                            <img src="'.$this->MemberData()->getPhotoProfileThumb()->URL.'" alt="profile picture">
+                        </figure>
+                    </a>
+                </div>
+                <div class="posted-author">
+                    <h6 class="author"><a href="'.$this->MemberData()->Link().'">'.$this->MemberData()->FirstName.' '.$this->MemberData()->Surname.' </a></h6>
+                    <span class="post-time"><i class="fa fa-calendar mr-1"></i> '.$date->format("d-m-y").'
+                    <i class="fa fa-clock-o mr-1 ml-1"></i> '.$date->format("H:i").'</span>
+                </div>
+                <div class="post-settings-bar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <div class="post-settings arrow-shape">
+                        <ul>
+                            <li><button class="report-btn" data-id="'.$this->ID.'">report</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>';
+            
+            $posHtml = '<div class="post-content">
+                <p class="post-desc">
+                    '.$this->Content.'
+                </p>';
+
+            if ($this->Image()->count() == 0){
+                $ImageHtml = "";
+            }
+            if ($this->Image()->count() == 1) {
+                $img = $this->Image()->first();
+                $ImageHtml = '<div class="post-thumb-gallery">
+                                <figure class="post-thumb img-popup-'.$this->ID.' bg-dark">
+                                    <a href="'.$img->URL.'">
+                                        <img src="'.$img->Fill(320, 270)->URL.'" alt="Posted by '.$this->MemberData()->FirstName.'">
+                                    </a>
+                                </figure>
+                                </div>
+                                <script> $(".img-popup-'.$this->ID.'").lightGallery(); </script>';
+            }
+
+            if ($this->Image()->count() > 1){
+                    $imageAll = "";
+                    foreach($this->Image() as $img){
+                        $imageAll .= '<div class="p-0 p-1" data-src="'.$img->URL.'">
+                                <div class="post-thumb-gallery ">
+                                    <figure class="post-thumb bg-dark">
+                                        <a href="'.$img->URL.'">
+                                            <img src="'.$img->Fill(320, 270)->URL.'" alt="Posted by '.$this->MemberData()->FirstName.'">
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>';
+                        $ImageHtml = '<div class="row owl-carousel owl-theme img-popup-'.$this->ID.' text-center">
+                                    '.$imageAll.'
+                                    </div> <script> $(".img-popup-'.$this->ID.'").lightGallery();
+                                    $(".img-popup-'.$this->ID.'").owlCarousel(window.configowl);
+                                    </script>';
+                    }
+            }
+                    
+            $postMeta = '<div class="post-meta">
+                            <button class="post-meta-like">
+                                <i class="fa fa-heart-o"></i>
+                                <span>'.$this->LikeData()->count().'</span>
+                            </button>
+                            <ul class="comment-share-meta">
+                                <li>
+                                    <button class="post-comment">
+                                        <i class="bi bi-chat-bubble"></i>
+                                        <span>'.$this->CommentFeedData()->count().'</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>';
+
+            return $profileHtml." ".$posHtml." " .$ImageHtml." ".$postMeta;
+    }
+
 
     public function getCMSFields()
     {
