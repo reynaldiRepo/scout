@@ -101,6 +101,13 @@ class FeedData extends DataObject{
 
     public function renderCardThemeAdda(){
         $date = DateTime::createFromFormat("Y-m-d H:i:s", $this->Created);
+        $member = Member::currentUser();
+
+        $settingbar = "";
+        if ($member->ID == $this->MemberData()->ID){
+            $settingbar = '<li><button class="delete=feed-btn" data-id="'.$this->ID.'">Delete</button></li>';
+        }
+
         $profileHtml = '<div class="card">
             <div class="post-title d-flex align-items-center">
                 <div class="profile-thumb">
@@ -121,7 +128,8 @@ class FeedData extends DataObject{
                     <span></span>
                     <div class="post-settings arrow-shape">
                         <ul>
-                            <li><button class="report-btn" data-id="'.$this->ID.'">report</button></li>
+                            <li><button class="report-btn" data-id="'.$this->ID.'">Report</button></li>
+                            '.$settingbar.'
                         </ul>
                     </div>
                 </div>

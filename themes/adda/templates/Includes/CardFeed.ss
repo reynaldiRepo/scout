@@ -23,7 +23,10 @@
             <span></span>
             <div class="post-settings arrow-shape">
                 <ul>
-                    <li><button>report</button></li>
+                    <li><button class="report-btn" data-id="$ID">Report</button></li>
+                    <% if $Top.CurrentMember.ID == $MemberData.ID %>
+                    <li><button class="delete=feed-btn" data-id="$ID">Delete</button></li>
+                    <% end_if %>
                 </ul>
             </div>
         </div>

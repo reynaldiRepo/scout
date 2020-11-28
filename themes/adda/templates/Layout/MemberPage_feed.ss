@@ -175,4 +175,43 @@
         }
     })
 
+    function likefeed(e){
+        var id = $(e).attr("data-ID")
+        var numcomment = parseInt($("#num-like-"+id).text());
+        var icon = $("#icon-like-"+id);
+        $.ajax({
+            url:"{$BaseHref}api-helper/likefeed",
+            data: {'FeedDataID':id}
+        }).done(function(data){
+            data = JSON.parse(data)
+            if (data.status == 200){
+                //success like
+                icon.attr('class', 'fa fa-heart color-theme');
+                numcomment += 1;
+                $("#num-like-"+id).text(numcomment);
+            }else if(data.status == 205){
+                icon.attr('class', 'fa fa-heart-o color-theme');
+                numcomment -= 1;
+                $("#num-like-"+id).text(numcomment);
+            }else{
+                console.log(data);
+            }
+        }).fail(function(){
+            console.log(data);
+        })
+    }
+
+    function togglecomment(e){
+        var id = $(e).attr("data-ID")
+        var ctr = $("#comment-frame-"+id)
+        var isopen = $(e).attr("data-frame-open");
+        if (isopen == "0"){
+            $(e).attr("data-frame-open", "1");
+            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='650' frameBorder='0'></iframe>")
+        }else{
+            $(e).attr("data-frame-open", "0");
+            ctr.find("iframe").first().remove();
+        }
+    }
+
 </script>
