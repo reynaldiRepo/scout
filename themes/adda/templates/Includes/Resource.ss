@@ -140,7 +140,7 @@
     .ss-single-selected {
         height: 40px !important
     }
-
+    
     .loading {
         background-image: url("$SiteConfig.LoadingGif.URL");
         height: 100px;
@@ -255,6 +255,13 @@
     /* Optional: show position indicator in red */
     ::-webkit-scrollbar-thumb {
         background: rgba(0,0,0, 0.5);
+    }
+
+    .iziToast-wrapper {
+        z-index : 2999 !important;
+    }
+    .iziToast-overlay {
+        z-index : 2997 !important;
     }
 
 </style>

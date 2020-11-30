@@ -13,7 +13,7 @@
         <div class="post-title d-flex align-items-center">
             <!-- profile picture end -->
             <div class="profile-thumb">
-                <a href="$Link">
+                <a href="$MemberData.Link">
                     <figure class="profile-thumb-middle">
                         <img src="$MemberData.getPhotoProfileThumb.URL" alt="profile picture">
                     </figure>
@@ -22,21 +22,23 @@
             <!-- profile picture end -->
 
             <div class="posted-author">
-                <h6 class="author"><a href="$Link">$MemberData.FirstName $MemberData.Surname</a></h6>
+                <h6 class="author"><a href="$MemberData.Link">$MemberData.FirstName $MemberData.Surname</a></h6>
                 <span class="post-time"><i class="fa fa-calendar mr-1"></i> $Created.Format('dd/MM/YYYY')
                     <i class="fa fa-clock-o mr-1 ml-1"></i> $Created.Format('HH:mm')</span>
             </div>
-
+            <button class="edit-feed btn btn-info float-right">Edit</button>
             <div class="post-settings-bar">
                 <span></span>
                 <span></span>
                 <span></span>
                 <div class="post-settings arrow-shape">
                     <ul>
-                        <li><button class="report-btn" data-id="$ID">Report</button></li>
                         <% if $Top.CurrentMember.ID == $MemberData.ID %>
-                        <li><button class="delete=feed-btn" data-id="$ID">Delete</button></li>
+                        <li><button data-toggle="modal" data-target="#editfeed-modal"  class="edit-feed-btn" data-id="$ID">Edit</button>
+                        <li><button class="delete-feed-btn" onclick="deletefeed(this)" data-id="$ID">Delete</button>
+                        </li>
                         <% end_if %>
+                        <li><button class="report-btn" data-id="$ID">Report</button></li>
                     </ul>
                 </div>
             </div>
@@ -50,9 +52,9 @@
             <% if $Image && $Image.count == 1 %>
             <% loop $Image %>
             <div class="post-thumb-gallery">
-                <figure class="post-thumb img-popup bg-dark">
+                <figure class="post-thumb img-popup bg-dark text-center">
                     <a href="$URL">
-                        <img src="$Fill(320, 270).URL" alt="Posted by $Up.MemberData.FirstName ">
+                        <img src="$Fill(640, 520).URL" alt="Posted by $Up.MemberData.FirstName " style="width:100%">
                     </a>
                 </figure>
             </div>
@@ -110,11 +112,11 @@
     </div>
 </div>
 
-
-
+<% with $Feed %>
+<% include EditFeedForm %>
+<% end_with %>
 
 <script>
-
     $(".like-btn").click(function () {
         var id = $(this).attr("data-ID")
         var numcomment = parseInt($("#num-like-" + id).text());
@@ -180,6 +182,87 @@
                 $(target).text(data.data)
             }
         })
+    }
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $(".lightgallery").lightGallery();
+        $(".slim-select").each(function () {
+            new SlimSelect({
+                select: this
+            })
+        })
+        $(".prev-content").each(function () {
+            $(this).find("br").each(function () {
+                console.log("aa")
+                $(this).remove();
+            })
+        })
+        $(".close-div").click(function () {
+            var process = $(this).attr("data-process");
+            var div = $($(this).attr("data-target"))
+            div.hide();
+            if (process == 1) {
+                var url = $(this).attr("data-url");
+                $.ajax({
+                    url: url,
+                    method: "GET"
+                }).done(function (data) {
+                    console.log(data)
+                }).fail(() => {
+                    console.log("Error")
+                })
+            }
+        })
+        $(".btn-href").click(function (e) {
+            e.preventDefault();
+            blockUI();
+            location.href = $(this).attr("href")
+        })
+    });
+
+
+    window.owl = $(".owl-carousel").owlCarousel({
+        dots: true,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 3
+            }
+        }
+    });
+
+    function deletefeed(e) {
+        var id = $(e).attr("data-id");
+        Question(function () {
+            $.ajax({
+                url: "{$BaseHref}feed/deletefeed?id=" + id,
+                beforeSend: function () {
+                    blockUI()
+                }
+            }).done(function (data) {
+                $.unblockUI()
+                data = JSON.parse(data);
+                if (data.status == 200) {
+                    alertSuccess(data.msg)
+                    location.href="{$BaseHref}member/feed";
+                } else {
+                    alertWarning(data.msg)
+                }
+            }).fail(function () {
+                $.unblockUI()
+                alertError("ERROR !!!")
+            })
+        }, "Anda yakin menghapus data ini ? ")
     }
 
 </script>

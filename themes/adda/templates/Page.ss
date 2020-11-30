@@ -112,6 +112,29 @@
             }
         });
         
+        function deletefeed(e) {
+        var id = $(e).attr("data-id");
+        Question(function () {
+            $.ajax({
+                url: "{$BaseHref}feed/deletefeed?id=" + id,
+                beforeSend: function () {
+                    blockUI()
+                }
+            }).done(function (data) {
+                $.unblockUI()
+                data = JSON.parse(data);
+                if (data.status == 200) {
+                    alertSuccess(data.msg)
+                    location.reload();
+                } else {
+                    alertWarning(data.msg)
+                }
+            }).fail(function () {
+                $.unblockUI()
+                alertError("ERROR !!!")
+            })
+        }, "Anda yakin menghapus data ini ? ")
+    }
     </script>
 </body>
 

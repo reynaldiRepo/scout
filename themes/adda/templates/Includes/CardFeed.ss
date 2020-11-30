@@ -16,17 +16,17 @@
             <span class="post-time"><i class="fa fa-calendar mr-1"></i> $Created.Format('dd/MM/YYYY')
                 <i class="fa fa-clock-o mr-1 ml-1"></i> $Created.Format('HH:mm')</span>
         </div>
-
         <div class="post-settings-bar">
             <span></span>
             <span></span>
             <span></span>
             <div class="post-settings arrow-shape">
                 <ul>
-                    <li><button class="report-btn" data-id="$ID">Report</button></li>
+                    <li><a class="text-dark" href="$Link" data-id="$ID">Detail</a></li>
                     <% if $Top.CurrentMember.ID == $MemberData.ID %>
-                    <li><button class="delete=feed-btn" data-id="$ID">Delete</button></li>
+                    <li><button class="delete-feed-btn" onclick="deletefeed(this)" data-id="$ID">Delete</button></li>
                     <% end_if %>
+                    <li><button class="report-btn" data-id="$ID">Report</button></li>
                 </ul>
             </div>
         </div>

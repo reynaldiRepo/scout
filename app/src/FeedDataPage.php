@@ -24,7 +24,8 @@ class FeedDataPageController extends PageController
         'deletecomment',
         'updatenumcomment',
         'numreplycomment',
-        'post'
+        'post',
+        'deletefeed'
     ];
 
     private static $url_handlers = [
@@ -208,7 +209,28 @@ class FeedDataPageController extends PageController
 
         $data['Feed'] = $feed;
         return $this->customise($data)->renderWith(array('CleanPage', 'FeedDetail'));
+    }
 
+    public function deletefeed(){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired, please login again']);
+            return;
+        }
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong, No Data !']);
+            return;
+        }
+        $id = $_GET['id'];
+        $Feed = FeedData::get()->byID($id);
+        if ($Feed){
+            $Feed->delete();
+            echo json_encode(['status'=>200, 'msg'=>'Delelte Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Delelte Failed, data has not found']);
+            return;
+        }
     }
 
 }

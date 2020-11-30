@@ -83,6 +83,10 @@ class FeedData extends DataObject{
         return Director::absoluteBaseURL()."feed/post/".$this->ID;
     }
 
+    public function lenContent(){
+       return strlen($this->Content);
+    }
+
     public function canCreate($member = null, $context = [])
     {
         return false;
@@ -110,7 +114,7 @@ class FeedData extends DataObject{
 
         $settingbar = "";
         if ($member->ID == $this->MemberData()->ID){
-            $settingbar = '<li><button class="delete=feed-btn" data-id="'.$this->ID.'">Delete</button></li>';
+            $settingbar = '<li><button class="delete-feed-btn" onclick="deletefeed(this)" data-id="'.$this->ID.'">Delete</button></li>';
         }
 
         $profileHtml = '<div class="card">
@@ -133,8 +137,9 @@ class FeedData extends DataObject{
                     <span></span>
                     <div class="post-settings arrow-shape">
                         <ul>
-                            <li><button class="report-btn" data-id="'.$this->ID.'">Report</button></li>
+                            <li><a class="text-dark" href="'.$this->Link().'" data-id="$ID">Detail</a></li>
                             '.$settingbar.'
+                            <li><button class="report-btn" data-id="'.$this->ID.'">Report</button></li>
                         </ul>
                     </div>
                 </div>

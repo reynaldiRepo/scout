@@ -46,8 +46,13 @@
                                             <span>
                                                 <i class="fa fa-calendar mr-2"></i> $Created.Format("dd-MM-YYYY")
                                                 <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
+                                                <% if $CountComment == 0 %>
                                                 <button class="ml-2 reply" id="num-comment-{$ID}" data-ID="$ID" onclick="togglecomment(this)"
                                                 data-frame-open="0"><i class="bi bi-chat-bubble mr-2"></i> $CountComment</button>
+                                                <% else %>
+                                                <button class="ml-2 reply" id="num-comment-{$ID}" data-ID="$ID" onclick="togglecomment(this)"
+                                                data-frame-open="1"><i class="bi bi-chat-bubble mr-2"></i> $CountComment</button>
+                                                <% end_if %>
                                             </span>
                                             <% if $Up.CurrentMember.ID == $MemberData.ID %>
                                             <button class="float-right del-comment" data-id="$ID"
@@ -56,8 +61,14 @@
                                             </button>
                                             <% end_if %>
                                         </div>
-                                        <div class="frame-content mt-2" id="comment-frame-{$ID}">
-                                        </div>
+                                        <% if $CountComment == 0 %>
+                                            <div class="frame-content mt-2" id="comment-frame-{$ID}">
+                                            </div>
+                                        <% else %>
+                                            <div class="frame-content mt-2" id="comment-frame-{$ID}">
+                                                <iframe src='{$BaseHref}feed/commentreply?CommentFeedDataID={$ID}' width='100%' height='300' frameBorder='0'></iframe>
+                                            </div>
+                                        <% end_if %>
                                     </div>
                                 </div>
                             </div>

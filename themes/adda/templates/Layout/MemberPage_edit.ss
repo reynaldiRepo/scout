@@ -18,7 +18,7 @@
         </form>
         <form id="edit-banner" action="{$BaseHref}member/updatebanner" method="POST" enctype='multipart/form-data'>
             <input id="input-banner" accept="image/*" type="file" name="BannerImage" hidden>
-            <label style="cursor:pointer" for="input-banner" class="edit-prof-btn text-white bg-info mt-2 pl-2 pr-2"><i
+            <label style="cursor:pointer; top:10px !important" for="input-banner" class="edit-prof-btn text-white bg-info mt-2 pl-2 pr-2"><i
                     class="fa fa-edit"></i> Change Banner</label>
         </form>
     </div>

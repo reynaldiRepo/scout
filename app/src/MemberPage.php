@@ -64,8 +64,8 @@ class MemberPageController extends PageController{
         
         //new feature feed
         'addfeed',
+        'editfeed',
         'deletefeed',
-        'updatefeed',
         'feed',
     ];
 
@@ -590,7 +590,34 @@ class MemberPageController extends PageController{
             echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
             return;
         }
-        
     }
+
+    public function editfeed($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'session expired']);
+            return;
+        }
+        $feed = FeedData::get()->byID($_POST['ID']);
+        $feed->update($_POST);
+        $feed->MemberDataID = $member->ID;
+        $feed->write();
+        if ($feed) {
+            foreach($feed->Image() as $i){
+                $feed->Image()->remove($i);
+            }
+            if (isset($data['Images'])) {
+                foreach ($data['Images'] as $i) {
+                    $feed->Image()->add($i);
+                }
+            }  
+            echo json_encode(['status'=>200, 'msg'=>'Edit Feed Success']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+            return;
+        }
+    }
+
 
 }
