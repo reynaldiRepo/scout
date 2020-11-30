@@ -26,4 +26,12 @@ class CommentFeedData extends DataObject{
         'Content',
         'Created' => 'Date Post'
     ];
+
+    public function getChild(){
+        return CommentFeedData::get()->filter(['CommentFeedDataID'=> $this->ID])->sort("ID", "DESC");
+    }
+    
+    public function CountComment(){
+       return $this->getChild()->count();
+    }
 }

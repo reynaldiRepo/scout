@@ -57,7 +57,12 @@ class FeedData extends DataObject{
     }
 
     public function CountComment(){
-        return $this->CommentFeedData()->count();
+        $thisComment =  $this->CommentFeedData()->count();
+        $thisNestedComment = 0;
+        foreach($this->CommentFeedData() as $cfd){
+            $thisNestedComment += CommentFeedData::get()->filter(['CommentFeedDataID'=> $cfd->ID])->count();
+        }
+        return $thisComment + $thisNestedComment;
     }
 
     public function toJsonArray(){
@@ -75,7 +80,7 @@ class FeedData extends DataObject{
     }
 
     public function Link(){
-        return Director::absoluteBaseURL()."member/post/".$this->ID;
+        return Director::absoluteBaseURL()."feed/post/".$this->ID;
     }
 
     public function canCreate($member = null, $context = [])
@@ -111,14 +116,14 @@ class FeedData extends DataObject{
         $profileHtml = '<div class="card">
             <div class="post-title d-flex align-items-center">
                 <div class="profile-thumb">
-                    <a href="'.$this->MemberData()->Link().'">
+                    <a href="'.$this->Link().'">
                         <figure class="profile-thumb-middle">
                             <img src="'.$this->MemberData()->getPhotoProfileThumb()->URL.'" alt="profile picture">
                         </figure>
                     </a>
                 </div>
                 <div class="posted-author">
-                    <h6 class="author"><a href="'.$this->MemberData()->Link().'">'.$this->MemberData()->FirstName.' '.$this->MemberData()->Surname.' </a></h6>
+                    <h6 class="author"><a href="'.$this->Link().'">'.$this->MemberData()->FirstName.' '.$this->MemberData()->Surname.' </a></h6>
                     <span class="post-time"><i class="fa fa-calendar mr-1"></i> '.$date->format("d-m-y").'
                     <i class="fa fa-clock-o mr-1 ml-1"></i> '.$date->format("H:i").'</span>
                 </div>
@@ -191,7 +196,7 @@ class FeedData extends DataObject{
                     <li>
                         <button class="post-comment comment-btn" data-ID="'.$this->ID.'" data-frame-open="0"  onclick="togglecomment(this)">
                             <i class="bi bi-chat-bubble"></i>
-                            <span id="num-comment-'.$this->ID.'">'.$this->CommentFeedData()->count().'</span>
+                            <span id="num-comment-'.$this->ID.'">'.$this->CountComment().'</span>
                         </button>
                     </li>
                 </ul>';

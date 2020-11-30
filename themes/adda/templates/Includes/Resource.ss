@@ -249,15 +249,12 @@
     }
 
     ::-webkit-scrollbar {
-        width: 0px;
-        /* Remove scrollbar space */
-        background: transparent;
-        /* Optional: just make scrollbar invisible */
+        width: 3px;        
     }
 
     /* Optional: show position indicator in red */
     ::-webkit-scrollbar-thumb {
-        background: #FF0000;
+        background: rgba(0,0,0, 0.5);
     }
 
 </style>

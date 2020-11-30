@@ -1,5 +1,5 @@
 <div class="col-md-12 p-0">
-    <div class="card" style="height:650px !important">
+    <div class="card" style="">
         <div class="profile-thumb d-flex">
             <a href="$CurrentMember.Link" target="_parent"> 
                 <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
@@ -19,10 +19,11 @@
             </div>
         </div>
         <hr>
-        <div class="h-100 w-100 mt-2 p-0 p-2" style="position: relative; overflow-y:scroll">
+        <div class="h-100 w-100 mt-2 p-0 p-2" style="position: relative;">
             <h4 class="widget-title mt-0 mb-4">Komentar Lainnya</h4>
             <% if $Comment %>
                 <% loop $Comment %>
+                    
                     <div class="post-desc  mt-2">
                         <div class="share-box-inner">
                             <div class="share-content-box w-100 p-0">
@@ -30,7 +31,7 @@
                                     <div class="share-text-field bg-white p-3" style="border-radius:10px; height:unset">
                                         <div class="d-flex">
                                             <div class="profile-thumb">
-                                                <a href="$MemberData.Link">
+                                                <a target="_parent" href="$MemberData.Link">
                                                     <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
                                                         <img src="$MemberData.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
                                                     </figure>
@@ -45,6 +46,8 @@
                                             <span>
                                                 <i class="fa fa-calendar mr-2"></i> $Created.Format("dd-MM-YYYY")
                                                 <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
+                                                <button class="ml-2 reply" id="num-comment-{$ID}" data-ID="$ID" onclick="togglecomment(this)"
+                                                data-frame-open="0"><i class="bi bi-chat-bubble mr-2"></i> $CountComment</button>
                                             </span>
                                             <% if $Up.CurrentMember.ID == $MemberData.ID %>
                                             <button class="float-right del-comment" data-id="$ID"
@@ -53,11 +56,14 @@
                                             </button>
                                             <% end_if %>
                                         </div>
+                                        <div class="frame-content mt-2" id="comment-frame-{$ID}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 <% end_loop %>
             <% else %>
                 <div class="alert "> Belum ada comment </div>
@@ -97,8 +103,20 @@
 
 <script>
 
-    var parenttrigger = window.parent.$("#num-comment-{$FeedDataID}");
-    var numcomment = parseInt(parenttrigger.text())
+    parenttrigger = parent.updateNumComment("#num-comment-{$FeedDataID}", "$FeedDataID");
+
+    window.updateCommentNum = function(target, id){
+        $.ajax({
+            url:"{$BaseHref}feed/numreplycomment?id="+id,
+        }).done(function(data){
+            data = JSON.parse(data)
+            if (data.status == 200){
+                $(target).html("<i class='bi bi-chat-bubble mr-2'></i>" + data.data)
+                parent.updateNumComment("#num-comment-{$FeedDataID}", "$FeedDataID");
+            }
+        })
+    }
+
     $("#form-add-comment").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this)
@@ -117,7 +135,7 @@
             data = JSON.parse(data)
             if (data.status == 200) {
                 alertSuccess(data.msg);
-                parenttrigger.text(numcomment+1)
+                parenttrigger;
                 location.reload();
             } else {
                 alertWarning(data.msg);
@@ -151,7 +169,7 @@
                 data = JSON.parse(data);
                 if (data.status == 200) {
                     alertSuccess(data.msg);
-                    parenttrigger.text(numcomment-1)
+                    parenttrigger;
                     location.reload();
                     location.reload();
                 } else {
@@ -163,5 +181,18 @@
             })
         }, "Anda yakin menghapus comment ini ? ")
     })
+
+    function togglecomment(e){
+        var id = $(e).attr("data-ID")
+        var ctr = $("#comment-frame-"+id)
+        var isopen = $(e).attr("data-frame-open");
+        if (isopen == "0"){
+            $(e).attr("data-frame-open", "1");
+            ctr.append("<iframe src='{$BaseHref}feed/commentreply?CommentFeedDataID="+id+"' width='100%' height='300' frameBorder='0'></iframe>")
+        }else{
+            $(e).attr("data-frame-open", "0");
+            ctr.find("iframe").first().remove();
+        }
+    }
 
 </script>

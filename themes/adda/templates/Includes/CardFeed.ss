@@ -3,7 +3,7 @@
     <div class="post-title d-flex align-items-center">
         <!-- profile picture end -->
         <div class="profile-thumb">
-            <a href="$MemberData.Link">
+            <a href="$Link">
                 <figure class="profile-thumb-middle">
                     <img src="$MemberData.getPhotoProfileThumb.URL" alt="profile picture">
                 </figure>
@@ -12,7 +12,7 @@
         <!-- profile picture end -->
 
         <div class="posted-author">
-            <h6 class="author"><a href="$MemberData.Link">$MemberData.FirstName $MemberData.Surname</a></h6>
+            <h6 class="author"><a href="$Link">$MemberData.FirstName $MemberData.Surname</a></h6>
             <span class="post-time"><i class="fa fa-calendar mr-1"></i> $Created.Format('dd/MM/YYYY')
                 <i class="fa fa-clock-o mr-1 ml-1"></i> $Created.Format('HH:mm')</span>
         </div>
@@ -85,7 +85,7 @@
                 <li>
                     <button class="post-comment comment-btn" data-ID="$ID" data-frame-open="0">
                         <i class="bi bi-chat-bubble"></i>
-                        <span id="num-comment-{$ID}">$CommentFeedData.count()</span>
+                        <span id="num-comment-{$ID}">$CountComment</span>
                     </button>
                 </li>
             </ul>

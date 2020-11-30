@@ -13,11 +13,11 @@
 
 </head>
 
-<body>
-    <main>
+<body class="bg-white">
+    <main class="bg-white">
 
-        <div class="pt-0" style="padding-bottom: unset;position: sticky;">
-            <div class="row">
+        <div class="pt-0 bg-white" style="padding-bottom: unset;position: sticky;">
+            <div class="row bg-white">
                 $Layout
             </div>
         </div>
