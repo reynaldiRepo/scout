@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordViewer;
 use SilverStripe\Control\Director;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Security\Member;
@@ -23,12 +24,16 @@ use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\RequiredFields;
 
 class FeedData extends DataObject{
+
+    private static $default_sort = "Created Desc";
+
     /**
      * Database fields
      * @var array
      */
     private static $db = [
         'Content' => 'HTMLText',
+        'isHide' => 'Boolean'
     ];
 
     private static $has_one = [
@@ -38,7 +43,8 @@ class FeedData extends DataObject{
     private static $has_many = [
         'Image' => CustomImage::class,
         'CommentFeedData' => CommentFeedData::class,
-        'LikeData' => LikeData::class
+        'LikeData' => LikeData::class,
+        'ReportData' => ReportData::class,
     ];
 
     private static $singular_name = 'Feed Anggota';
@@ -47,13 +53,19 @@ class FeedData extends DataObject{
     private static $summary_fields = [
         'Created' => 'Date Post',
         'MemberData.FirstName' => 'User',
-        'Content',
+        'shortcontent' => 'Content Preview',
         'CountLike' => 'Like',
-        'CountComment' => 'Comment'
+        'CountComment' => 'Comment',
+        'CountReport' => 'Reported by Other User'
     ];
 
     public function CountLike(){
         return $this->LikeData()->count();
+    }
+
+    public function shortcontent(){
+        $limit = 150;
+        return strlen($this->Content) >= 150 ? substr($this->Content, 0, $limit)."..." : $this->Content;
     }
 
     public function CountComment(){
@@ -63,6 +75,10 @@ class FeedData extends DataObject{
             $thisNestedComment += CommentFeedData::get()->filter(['CommentFeedDataID'=> $cfd->ID])->count();
         }
         return $thisComment + $thisNestedComment;
+    }
+
+    public function CountReport(){
+        return $this->ReportData()->count();
     }
 
     public function toJsonArray(){
@@ -92,11 +108,6 @@ class FeedData extends DataObject{
         return false;
     }
 
-    public function canEdit($member = null)
-    {
-        return false;
-    }
-
     public function isLike(){
         $member = Member::currentUser();
         $like = LikeData::get()->filter(['MemberDataID'=>$member->ID, 'FeedDataID'=>$this->ID]);
@@ -115,6 +126,8 @@ class FeedData extends DataObject{
         $settingbar = "";
         if ($member->ID == $this->MemberData()->ID){
             $settingbar = '<li><button class="delete-feed-btn" onclick="deletefeed(this)" data-id="'.$this->ID.'">Delete</button></li>';
+        }else{
+            $settingbar = '<li><button class="report-btn"  onclick="doreport(this)"  data-id="'.$this->ID.'">Report</button></li>';
         }
 
         $profileHtml = '<div class="card">
@@ -139,7 +152,7 @@ class FeedData extends DataObject{
                         <ul>
                             <li><a class="text-dark" href="'.$this->Link().'" data-id="$ID">Detail</a></li>
                             '.$settingbar.'
-                            <li><button class="report-btn" data-id="'.$this->ID.'">Report</button></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -224,22 +237,42 @@ class FeedData extends DataObject{
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+        $fields->removeFieldFromTab('Root', 'Image');
         $fields->removeByName([
-            'MemberDataID'
+            'MemberDataID',
+            'isHide',
+            'Content'
         ]);
+
+        $fields->addFieldToTab(
+            'Root.Main',
+            CustomDropdown::create('isHide', 'Sembunyikan Dari Web', ["0"=>"Tidak", "1"=>"Disembunyikan"])
+        );
+
         $fields->addFieldToTab(
             'Root.Main',
             CustomDropdown::create('MemberDataID', 'Member', MemberData::get()->map("ID", "FirstName"))
         );
 
+        $fields->addFieldToTab(
+            'Root.Main',
+            ReadonlyField::create(
+                'Content',
+                'Content'
+            )
+        );
+
+        
+
         $gridfield = GridField::create(
             'Image',
-            'Image',
+            'List Image',
             $this->Image(),
-            GridFieldConfig_RecordEditor::create()  
+            GridFieldConfig_RecordViewer::create()
         );
+
         $fields->addFieldToTab(
-            'Root.Image',
+            'Root.Main',
             $gridfield
         );
         return $fields;

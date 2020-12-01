@@ -74,7 +74,7 @@ class HomePageController extends PageController{
         // var_dump($start, $count);
         // die();
         $data['Title'] = "Feed Anggota Peransaka";
-        $Feed = DataObject::get("FeedData", "","ID Desc","", "$start, $count");
+        $Feed = DataObject::get("FeedData", "isHide = '0' ","ID Desc","", "$start, $count");
         $data['Feed'] = $Feed;
 
         //check future page for 3 ajax load

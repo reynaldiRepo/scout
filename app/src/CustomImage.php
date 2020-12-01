@@ -15,6 +15,16 @@ class CustomImage extends Image{
         parent::onAfterWrite();
         $this->publishRecursive();
     }
+
+    public function getpreviewimg(){
+        return $this->Fill(50,50);
+    }
+
+    private static $summary_fields = [
+        'getpreviewimg' => 'Preview',
+        'URL' => 'Url',
+        'Created',
+    ];
 }
 
 class CustomFile extends File{    

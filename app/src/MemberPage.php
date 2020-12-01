@@ -554,7 +554,7 @@ class MemberPageController extends PageController{
         // var_dump($start, $count);
         // die();
         $data['Title'] = "Feed Anggota Peransaka";
-        $Feed = DataObject::get("FeedData", "MemberDataID = '".$member->ID."'","ID Desc","", "$start, $count");
+        $Feed = DataObject::get("FeedData", "MemberDataID = '".$member->ID."' and isHide = '0'","ID Desc","", "$start, $count");
         $data['Feed'] = $Feed;
 
         // var_dump( DataObject::get("FeedData", "MemberDataID = '".$member->ID."'")->count());

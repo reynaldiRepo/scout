@@ -30,6 +30,9 @@ class ApiHelperPageController extends PageController{
         'getfeedmember' => true,
         'likefeed' => true,
 
+        //for report
+        'doreport'
+
     ];
 
     
@@ -130,7 +133,7 @@ class ApiHelperPageController extends PageController{
         $start = $_GET['start'];
         $count = $_GET['count'];
         
-        $feed = DataObject::get("FeedData", "","ID Desc","", "$start, $count");
+        $feed = DataObject::get("FeedData", "isHide='0'","ID Desc","", "$start, $count");
         // var_dump("a");
         if ($feed->count() == 0){
             echo json_encode(['status'=>417, 'msg'=>'End Of Data']);
@@ -177,7 +180,7 @@ class ApiHelperPageController extends PageController{
             }
         }
         
-        $feed = DataObject::get("FeedData", "MemberDataID = '$id'","ID Desc","", "$start, $count");
+        $feed = DataObject::get("FeedData", "MemberDataID = '$id' and isHide='0'","ID Desc","", "$start, $count");
         // var_dump("a");
         if ($feed->count() == 0){
             echo json_encode(['status'=>417, 'msg'=>'End Of Data']);
@@ -224,6 +227,35 @@ class ApiHelperPageController extends PageController{
             echo json_encode(['status'=>200, 'msg'=>'Like Success']);
             return;
         }
+    }
 
+    public function doreport($data){
+        $member = Member::currentUser();
+        if (!$member){
+            echo json_encode(['status'=>500, 'msg'=>'Session Expired']);
+            return;
+        }
+        if (!isset($_GET['id'])){
+            echo json_encode(['status'=>500, 'msg'=>'id Required']);
+            return;
+        }
+
+        $feed = FeedData::get()->byID($_GET['id']);
+        if (!$feed){
+            echo json_encode(['status'=>500, 'msg'=>'No data !']);
+            return;
+        }
+        $newReport = new ReportData();
+        $newReport->update($_POST);
+        $newReport->FeedDataID = $feed->ID;
+        $newReport->MemberDataID = $member->ID;
+        $new = $newReport->write();
+        if ($new){
+            echo json_encode(['status'=>200, 'msg'=>'Terimkasih sudah mengirim report anda, kami akan mempelajari apa yang sedang terjadi']);
+            return;
+        }else{
+            echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
+            return;
+        }   
     }
 }

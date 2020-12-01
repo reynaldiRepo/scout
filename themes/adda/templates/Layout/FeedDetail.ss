@@ -38,7 +38,11 @@
                         <li><button class="delete-feed-btn" onclick="deletefeed(this)" data-id="$ID">Delete</button>
                         </li>
                         <% end_if %>
-                        <li><button class="report-btn" data-id="$ID">Report</button></li>
+                        
+                        <% if $Top.CurrentMember.ID != $MemberData.ID %>
+                            <li><button class="report-btn" onclick="doreport(this)" data-id="$ID">Report</button></li>
+                        <% end_if %>
+
                     </ul>
                 </div>
             </div>

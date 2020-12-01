@@ -62,33 +62,33 @@
         $(document).ready(function () {
             $(".lightgallery").lightGallery();
             $(".slim-select").each(function () {
-            new SlimSelect({
+                new SlimSelect({
                     select: this
                 })
             })
-            $(".prev-content").each(function(){
-                $(this).find("br").each(function(){
+            $(".prev-content").each(function () {
+                $(this).find("br").each(function () {
                     console.log("aa")
                     $(this).remove();
                 })
             })
-            $(".close-div").click(function(){
+            $(".close-div").click(function () {
                 var process = $(this).attr("data-process");
                 var div = $($(this).attr("data-target"))
                 div.hide();
-                if (process == 1){
+                if (process == 1) {
                     var url = $(this).attr("data-url");
                     $.ajax({
                         url: url,
                         method: "GET"
-                    }).done(function(data){
+                    }).done(function (data) {
                         console.log(data)
-                    }).fail(()=>{
+                    }).fail(() => {
                         console.log("Error")
                     })
                 }
             })
-            $(".btn-href").click(function(e){
+            $(".btn-href").click(function (e) {
                 e.preventDefault();
                 blockUI();
                 location.href = $(this).attr("href")
@@ -96,7 +96,7 @@
         });
 
 
-      window.owl =  $(".owl-carousel").owlCarousel({
+        window.owl = $(".owl-carousel").owlCarousel({
             dots: true,
             responsiveClass: true,
             responsive: {
@@ -111,31 +111,34 @@
                 }
             }
         });
-        
+
         function deletefeed(e) {
-        var id = $(e).attr("data-id");
-        Question(function () {
-            $.ajax({
-                url: "{$BaseHref}feed/deletefeed?id=" + id,
-                beforeSend: function () {
-                    blockUI()
-                }
-            }).done(function (data) {
-                $.unblockUI()
-                data = JSON.parse(data);
-                if (data.status == 200) {
-                    alertSuccess(data.msg)
-                    location.reload();
-                } else {
-                    alertWarning(data.msg)
-                }
-            }).fail(function () {
-                $.unblockUI()
-                alertError("ERROR !!!")
-            })
-        }, "Anda yakin menghapus data ini ? ")
-    }
+            var id = $(e).attr("data-id");
+            Question(function () {
+                $.ajax({
+                    url: "{$BaseHref}feed/deletefeed?id=" + id,
+                    beforeSend: function () {
+                        blockUI()
+                    }
+                }).done(function (data) {
+                    $.unblockUI()
+                    data = JSON.parse(data);
+                    if (data.status == 200) {
+                        alertSuccess(data.msg)
+                        location.reload();
+                    } else {
+                        alertWarning(data.msg)
+                    }
+                }).fail(function () {
+                    $.unblockUI()
+                    alertError("ERROR !!!")
+                })
+            }, "Anda yakin menghapus data ini ? ")
+        }
+
     </script>
+    <% include report %>
+
 </body>
 
 </html>

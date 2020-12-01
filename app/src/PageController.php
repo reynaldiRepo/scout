@@ -166,5 +166,9 @@ use SilverStripe\Security\MemberPassword;
             }
             return $data;
         }
+
+        public function getReasonReport(){
+            return ReportReasonData::get();
+        }
     }
 }
