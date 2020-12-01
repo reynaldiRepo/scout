@@ -64,7 +64,7 @@
                                             </a>
 										</div>
 										<div class="msg-time">
-											<p>$Created.Format("dd MM YYYY")</p>
+											<p>$Created.Format("dd-MM-YYYY")</p>
 										</div>
                                     </li>
                                     <% end_loop %>
