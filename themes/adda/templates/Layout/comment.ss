@@ -8,11 +8,11 @@
             </a>
             <h4 class="widget-title mt-0 mb-4">$CurrentMember.FirstName $CurrentMember.Surname</h4>
         </div>
-        <div class="share-box-inner mt-2">
+        <div class="share-box-inner mt-2 pr-2 pl-2">
             <div class="share-content-box w-100">
                 <form class="share-text-box p-0" action="{$BaseHref}feed/addcomment?id=$FeedDataID" method="POST"
                     id="form-add-comment" method="POST">
-                    <textarea id="out-input-comment" name="Content" required class="share-text-field"
+                    <textarea id="out-input-comment" name="Content" required class="share-text-field bg-white"
                         style="height:100px;border-radius:10px;padding:10px" placeholder="Say Something"></textarea>
                     <button class="submit-btn mt-2 p-2" style="border-radius:10px" type="submit">Comment</button>
                 </form>

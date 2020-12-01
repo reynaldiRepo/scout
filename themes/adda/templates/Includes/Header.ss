@@ -27,6 +27,7 @@
                 <div class="col-md-5">
                     <div class="header-top-right d-flex align-items-center justify-content-end">
 						
+						<% if $CurrentMember %>
 						<div class="profile-setting-box mr-2">
                             <a href="javascript:void(0)" class="notif-triger text-dark" style="background:unset">
 								<i class="fa fa-bell-o color-theme" style="font-size:24px"></i><span class="bg-warning" 
@@ -66,7 +67,7 @@
                             </div>
                         </div>
 
-                        <% if $CurrentMember %>
+                        
                         <div class="profile-setting-box">
                             <div class="profile-thumb-small">
                                 <a href="javascript:void(0)" class="profile-triger">
