@@ -9,6 +9,16 @@ class LikeData extends DataObject{
     ];
 
     /**
+     * Defines summary fields commonly used in table columns
+     * as a quick overview of the data for this dataobject
+     * @var array
+     */
+    private static $summary_fields = [
+        'Created',
+        'MemberData.FirstName' => 'User'
+    ];
+
+    /**
      * DataObject create permissions
      * @param Member $member
      * @param array $context Additional context-specific data which might

@@ -1,63 +1,58 @@
 <div class="col-md-12 p-0">
     <div class="card" style="">
-        <div class="profile-thumb d-flex">
-            <a href="$CurrentMember.Link" target="_parent"> 
-                <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
-                    <img src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
-                </figure>
-            </a>
-            <h4 class="widget-title mt-0 mb-4">$CurrentMember.FirstName $CurrentMember.Surname</h4>
-        </div>
         <div class="share-box-inner mt-2 pr-2 pl-2">
+            <div class="profile-thumb d-flex">
+                <a href="$CurrentMember.Link" target="_parent"> 
+                    <figure class="profile-thumb-middle bg-dark mr-2 mt-2" style="width:32px;height:32px">
+                        <img src="$CurrentMember.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
+                    </figure>
+                </a>
+            </div>
             <div class="share-content-box w-100">
                 <form class="share-text-box p-0" action="{$BaseHref}feed/addcomment?id=$FeedDataID" method="POST"
                     id="form-add-comment" method="POST">
-                    <textarea id="out-input-comment" name="Content" required class="share-text-field bg-white"
+                    <textarea id="out-input-comment" name="Content" required class="share-text-field border"
                         style="height:100px;border-radius:10px;padding:10px" placeholder="Say Something"></textarea>
-                    <button class="submit-btn mt-2 p-2" style="border-radius:10px" type="submit">Comment</button>
+                    <button class="btn btn-danger bg-theme pl-3 pr-3 pt-1 pb-1 mt-2 rounded" type="submit">Comment</button>
                 </form>
             </div>
         </div>
-        <hr>
         <div class="h-100 w-100 mt-2 p-0 p-2" style="position: relative;">
             <h4 class="widget-title mt-0 mb-4">Komentar Lainnya</h4>
             <% if $Comment %>
                 <% loop $Comment %>
-                    
                     <div class="post-desc  mt-2">
                         <div class="share-box-inner">
+                            <div class="profile-thumb">
+                                <a target="_parent" href="$MemberData.Link">
+                                    <figure class="profile-thumb-middle bg-dark mr-2 mt-1" style="width:32px;height:32px">
+                                        <img src="$MemberData.getPhotoProfile.Fill(100,100).URL" alt="profile picture" style="width:32px;height:32px">
+                                    </figure>
+                                </a>
+                            </div>
                             <div class="share-content-box w-100 p-0">
                                 <div class="share-text-box p-0">
-                                    <div class="share-text-field bg-white p-3" style="border-radius:10px; height:unset">
+                                    <div class="share-text-field bg-white p-0" style="border-radius:10px; height:unset">
                                         <div class="d-flex">
-                                            <div class="profile-thumb">
-                                                <a target="_parent" href="$MemberData.Link">
-                                                    <figure class="profile-thumb-middle bg-dark mr-2" style="width:32px;height:32px">
-                                                        <img src="$MemberData.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
                                             <b>$MemberData.FirstName $MemberData.Surname</b>
                                         </div>
-                                        <hr class="m-0 mt-2 mb-2">
-                                        <p>$Content</p>
-                                        <hr>
-                                        <div class="col-md-12 p-1 w-100">
+                                        <p class="mb-0">$Content</p>
+                                        <div class="col-md-12 p-0 w-100">
                                             <span>
-                                                <i class="fa fa-calendar mr-2"></i> $Created.Format("dd-MM-YYYY")
+                                                <i class="fa fa-calendar mr-1"></i> $Created.Format("dd-MM-YYYY") 
                                                 <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
                                                 <% if $CountComment == 0 %>
                                                 <button class="ml-2 reply" id="num-comment-{$ID}" data-ID="$ID" onclick="togglecomment(this)"
-                                                data-frame-open="0"><i class="bi bi-chat-bubble mr-2"></i> $CountComment</button>
+                                                data-frame-open="0"><i class="fa fa-reply mr-2"></i>Balas ($CountComment)</button>
                                                 <% else %>
                                                 <button class="ml-2 reply" id="num-comment-{$ID}" data-ID="$ID" onclick="togglecomment(this)"
-                                                data-frame-open="1"><i class="bi bi-chat-bubble mr-2"></i> $CountComment</button>
+                                                data-frame-open="1"><i class="fa fa-reply mr-2"></i>Balas ($CountComment)</button>
                                                 <% end_if %>
                                             </span>
                                             <% if $Up.CurrentMember.ID == $MemberData.ID %>
-                                            <button class="float-right del-comment" data-id="$ID"
+                                            <button class="ml-3 del-comment" data-id="$ID"
                                                 data-url="{$BaseHref}feed/deletecomment?FeedDataID=$Top.FeedDataID&ID=$ID">
-                                                <i style="font-size:18px" class="fa fa-trash"></i>
+                                                <i style="font-size:18px" class="fa fa-trash color-theme"></i>
                                             </button>
                                             <% end_if %>
                                         </div>

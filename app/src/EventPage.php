@@ -148,7 +148,7 @@ class EventPageController extends PageController
             $data['Title'] = $Event->Title;
             $data['Event'] = $Event;
             $Comment = new PaginatedList($Event->CommentEventData()->sort("Created", "DESC"), $this->getRequest());
-            $Comment->setPageLength(10);
+            $Comment->setPageLength(CT::$PageSize);
             $data['Comments'] = $Comment;
         }else{
             die("404/ not found");
@@ -225,6 +225,11 @@ class EventPageController extends PageController
             $newComment->MemberDataID = $member->ID;
             $newComment->write();
             $event->CommentEventData()->add($newComment);
+            foreach ($event->MemberData() as $m){
+                if ($m->ID != $member->ID) {
+                    $newNotif = NotificationData::writenotif(1, $newComment, $m);
+                }
+            }
             echo json_encode(['status'=>200, 'msg'=>'Add Comment Success']);
             return;
         }else{

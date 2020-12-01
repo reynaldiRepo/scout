@@ -238,6 +238,7 @@ class FeedData extends DataObject{
     {
         $fields = parent::getCMSFields();
         $fields->removeFieldFromTab('Root', 'Image');
+        $fields->removeFieldFromTab('Root', 'ReportData');
         $fields->removeByName([
             'MemberDataID',
             'isHide',
@@ -251,7 +252,7 @@ class FeedData extends DataObject{
 
         $fields->addFieldToTab(
             'Root.Main',
-            CustomDropdown::create('MemberDataID', 'Member', MemberData::get()->map("ID", "FirstName"))
+            ReadonlyField::create('Member', 'Member')->setValue($this->MemberData()->FirstName)
         );
 
         $fields->addFieldToTab(
@@ -271,9 +272,21 @@ class FeedData extends DataObject{
             GridFieldConfig_RecordViewer::create()
         );
 
+        $gridfieldReport = GridField::create(
+            'ReportData',
+            'Report',
+            $this->ReportData(),
+            GridFieldConfig_RecordViewer::create()
+        );
+
         $fields->addFieldToTab(
             'Root.Main',
             $gridfield
+        );
+
+        $fields->addFieldToTab(
+            'Root.Main',
+            $gridfieldReport
         );
         return $fields;
     }

@@ -70,9 +70,9 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.22/datatables.min.js"></script>
 
-<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.theme.default.min.css">
-<script src="$ThemeDir/javascript/owlcarousel/dist/owl.carousel.js"></script>
+<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.carousel.min.css?key=$getResourceV">
+<link rel="stylesheet" href="$ThemeDir/javascript/owlcarousel/dist/assets/owl.theme.default.min.css?key=$getResourceV">
+<script src="$ThemeDir/javascript/owlcarousel/dist/owl.carousel.js?key=$getResourceV"></script>
 
 <style>
     .bg-theme {
@@ -249,7 +249,7 @@
     }
 
     ::-webkit-scrollbar {
-        width: 3px;
+        width: 2px;
     }
 
     /* Optional: show position indicator in red */
@@ -268,7 +268,7 @@
     .share-text-box .share-text-field {
         -webkit-box-shadow: unset !important;
         box-shadow: unset !important;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+        
         -webkit-transition: all 0.4s ease;
     }
 

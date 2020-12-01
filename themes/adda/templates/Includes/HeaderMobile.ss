@@ -42,19 +42,23 @@
                             font-size: 8px;
                             position: absolute;
                             right: 8px;
-                            bottom: -4px;">10</span>
+                            bottom: -4px;">$numberNotif</span>
                     </a>
                     <div class="notif-dropdown notif-dropdown-mobile">
                         <ul class="dropdown-msg-list pr-3 pl-3 pt-3">
                             <li class="msg-list-item d-flex">
                                 <div class="profile-thumb  mr-2" style="width: 32px;height: 32px;">
-                                    <figure class="profile-thumb-middle" style="width: 32px;height: 32px;">
-                                        <img src="$SiteConfig.SmallWebLogo.URL" alt="profile picture">
-                                    </figure>
+                                    <a href="$MemberOnNotif.Link">
+                                        <figure class="profile-thumb-middle" style="width: 32px;height: 32px;">
+                                            <img src="$SiteConfig.SmallWebLogo.URL" alt="profile picture">
+                                        </figure>
+                                    </a>
                                 </div>
                                 <div class="notification-content text-dark">
-                                    <a href="profile.html" class="text-dark">Robert Faul</a>
-                                    <p>and 35 other people reacted to your photo</p>
+                                    <a href="{$BaseHref}api-helper/seenotif?ID=$ID">
+                                        $MemberOnNotif.FirstName $MemberOnNotif.Surname,
+                                        <p>$Content.RAW</p>
+                                    </a>
                                 </div>
                             </li>
                         </ul>

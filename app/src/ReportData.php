@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\LiteralField;
 
@@ -61,22 +62,22 @@ class ReportData extends DataObject{
 
         $fields->addFieldToTab(
             'Root.Main',
-            LiteralField::create("Created", "Reported at ".$this->Created)
+            ReadonlyField::create("Created", "Reported at ")->setValue($this->Created)
         );
 
         $fields->addFieldToTab(
             'Root.Main',
-            LiteralField::create("Sender", "Reported By ".$this->MemberData()->FirstName." / ".$this->MemberData()->Email)
+            ReadonlyField::create("Sender", "Reported By ")->setValue($this->MemberData()->FirstName." / ".$this->MemberData()->Email)
         );
 
         $fields->addFieldToTab(
             'Root.Main',
-            LiteralField::create("FeedContent", "Feed Content : ".$this->FeedData()->content)
+            ReadonlyField::create("FeedContent", "Feed Content : ")->setValue($this->FeedData()->content)
         );
 
         $fields->addFieldToTab(
             'Root.Main',
-            LiteralField::create("FeedContent", "Report Reason ".$this->getReasonData())
+            ReadonlyField::create("FeedContent", "Report Reason ")->setValue($this->getReasonData())
         );
 
         return $fields;

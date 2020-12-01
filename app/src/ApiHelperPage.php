@@ -31,7 +31,10 @@ class ApiHelperPageController extends PageController{
         'likefeed' => true,
 
         //for report
-        'doreport'
+        'doreport',
+
+        // for notif
+        'seenotif',
 
     ];
 
@@ -258,4 +261,26 @@ class ApiHelperPageController extends PageController{
             return;
         }   
     }
+
+    public function seenotif(){
+        $member = Member::currentUser();
+        if (!$member){
+            return $this->redirect("member/login");
+            
+        }
+        if (!isset($_GET['ID'])){
+            die("404/ Not Found");
+            return;
+        }
+        
+        $ID = $_GET['ID'];
+        $notif = NotificationData::get()->byID($ID);
+        if (!$notif){
+            die("404/ Not Found");
+        }
+        $link = $notif->getLinkToSee();
+        die();
+        return $this->redirect($link);
+    }
+
 }

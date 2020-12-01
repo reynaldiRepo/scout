@@ -108,7 +108,7 @@
             </div>
             <hr>
             <div class="frame-content mt-2" id="comment-frame-{$ID}">
-                <iframe src='{$BaseHref}feed/comment?FeedDataID={$ID}' width='100%' height='500'
+                <iframe src='{$BaseHref}feed/comment?FeedDataID={$ID}' width='100%'
                     frameBorder='0'></iframe>
             </div>
             <% end_with %>
@@ -120,6 +120,11 @@
 <% include EditFeedForm %>
 <% end_with %>
 
+<script>
+    $("iframe").on("load", function(){
+        this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
+    })
+</script>
 <script>
     $(".like-btn").click(function () {
         var id = $(this).attr("data-ID")

@@ -170,5 +170,24 @@ use SilverStripe\Security\MemberPassword;
         public function getReasonReport(){
             return ReportReasonData::get();
         }
+
+        public function numberNotif(){
+            $member = Member::currentUser();
+            if (!$member){
+                return 0;
+            }else{
+                return NotificationData::get()->filter(['OwnerNotifID'=>$member->ID, 'hasSeen'=>'0'])->count();
+            }
+        }
+
+        public function getNotif($limit = 4){
+            $member = Member::currentUser();
+            if (!$member){
+                return null;
+            }else{
+                return NotificationData::get()->filter(['OwnerNotifID'=>$member->ID, 'hasSeen'=>'0'])->sort('Created', 'Desc')->limit($limit);
+            }
+        }
+
     }
 }

@@ -96,7 +96,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-theme">
-                <h5 class="modal-title text-white" id="modal-searchLabel">Search Member</h5>
+                <h5 class="modal-title text-white" id="modal-searchLabel">Search Event</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -50,7 +50,7 @@ class FeedDataPageController extends PageController
         $Feed = FeedData::get()->byID($feedID);
         $data['FeedDataID'] = $feedID;
         $Comment = new PaginatedList($Feed->CommentFeedData()->sort("Created", "DESC"), $this->getRequest());
-        $Comment->setPageLength(10);
+        $Comment->setPageLength(CT::$PageSize);
         $data['Comment'] = $Comment;
         return $this->customise($data)->renderWith(array('CleanPageNoHeader' ,'comment'));
     }
@@ -66,7 +66,7 @@ class FeedDataPageController extends PageController
         }
         $CommentParent = CommentFeedData::get()->byID($_GET['CommentFeedDataID']);
         $Comment = new PaginatedList($CommentParent->getChild(), $this->getRequest());
-        $Comment->setPageLength(10);
+        $Comment->setPageLength(CT::$PageSize);
         $data['CommentParent'] = $CommentParent;
         $data['Comment'] = $Comment;
         
@@ -92,6 +92,7 @@ class FeedDataPageController extends PageController
             $newComment->MemberDataID = $member->ID;
             $newComment->write();
             $Feed->CommentFeedData()->add($newComment);
+            $newNotif = NotificationData::writenotif(2, $newComment, $Feed->MemberData());
             echo json_encode(['status'=>200, 'msg'=>'Add Comment Success']);
             return;
         }else{
@@ -118,6 +119,26 @@ class FeedDataPageController extends PageController
             $newComment->MemberDataID = $member->ID;
             $newComment->CommentFeedDataID = $CommentFeed->ID;
             $newComment->write();
+            
+            //for get user to send notif
+            $users = [];
+            foreach (CommentFeedData::get()->filter([CommentFeedDataID => $CommentFeed->ID]) as $c){
+                if ($c->MemberDataID != $member->ID) {
+                    $users[$c->MemberDataID] = $c->MemberData();
+                }
+            }
+            $users[$CommentFeed->MemberDataID] = $CommentFeed->MemberData();
+            $users[$CommentFeed->FeedData()->MemberDataID] = $CommentFeed->FeedData()->MemberData();
+            foreach($users as $k=>$v){
+                if ($k == $CommentFeed->FeedData()->MemberDataID){
+                    $newNotif = NotificationData::writenotif(2, $newComment, $v);
+                }
+                if ($member->ID != $k && $k != $CommentFeed->FeedData()->MemberDataID) {
+                    $newNotif = NotificationData::writenotif(3, $newComment, $v);
+                }
+            }
+            //==================================
+            
             echo json_encode(['status'=>200, 'msg'=>'Add Comment Success']);
             return;
         }else{

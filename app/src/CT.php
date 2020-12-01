@@ -16,6 +16,7 @@ use SilverStripe\Control\Cookie;
 class CT { 
 
     private static $cookie_login_name = "CTLogin";
+    public static $PageSize = 10;
 
     public function getKabupatenJatim(){
         return KabupatenData::get()->filter(['ProvinsiDataID'=>ProvinsiData::getJatim()->ID])->sort("Title", "ASC");

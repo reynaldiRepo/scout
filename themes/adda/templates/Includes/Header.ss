@@ -32,34 +32,49 @@
                             <a href="javascript:void(0)" class="notif-triger text-dark" style="background:unset">
 								<i class="fa fa-bell-o color-theme" style="font-size:24px"></i><span class="bg-warning" 
 									style="color: #fff;
-									padding: 4px 4px;
-									border-radius: 50%;
-									width: 10px;
-									height: 10px;
-									font-size: 10px;
-									position: relative;
-									right: 9px;">10</span>
+                                    padding: 3px 5px;
+                                    border-radius: 50%;
+                                    width: 20px;
+                                    height: 20px;
+                                    line-height: 20px;
+                                    font-size: 12px;
+                                    position: relative;
+                                    right: 8px;
+                                    bottom: -4px;">$numberNotif</span>
                             </a>
                             <div class="notif-dropdown">
                                 <div class="dropdown-title p-3">
-									<p class="recent-msg">Notification <i class="fa fa-bell-o"></i> (10)</p>
+									<p class="recent-msg">Notification <i class="fa fa-bell-o"></i> ($numberNotif)</p>
 								</div>
                                 <ul class="dropdown-msg-list pr-3 pl-3">
+                                    <% if getNotif %>
+                                    <% loop $getNotif %>
 									<li class="msg-list-item d-flex justify-content-between">
-										<div class="profile-thumb">
-											<figure class="profile-thumb-middle">
-												<img src="$SiteConfig.SmallWebLogo.URL" alt="profile picture">
-											</figure>
+                                        <div class="profile-thumb">
+                                            <a href="$MemberOnNotif.Link">
+                                                <figure class="profile-thumb-middle">
+                                                    <img src="$MemberOnNotif.getPhotoProfile.URL" alt="profile picture">
+                                                </figure>
+                                            </a>
 										</div>
-										<div class="msg-content notification-content">
-											<a href="profile.html">Robert Faul</a>,
-											<a href="profile.html">william jhon</a>
-											<p>and 35 other people reacted to your photo</p>
+                                        <div class="msg-content notification-content">
+                                            <a href="{$BaseHref}api-helper/seenotif?ID=$ID">
+                                                $MemberOnNotif.FirstName $MemberOnNotif.Surname
+                                                <p>$Content.RAW</p>
+                                            </a>
 										</div>
 										<div class="msg-time">
-											<p>25 Apr 2019</p>
+											<p>$Created.Format("dd MM YYYY")</p>
 										</div>
-									</li>
+                                    </li>
+                                    <% end_loop %>
+                                    <% else %>
+                                    <li class="msg-list-item d-flex justify-content-between">
+                                        <div class="msg-content notification-content">
+                                            <p>Tidak ada notifikasi untuk anda</p>
+                                        </div>
+                                    </li>
+                                    <% end_if %>
 								</ul>
 								<div class="msg-dropdown-footer  pl-3 pr-3 pt-0 pb-3">
 									<button>See all notification</button>

@@ -57,7 +57,12 @@
     </main>
 
     <!-- Main JS -->
-    <script src="$ThemeDir/javascript/main.js"></script>
+    <script src="$ThemeDir/javascript/main.js?key=$getResourceV"></script>
+    <script>
+        $("iframe").on("load", function(){
+            this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
+        })
+    </script>
     <script>
         $(document).ready(function () {
             $(".lightgallery").lightGallery();

@@ -229,39 +229,41 @@
         <h4 class="widget-title mt-3 mb-4">Komentar Lainnya</h4>
         <% if Comments %>
         <% loop Comments %>
-        <div class="post-desc  mt-2">
-            <div class="share-box-inner">
-                <div class="profile-thumb">
-                    <a href="$MemberData.Link">
-                        <figure class="profile-thumb-middle bg-dark">
-                            <img src="$MemberData.getPhotoProfile.Fill(80,80).URL" alt="profile picture">
-                        </figure>
-                    </a>
-                </div>
-                <div class="share-content-box w-100">
-                    <div class="share-text-box">
-                        <div class="share-text-field bg-white p-3" style="border-radius:10px; height:unset">
-                            <b>$MemberData.FirstName $MemberData.Surname</b>
-                            <hr class="m-0 mt-2 mb-2">
-                            <p>$Content</p>
-                            <hr>
-                            <div class="col-md-12 p-1 w-100">
-                                <span>
-                                    <i class="fa fa-calendar mr-2"></i> $Created.Format("dd-MM-YYYY")
-                                    <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
-                                </span>
-                                <% if $Up.CurrentMember.ID == $MemberData.ID %>
-                                <button class="float-right del-comment" data-id="$ID"
-                                    data-url="{$BaseHref}event/deletecomment?idevent=$EventData.ID&idcomment=$ID">
-                                    <i style="font-size:18px" class="fa fa-trash"></i>
-                                </button>
-                                <% end_if %>
+            <div class="post-desc  mt-2">
+                <div class="share-box-inner">
+                    <div class="profile-thumb mr-2">
+                        <a target="_parent" href="$MemberData.Link">
+                            <figure class="profile-thumb-middle bg-dark mr-2 mt-1" style="width:32px;height:32px">
+                                <img src="$MemberData.getPhotoProfile.Fill(100,100).URL" alt="profile picture" style="width:32px;height:32px">
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="share-content-box w-100 p-0">
+                        <div class="share-text-box p-0">
+                            <div class="share-text-field bg-white p-0" style="border-radius:10px; height:unset">
+                                <div class="d-flex">
+                                    <b>$MemberData.FirstName $MemberData.Surname</b>
+                                </div>
+                                <p class="mb-0">$Content</p>
+                                <div class="col-md-12 p-0 w-100">
+                                    <span>
+                                        <i class="fa fa-calendar mr-1"></i> $Created.Format("dd-MM-YYYY") 
+                                        <i class="fa fa-clock-o ml-2 mr-2"></i>$Created.Format("HH:mm")
+
+                                    </span>
+                                    <% if $Up.CurrentMember.ID == $MemberData.ID %>
+                                    <button class="ml-3 del-comment" data-id="$ID"
+                                        data-url="{$BaseHref}event/deletecomment?idevent=$Top.Event.ID&idcomment=$ID">
+                                        <i style="font-size:18px" class="fa fa-trash color-theme"></i>
+                                    </button>
+                                    <% end_if %>
+                                </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>
-        </div>
         <% end_loop %>
         <% else %>
         <div class="mt-2">
