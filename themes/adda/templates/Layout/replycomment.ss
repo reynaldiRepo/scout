@@ -1,14 +1,14 @@
 <% with $CommentParent  %>
 <div class="col-md-12 p-0 bg-light">
     <div class="card p-0 bg-light" style="">
-        <div class="col-md-12 p-0 pl-4 pr-3 reply-container pt-3 mt-0" id="reply-container-{$ID}">
+        <div class="col-md-12 p-0 pl-3 pr-2 reply-container pt-1 mt-0" id="reply-container-{$ID}">
             <div class="share-box-inner pl-3 mt-0">
                 <div class="share-content-box w-100">
                     <form class="share-text-box p-0 form-add-comment-reply"
                         action="{$BaseHref}feed/addcommentreply?id=$ID" method="POST" id="form-add-comment-reply"
                         method="POST">
                         <textarea id="out-input-comment" name="Content" required class="share-text-field"
-                            style="height:50px;border-radius:10px;padding:10px" placeholder="Say Something"></textarea>
+                            style="height:70px;border-radius:10px;padding:10px;background:#fff" placeholder="Say Something"></textarea>
                         <button class="submit-btn mt-2 p-2" style="border-radius:10px" type="submit">Comment</button>
                     </form>
                 </div>
@@ -16,7 +16,6 @@
             <div class="col-md-12 pl-3">
                 <hr class="mb-2">
                 <h6 class="mt-0 mb-2">Komentar Lainnya</h6>
-                <hr class="mt-2">
             </div>
             <% if $Top.Comment %>
             <% loop $Top.Comment %>

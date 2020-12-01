@@ -21,7 +21,7 @@
                                 <img src="$getImageEvent.URL" alt="Photo Gallery">
                             </div>
                             <div class="gallery-overlay">
-                                <img src="$getImageEvent.Fill(400,200).URL" alt="Photo Gallery">
+                                <img src="$getImageEvent.Fill(500,300).URL" alt="Photo Gallery">
                                 <div class="view-icon"></div>
                             </div>
                         </div>

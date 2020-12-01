@@ -10,7 +10,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <% include Resource %>
-
+    <style>
+        .card { 
+            padding: 15px !important;
+        }
+    </style>
 </head>
 
 <body class="bg-white">

@@ -159,7 +159,7 @@
         var isopen = $(this).attr("data-frame-open");
         if (isopen == "0"){
             $(this).attr("data-frame-open", "1");
-            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='350' frameBorder='0'></iframe>")
+            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='400' frameBorder='0'></iframe>")
         }else{
             $(this).attr("data-frame-open", "0");
             ctr.find("iframe").first().remove();
@@ -198,7 +198,7 @@
         var isopen = $(e).attr("data-frame-open");
         if (isopen == "0"){
             $(e).attr("data-frame-open", "1");
-            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='350' frameBorder='0'></iframe>")
+            ctr.append("<iframe src='{$BaseHref}feed/comment?FeedDataID="+id+"' width='100%' height='400' frameBorder='0'></iframe>")
         }else{
             $(e).attr("data-frame-open", "0");
             ctr.find("iframe").first().remove();

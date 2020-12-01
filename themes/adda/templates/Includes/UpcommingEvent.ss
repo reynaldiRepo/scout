@@ -1,5 +1,5 @@
 <div class="card widget-item">
-    <h4 class="widget-title">Upcomming Event <i class="fa fa-bell ml-2"></i></h4>
+    <h4 class="widget-title">Upcomming Event <i class="fa fa-bell-o ml-2"></i></h4>
     <div class="widget-body">
         <ul class="like-page-list-wrapper">
             <% if getUpcommingEvent %>

@@ -123,11 +123,19 @@
         $(".profile-dropdown").slideToggle();
 	})
 
+	$('.notif-triger').on('click', function(event){
+		event.stopPropagation();
+        $(".notif-dropdown").slideToggle();
+	})
+
 	//Close When Click Outside
 	$('body').on('click', function(e){
 		var $target = e.target;
 		if (!$($target).is('.profile-dropdown') && !$($target).parents().is('.profile-dropdown')) {
 			$(".profile-dropdown").slideUp("slow");
+		}
+		if (!$($target).is('.notif-dropdown') && !$($target).parents().is('.notif-dropdown')) {
+			$(".notif-dropdown").slideUp("slow");
 		}
 	});
 

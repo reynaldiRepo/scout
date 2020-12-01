@@ -140,7 +140,7 @@
     .ss-single-selected {
         height: 40px !important
     }
-    
+
     .loading {
         background-image: url("$SiteConfig.LoadingGif.URL");
         height: 100px;
@@ -249,19 +249,61 @@
     }
 
     ::-webkit-scrollbar {
-        width: 3px;        
+        width: 3px;
     }
 
     /* Optional: show position indicator in red */
     ::-webkit-scrollbar-thumb {
-        background: rgba(0,0,0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .iziToast-wrapper {
-        z-index : 2999 !important;
+        z-index: 2999 !important;
     }
+
     .iziToast-overlay {
-        z-index : 2997 !important;
+        z-index: 2997 !important;
+    }
+
+    .share-text-box .share-text-field {
+        -webkit-box-shadow: unset !important;
+        box-shadow: unset !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        -webkit-transition: all 0.4s ease;
+    }
+
+    @media (min-width: 1200px){ 
+        .container {
+            max-width: 1320px;
+        }
+    }
+
+    .notif-dropdown {
+        top: 100%;
+        right: 0;
+        width: 450px;
+        background-color: #fff;
+        position: absolute;
+        z-index: 1;
+        border-radius: 0 0 2px 2px;
+        -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        display: none;
+    }
+
+    .notif-dropdown-mobile {
+        top: 100%;
+        right: -50px;
+        width: 350px;
+        margin-top: 15px;
+        background-color: #fff;
+        position: absolute;
+        z-index: 1;
+        border-radius: 0 0 2px 2px;
+        -webkit-box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+        display: none;
+        text-align:left
     }
 
 </style>

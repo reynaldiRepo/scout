@@ -27,8 +27,42 @@
             </div>
 
             <div class="mobile-header-profile bg-white">
+                
                 <!-- profile picture end -->
                 <% if $CurrentMember %>
+                <div class="profile-setting-box mr-2">
+                    <a href="javascript:void(0)" class="notif-triger text-dark" style="background:unset">
+                        <i class="fa fa-bell-o color-theme" style="font-size:24px"></i><span class="bg-warning" 
+                            style="color: #fff;
+                            padding: 4px 4px;
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            line-height: 12px;
+                            font-size: 8px;
+                            position: absolute;
+                            right: 8px;
+                            bottom: -4px;">10</span>
+                    </a>
+                    <div class="notif-dropdown notif-dropdown-mobile">
+                        <ul class="dropdown-msg-list pr-3 pl-3 pt-3">
+                            <li class="msg-list-item d-flex">
+                                <div class="profile-thumb  mr-2" style="width: 32px;height: 32px;">
+                                    <figure class="profile-thumb-middle" style="width: 32px;height: 32px;">
+                                        <img src="$SiteConfig.SmallWebLogo.URL" alt="profile picture">
+                                    </figure>
+                                </div>
+                                <div class="notification-content text-dark">
+                                    <a href="profile.html" class="text-dark">Robert Faul</a>
+                                    <p>and 35 other people reacted to your photo</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="msg-dropdown-footer pl-3 pr-3 pt-0 pb-3">
+                            <button>See all notification</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="profile-thumb profile-setting-box">
                     <a href="javascript:void(0)" class="profile-triger">
                         <figure class="profile-thumb-middle p-1 bg-dark" style="border-radius:50%">
