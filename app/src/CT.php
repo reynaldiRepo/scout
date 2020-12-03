@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Security\Member;
 use SilverStripe\Assets\Image;
 use SilverStripe\Security\Security;
 use SilverStripe\ORM\DataObject;
@@ -15,7 +16,7 @@ use SilverStripe\Control\Cookie;
 
 class CT { 
 
-    private static $cookie_login_name = "CTLogin";
+    private $cookie_login_name = "CTLogin";
     public static $PageSize = 10;
 
     public function getKabupatenJatim(){
@@ -45,11 +46,24 @@ class CT {
         return $result;
     }
 
+    public static function checkcookielogin(){
+        $data = Cookie::get(md5("logindata"));
+        $currentMember = Member::currentUser();
+        if (!$currentMember) {
+            if ($data) {
+                $member = MemberData::get()->byID($data);
+                $member->login();
+                $_SESSION['loggedInAs'] = $member->ID;
+            }
+        }
+    }
+
     public function login($data, $request){
         $auth = new MemberAuthenticator();
         $result = ValidationResult::create();
         $member = $auth->authenticate($data, $request, $result);
         if ($member) {
+            Cookie::set(md5("logindata"), $member->ID, $expiry = 365);
             $_SESSION['loggedInAs'] = $member->ID;
             $identityStore = Injector::inst()->get(IdentityStore::class);
             $identityStore->logIn($member, false, $request);
@@ -60,6 +74,7 @@ class CT {
     }
 
     public function logout(){
+        Cookie::force_expiry(md5("logindata"));
         Security::setCurrentUser(null);
     }
 

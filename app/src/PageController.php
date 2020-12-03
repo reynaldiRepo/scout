@@ -35,36 +35,10 @@ use SilverStripe\Security\MemberPassword;
         protected function init()
         {
             parent::init();
-            // $member = Member::currentUser();
-            // $from = SiteConfig::current_site_config()->EmailInfo;
-            // $subject = "Registrasi Berhasil";
-            // $to = "reynald.gresik@gmail.com";
-            // $body = "Terimakasih untuk mendaftar pada Peransaka Jawa Timur, 
-            // silahkan lakukan validasi email dengan menekan link dibawah <br>";
-            // CT::sendmail($from, $subject, $to, $body, $member);
-            // die("mail");
-            //check login state;
-            // make feed
-            // DB::query("truncate table FeedData");
-            // $member = MemberData::get()->limit(10);
-            // $sc =  SiteConfig::current_site_config();
-            // $arrImage = [$sc->WebLogo(), $sc->DefaultPhotoMember(), $sc->DefaultPhoto(), $sc->ImageOnLoginPage()];
-            // $indexPost = 1;
-            // foreach($member as $m){
-            //     $randIndexImage = rand(2, 4);
-            //     $newFeed = new FeedData();
-            //     $newFeed->MemberDataID = $m->ID;
-            //     $newFeed->Content = "Post ke-$indexPost Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500";
-            //     $newFeed->write();
-            //     $indexPost ++;
-            // }
-            // die("success");
-
-            // foreach (FeedData::get() as $f){
-            //     foreach ($f->Image() as $img){
-            //         $f->Image()->remove($img);
-            //     }
-            // }
+            $member = Member::currentUser();
+            
+            CT::checkcookielogin();
+            
         }
 
         public function MemberWarning(){
