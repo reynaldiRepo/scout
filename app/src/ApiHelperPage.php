@@ -278,6 +278,8 @@ class ApiHelperPageController extends PageController{
         if (!$notif){
             die("404/ Not Found");
         }
+        $notif->hasSeen = "1";
+        $notif->write();
         $link = $notif->getLinkToSee();
         return $this->redirect($link);
     }

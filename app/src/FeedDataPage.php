@@ -250,6 +250,7 @@ class FeedDataPageController extends PageController
 
         $data['Feed'] = $feed;
         $data['Count'] = isset($_GET['Count']) ? $_GET['Count'] : null;
+        $data['CountChild'] = isset($_GET['CountChild']) ? $_GET['CountChild'] : null;
         return $this->customise($data)->renderWith(array('CleanPage', 'FeedDetail'));
     }
 
