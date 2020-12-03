@@ -272,7 +272,6 @@ class ApiHelperPageController extends PageController{
             die("404/ Not Found");
             return;
         }
-        
         $ID = $_GET['ID'];
         $notif = NotificationData::get()->byID($ID);
         if (!$notif){

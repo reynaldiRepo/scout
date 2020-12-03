@@ -89,7 +89,6 @@ class FeedDataPageController extends PageController
             $count = $Count+CT::$PageSize;
             $data['LoadMore'] = Director::absoluteBaseURL()."feed/commentreply?CommentFeedDataID=$CommentParentID&Count=$count";
         }
-        
         return $this->customise($data)->renderWith(array('CleanPageNoHeader' ,'replycomment'));
     }
 
@@ -150,7 +149,7 @@ class FeedDataPageController extends PageController
             $users[$CommentFeed->MemberDataID] = $CommentFeed->MemberData();
             $users[$CommentFeed->FeedData()->MemberDataID] = $CommentFeed->FeedData()->MemberData();
             foreach($users as $k=>$v){
-                if ($k == $CommentFeed->FeedData()->MemberDataID){
+                if ($k == $CommentFeed->FeedData()->MemberDataID && $member->ID != $k){
                     $newNotif = NotificationData::writenotif(2, $newComment, $v);
                 }
                 if ($member->ID != $k && $k != $CommentFeed->FeedData()->MemberDataID) {
