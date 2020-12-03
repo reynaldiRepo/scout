@@ -306,6 +306,10 @@
         text-align:left
     }
 
+    .c-pointer {
+        cursor:pointer
+    }
+
 </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->

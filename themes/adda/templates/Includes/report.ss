@@ -13,27 +13,23 @@
                     <div class="modal-body">
                         <fieldset class="form-group">
                             <div class="row">
-                                <legend class="col-form-label col-sm-4 pt-0">Report Dengan alsan</legend>
-                                <div class="col-sm-8">
+                                <div class="alert alert-info">
+                                    Silahkan lakukan report pada postingan ini bila dirasa telah melanggar kebijakan dalam menggunakan
+                                    sistem ini, admin akan segera meninjau.
+                                </div>
+                                <input type="text" readonly class="form-control sr-only" name="ReportReasonDataID" id="target-report">
+                                <div class="col-md-12">
                                     <% loop $getReasonReport %>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="ReportReasonDataID" required
-                                            id="ReportReasonDataID{$ID}" value="$ID">
-                                        <label class="form-check-label" for="ReportReasonDataID{$ID}">
-                                            $Title
-                                        </label>
+                                    <div class="c-pointer col-md-12 alert border m-0 mt-2 p-3 report-opt" id="report-$ID" data-id="$ID">
+                                        $Title
                                     </div>
                                     <% end_loop %>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="ReportReasonDataID" required
-                                            id="ReportReasonDataID-other" value="0">
-                                        <label class="form-check-label" for="ReportReasonDataID-other">
-                                            Lainnya ..
-                                        </label>
+                                    <div class="c-pointer col-md-12 alert border m-0 mt-2 p-3 report-opt" id="report-0" data-id="0">
+                                        Lainnya
                                     </div>
                                 </div>
                             </div>
-                            <div class="row"  id="OtherReason">
+                            <div class="row" id="OtherReason">
                                 <legend class="col-form-label col-sm-4 pt-0">Alasan Lainnya ? </legend>
                                 <div class="col-sm-12">
                                     <textarea name="OtherReason" class="form-control" id="OtherReasonInput"></textarea>
@@ -52,21 +48,29 @@
     </div>
     <script>
 
-        $('input[name="ReportReasonDataID"]').change(function () {
-            if ($(this).val() == "0") {
+        $(".report-opt").hover(function(){
+            $(this).addClass("border-warning")
+        }, function(){
+            $(this).removeClass("border-warning")
+        })
+
+        $(".report-opt").click(function(){
+            $(".report-opt").removeClass("alert-warning")
+            $(this).addClass("alert-warning");
+            $("#target-report").val($(this).attr("data-id"))
+            if ($(this).attr("data-id") == "0"){
                 $("#OtherReason").show();
-                $("#OtherReasonInput").prop('required',true);
-                return;
+            }else{
+                $("#OtherReasonInput").val("");
+                $("#OtherReason").hide();
             }
-            $("#OtherReason").hide();
-            $("#OtherReasonInput").prop('required',false);
         })
 
         $('#report-modal').on('hidden.bs.modal', function () {
-            $('input[name="ReportReasonDataID"]').each(function(){
-               $(this).prop("checked", false) 
-            })
-            $("#OtherReasonInput").val("")
+            $(".report-opt").removeClass("alert-warning")
+            $("#target-report").val("")
+            $("#OtherReasonInput").val("");
+            $("#OtherReason").hide();
         })
 
         function doreport(e) {
