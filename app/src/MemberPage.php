@@ -67,6 +67,8 @@ class MemberPageController extends PageController{
         'editfeed',
         'deletefeed',
         'feed',
+
+        'notif'
     ];
 
     /**
@@ -617,6 +619,18 @@ class MemberPageController extends PageController{
             echo json_encode(['status'=>500, 'msg'=>'Something Wrong']);
             return;
         }
+    }
+
+    public function notif(){
+        $member = Member::currentUser();
+        if (!$member){
+            $this->redirect("member/login");
+        }
+        $notif = NotificationData::get()->filter(["OwnerNotifID"=>$member->ID])->sort("Created", "DESC");
+        $notif = new PaginatedList($notif, $this->getRequest());
+        $notif->setPageLength(20);
+        $data['notif'] = $notif;
+        return $data;
     }
 
 

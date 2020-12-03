@@ -44,6 +44,9 @@
                             bottom: -4px;">$numberNotif</span>
                     </a>
                     <div class="notif-dropdown notif-dropdown-mobile">
+                        <div class="dropdown-title p-3">
+                            <p class="recent-msg">Notification <i class="fa fa-bell-o"></i> ($numberNotif)</p>
+                        </div>
                         <ul class="dropdown-msg-list pr-3 pl-3 pt-3">
                             <% if getNotif %>
                             <% loop $getNotif %>
