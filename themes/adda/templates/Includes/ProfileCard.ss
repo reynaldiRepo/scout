@@ -1,4 +1,4 @@
-<div class="card card-profile widget-item p-0">
+<div class="card card-profile widget-item p-0 xs-hidden">
     <div class="profile-banner">
         <figure class="profile-banner-small">
             <a href="{$BaseHref}member">

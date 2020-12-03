@@ -1,4 +1,4 @@
-<div class="card widget-item">
+<div class="card widget-item xs-hidden">
     <h4 class="widget-title">Recent Event</h4>
     <div class="widget-body">
         <ul class="like-page-list-wrapper">

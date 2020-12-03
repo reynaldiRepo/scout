@@ -93,14 +93,14 @@
 
 
     $(document).ready(function(){
-        blockUI();
+        
     })
     window.onload = function() {
         var param = new URLSearchParams(window.location.search)
         if (param.get("Count") != null && param.get("Count") > "10"){
             window.scrollTo(0,document.body.scrollHeight - 30);
         }
-        $.unblockUI();
+        
     }
 
     parenttrigger = parent.updateNumComment("#num-comment-{$FeedDataID}", "$FeedDataID");

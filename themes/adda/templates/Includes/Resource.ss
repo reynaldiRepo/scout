@@ -310,6 +310,18 @@
         cursor:pointer
     }
 
+    @media only screen and (max-width: 767.98px) {
+        .xs-hidden{
+            display:none;
+        }
+    }
+
+    @media only screen and (max-width: 479.98px){
+        .post-meta .post-meta-like span {
+           display: unset !important;
+        }
+    }
+
 </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
