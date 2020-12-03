@@ -111,7 +111,9 @@ class FeedDataPageController extends PageController
             $newComment->MemberDataID = $member->ID;
             $newComment->write();
             $Feed->CommentFeedData()->add($newComment);
-            $newNotif = NotificationData::writenotif(2, $newComment, $Feed->MemberData());
+            if ($newComment->MemberDataID != $member->ID) {
+                $newNotif = NotificationData::writenotif(2, $newComment, $Feed->MemberData());
+            }
             echo json_encode(['status'=>200, 'msg'=>'Add Comment Success']);
             return;
         }else{

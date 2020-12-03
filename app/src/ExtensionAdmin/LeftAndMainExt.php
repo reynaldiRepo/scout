@@ -25,6 +25,7 @@ class LeftAndMainExt extends LeftAndMainExtension{
             CMSMenu::remove_menu_class(OtherAdmin::class);
             CMSMenu::remove_menu_class(LokasiAdmin::class);
             CMSMenu::remove_menu_class(AdminCabangAdmin::class);
+            CMSMenu::remove_menu_class(ReportDataAdmin::class);
         }   
     }
 

@@ -266,7 +266,6 @@ class ApiHelperPageController extends PageController{
         $member = Member::currentUser();
         if (!$member){
             return $this->redirect("member/login");
-            
         }
         if (!isset($_GET['ID'])){
             die("404/ Not Found");

@@ -40,7 +40,7 @@
     </main>
 
     <!-- Main JS -->
-    <script src="$ThemeDir/javascript/main.js"></script>
+    <script src="$ThemeDir/javascript/main.js?key=$getResourceV"></script>
     <script>
         $(document).ready(function () {
             $(".lightgallery").lightGallery();
