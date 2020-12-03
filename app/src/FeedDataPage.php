@@ -1,5 +1,6 @@
 <?php 
 
+use SilverStripe\Control\Director;
 use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
@@ -48,10 +49,19 @@ class FeedDataPageController extends PageController
         }
         $feedID = $_GET['FeedDataID'];
         $Feed = FeedData::get()->byID($feedID);
-        $data['FeedDataID'] = $feedID;
-        $Comment = new PaginatedList($Feed->CommentFeedData()->sort("Created", "DESC"), $this->getRequest());
-        $Comment->setPageLength(CT::$PageSize);
+        $Count = isset($_GET['Count']) ? $_GET['Count'] : CT::$PageSize; 
+        $Comment = DataObject::get("CommentFeedData", "FeedDataID = '$feedID'", "", "","0,$Count");
         $data['Comment'] = $Comment;
+        $data['FeedDataID'] = $feedID;
+        
+        
+        //check for load more;
+        $countAll = DataObject::get("CommentFeedData", "FeedDataID = '$feedID'", "", "","")->count();
+        if ($countAll > $Count){
+            $count = $Count+CT::$PageSize;
+            $data['LoadMore'] = Director::absoluteBaseURL()."feed/comment?FeedDataID=$feedID&Count=$count";
+        }
+
         return $this->customise($data)->renderWith(array('CleanPageNoHeader' ,'comment'));
     }
 
@@ -64,11 +74,21 @@ class FeedDataPageController extends PageController
         if (!$member){
             return $this->customise($data)->renderWith(array('CleanPageNoHeader' ,'nocomment'));
         }
+
         $CommentParent = CommentFeedData::get()->byID($_GET['CommentFeedDataID']);
-        $Comment = new PaginatedList($CommentParent->getChild(), $this->getRequest());
-        $Comment->setPageLength(CT::$PageSize);
+        $CommentParentID = $_GET['CommentFeedDataID'];
         $data['CommentParent'] = $CommentParent;
+
+        $Count = isset($_GET['Count']) ? $_GET['Count'] : CT::$PageSize; 
+        $Comment = DataObject::get("CommentFeedData", "CommentFeedDataID = '$CommentParentID'", "", "","0,$Count");
+
         $data['Comment'] = $Comment;
+        //check for load more;
+        $countAll = DataObject::get("CommentFeedData", "CommentFeedDataID = '$CommentParentID'", "", "","")->count();
+        if ($countAll > $Count){
+            $count = $Count+CT::$PageSize;
+            $data['LoadMore'] = Director::absoluteBaseURL()."feed/commentreply?CommentFeedDataID=$CommentParentID&Count=$count";
+        }
         
         return $this->customise($data)->renderWith(array('CleanPageNoHeader' ,'replycomment'));
     }
@@ -229,6 +249,7 @@ class FeedDataPageController extends PageController
         }
 
         $data['Feed'] = $feed;
+        $data['Count'] = isset($_GET['Count']) ? $_GET['Count'] : null;
         return $this->customise($data)->renderWith(array('CleanPage', 'FeedDetail'));
     }
 

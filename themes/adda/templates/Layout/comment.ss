@@ -76,27 +76,9 @@
             <% end_if %>
 
             <div class="col-lg-12 text-center mt-3 mb-2">
-                <div>
-                    <% if $Comment.MoreThanOnePage %>
-                    <% if $Comment.NotFirstPage %>
-                    <a class="prev btn-page p-1 pl-3 pr-3 bg-white btn" href="$Comment.PrevLink"><i
-                            class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></a>
-                    <% end_if %>
-                    <% loop $Comment.PaginationSummary %>
-                    <% if $CurrentBool %>
-                    <a class="btn-page p-1 pl-3 pr-3 bg-theme text-white btn">$PageNum</a>
-                    <% else %>
-                    <% if $Link %>
-                    <a href="$Link" class="btn-page p-1 pl-3 pr-3 bg-white btn">$PageNum</a>
-                    <% else %>
-                    ...
-                    <% end_if %>
-                    <% end_if %>
-                    <% end_loop %>
-                    <% if $Comment.NotLastPage %>
-                    <a class="next btn-page p-1 pl-3 pr-3 bg-white btn" href="$Comment.NextLink"><i
-                            class="fa fa-caret-right"></i><i class="fa fa-caret-right"></i></a>
-                    <% end_if %>
+                <div>                
+                    <% if $LoadMore %>
+                        <a class="next btn-page p-1 pl-3 pr-3 bg-white btn" href="$LoadMore">Load More</a>
                     <% end_if %>
                 </div>
             </div>
@@ -109,7 +91,21 @@
 
 <script>
 
+
+    $(document).ready(function(){
+        blockUI();
+    })
+    window.onload = function() {
+        var param = new URLSearchParams(window.location.search)
+        if (param.get("Count") != null && param.get("Count") != "10"){
+            window.scrollTo(0,document.body.scrollHeight - 30);
+        }
+        $.unblockUI();
+    }
+
     parenttrigger = parent.updateNumComment("#num-comment-{$FeedDataID}", "$FeedDataID");
+
+ 
 
     window.updateCommentNum = function(target, id){
         $.ajax({

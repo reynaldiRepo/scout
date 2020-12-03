@@ -27,7 +27,6 @@
             </div>
 
             <div class="mobile-header-profile bg-white">
-                
                 <!-- profile picture end -->
                 <% if $CurrentMember %>
                 <div class="profile-setting-box mr-2">
@@ -39,13 +38,15 @@
                             width: 20px;
                             height: 20px;
                             line-height: 12px;
-                            font-size: 8px;
+                            font-size: 9px;
                             position: absolute;
                             right: 8px;
                             bottom: -4px;">$numberNotif</span>
                     </a>
                     <div class="notif-dropdown notif-dropdown-mobile">
                         <ul class="dropdown-msg-list pr-3 pl-3 pt-3">
+                            <% if getNotif %>
+                            <% loop $getNotif %>
                             <li class="msg-list-item d-flex">
                                 <div class="profile-thumb  mr-2" style="width: 32px;height: 32px;">
                                     <a href="$MemberOnNotif.Link">
@@ -55,15 +56,17 @@
                                     </a>
                                 </div>
                                 <div class="notification-content text-dark">
-                                    <a href="{$BaseHref}api-helper/seenotif?ID=$ID">
-                                        $MemberOnNotif.FirstName $MemberOnNotif.Surname,
+                                    <a  class="text-dark" href="{$BaseHref}api-helper/seenotif?ID=$ID">
+                                        $MemberOnNotif.FirstName $MemberOnNotif.Surname
                                         <p>$Content.RAW</p>
                                     </a>
                                 </div>
                             </li>
+                            <% end_loop %>
+                            <% end_if %>
                         </ul>
                         <div class="msg-dropdown-footer pl-3 pr-3 pt-0 pb-3">
-                            <button>See all notification</button>
+                            <button onclick="location.href='{$BaseHref}member/notif'">See all notification</button>
                         </div>
                     </div>
                 </div>

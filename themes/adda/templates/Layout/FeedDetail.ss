@@ -108,8 +108,13 @@
             </div>
             <hr>
             <div class="frame-content mt-2" id="comment-frame-{$ID}">
+                <% if $Top.Count %>
+                <iframe src='{$BaseHref}feed/comment?FeedDataID={$ID}&Count=$Top.Count' width='100%'
+                    frameBorder='0'></iframe>
+                <% else %>
                 <iframe src='{$BaseHref}feed/comment?FeedDataID={$ID}' width='100%'
                     frameBorder='0'></iframe>
+                <% end_if %>
             </div>
             <% end_with %>
         </div>

@@ -77,7 +77,7 @@
                                     <% end_if %>
 								</ul>
 								<div class="msg-dropdown-footer  pl-3 pr-3 pt-0 pb-3">
-									<button>See all notification</button>
+									<button onclick="location.href='{$BaseHref}member/notif'">See all notification</button>
 								</div>
                             </div>
                         </div>

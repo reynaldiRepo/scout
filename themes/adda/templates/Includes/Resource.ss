@@ -249,12 +249,12 @@
     }
 
     ::-webkit-scrollbar {
-        width: 2px;
+        width: 1px;
     }
 
     /* Optional: show position indicator in red */
     ::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.2);
     }
 
     .iziToast-wrapper {

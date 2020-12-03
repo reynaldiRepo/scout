@@ -98,15 +98,43 @@ class NotificationData extends DataObject{
                         break;
                     }
                 }
-                $startPage = floor($find['ROW'] / CT::$PageSize);
+                $startPage =  floor($find['ROW'] / CT::$PageSize) * 10;
                 $link =  "event/v/".$comment->EventData()->ID.$comment->EventData()->getURLSegment()."?Start=$startPage";
                 return $link;
+            case 2:
+                $comment = CommentFeedData::get()->byID($this->IdTarget);
+                if ($comment->FeedDataID == "0"){
+                    $feedID = $comment->CommentFeedData()->FeedDataID;
+                    $data = DB::query("SELECT (ROW_NUMBER() OVER (Order by Created DESC) ) as 'ROW', Created, ID  FROM CommentFeedData WHERE FeedDataID = '$feedID'");    
+                }else{
+                    $data = DB::query("SELECT (ROW_NUMBER() OVER (Order by Created DESC) ) as 'ROW', Created, ID  FROM CommentFeedData WHERE FeedDataID = '".$comment->FeedDataID."'");
+                }
+                $find = null;
+                foreach($data as $d){
+                    if ($d['ID'] == $this->IdTarget){
+                        $find = $d;
+                        break;
+                    }
+                }
+                $startPage =  floor($find['ROW'] / CT::$PageSize) * 10 + 10;
+                if ($comment->FeedDataID == "0") {
+                    return  "feed/post/".$comment->CommentFeedData()->FeedDataID."?Count=$startPage";
+                }
+                return "feed/post/".$comment->FeedDataID."?Count=$startPage";
 
-            case 3:
-                $comment = CommentEventData::get()->byID($this->IdTarget);
-                $data = DB::query("SELECT (ROW_NUMBER() OVER (Order by Created DESC) ) as 'ROW', Created, ID  FROM CommentFeedData WHERE FeedDataID = '".$comment->EventDataID."'");
-                var_dump($data);
-                die();
+            case 3 :
+                $comment = CommentFeedData::get()->byID($this->IdTarget);
+                $feedID = $comment->CommentFeedData()->FeedDataID;
+                $data = DB::query("SELECT (ROW_NUMBER() OVER (Order by Created DESC) ) as 'ROW', Created, ID  FROM CommentFeedData WHERE FeedDataID = '$feedID'");    
+                $find = null;
+                foreach($data as $d){
+                    if ($d['ID'] == $this->IdTarget){
+                        $find = $d;
+                        break;
+                    }
+                }
+                $startPage =  floor($find['ROW'] / CT::$PageSize) * 10 + 10;
+                return  "feed/post/".$comment->CommentFeedData()->FeedDataID."?Count=$startPage";
             default:
                 break;
         }
