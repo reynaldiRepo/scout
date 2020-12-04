@@ -66,6 +66,12 @@
                                 </div>
                             </li>
                             <% end_loop %>
+                            <% else %>
+                                <li class="msg-list-item d-flex">
+                                    <div class="notification-content text-dark">
+                                        <p>Tidak ada notifikasi</p>
+                                    </div>
+                                </li>
                             <% end_if %>
                         </ul>
                         <div class="msg-dropdown-footer pl-3 pr-3 pt-0 pb-3">
