@@ -264,7 +264,7 @@ class MemberData extends Member
         $KabupatenDD = CustomDropdown::create(
             'KabupatenSelect',
             'Kabupaten Tempat Tinggal',
-            ProvinsiData::getJatim()->KabupatenData()->sort("Title", "ASC")->map("ID", "Title")
+            ProvinsiData::getJatim()->KabupatenData()->sort("Title", "ASC")
         )->setEmptyString('Pilih Kabupatem/Kota');
 
         if ($this->KecamatanID != 0){

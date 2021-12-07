@@ -25,7 +25,6 @@ class MemberExtension extends DataExtension
             $this->owner->addToGroupByCode("administrators"); 
         }
     }
-
     
     private static $summary_fields = [
         'FirstName' => 'Firstname',
@@ -101,6 +100,7 @@ class MemberExtension extends DataExtension
             'Surname',
             'Surname'
         ));
+
         $fields->addFieldsToTab(
             'Root.Main',
             [
@@ -108,5 +108,6 @@ class MemberExtension extends DataExtension
                 $Kwarran
             ]
         );
+        
     }
 }

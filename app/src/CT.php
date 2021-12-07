@@ -14,7 +14,9 @@ use SilverStripe\Security\IdentityStore;
 use SilverStripe\Control\Email\Email;
 use SilverStripe\Control\Cookie;
 
-class CT { 
+class CT {
+    
+    
 
     private $cookie_login_name = "CTLogin";
     public static $PageSize = 10;

@@ -24,7 +24,4 @@ CMSMenu::remove_menu_class(ReportAdmin::class);
 CMSMenu::remove_menu_class(ArchiveAdmin::class);
 CMSMenu::remove_menu_class(CampaignAdmin::class);
 //==================================================
-
-
-
 Security::setDefaultAdmin("admin","admin");
